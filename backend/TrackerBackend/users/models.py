@@ -1,26 +1,29 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
+# TODO: Модель активов будет собирать данные с API и хранить в себе информацию про крипту
+# TODO: Модель активов под пользователя будет составлять портфель
 class Asset(models.Model):
     name = models.CharField(
         max_length=200,
-        verbose_name='Название актива',
-        help_text='Введите название актива')
-    amount = models.DecimalField(
-        max_digits=50,
-        decimal_places=10,
-        verbose_name='Кол-во актива',
-        help_text='Введите кол-во актива')
+        verbose_name='Название актива')
+    # amount = models.DecimalField(
+    #     max_digits=50,
+    #     decimal_places=10,
+    #     verbose_name='Кол-во актива',
+    #     help_text='Введите кол-во актива')
+    symbol = models.CharField(
+        max_length=100,
+        verbose_name='Сокращенное название актива')
+    rank = models.IntegerField(verbose_name="Ранг актива")
     add_date = models.DateTimeField(
         'Дата добавления', auto_now_add=True
     )
-    price = models.DecimalField(
-        max_digits=50,
-        decimal_places=10,
-        verbose_name="Цена закупки актива",
-        help_text="Введите цену покупки актива"
-    )
+    # price = models.DecimalField(
+    #     max_digits=50,
+    #     decimal_places=10,
+    #     verbose_name="Цена закупки актива",
+    # )
 
 
 class CryptoUser(AbstractUser):
@@ -39,3 +42,31 @@ class CryptoUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class AssetForCryptoUser(models.Model):
+    # TODO: asset, amount validators
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
+                              related_name="asset_amounts")
+    crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
+                                    related_name="asset_amounts")
+    add_date = models.DateTimeField(
+        'Дата добавления', auto_now_add=True
+    )
+    amount = models.DecimalField(
+        max_digits=50,
+        decimal_places=10,
+        verbose_name='Кол-во актива',
+        help_text='Введите кол-во актива')
+    price = models.DecimalField(
+        max_digits=50,
+        decimal_places=10,
+        verbose_name="Цена закупки актива",
+    )
+
+    class Meta:
+        verbose_name = "Кол-во актива у пользователя"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f"{self.crypto_user}: {self.asset}"

@@ -3,9 +3,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
 
 from models import CryptoUser
-from serializers import CreateUserSerializer, UserInfoSerializer
+from serializers import CreateUserSerializer, UserInfoSerializer, UserAssetSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,3 +34,12 @@ class UserViewSet(viewsets.ModelViewSet):
             except ValidationError as e:
                 return Response(str(e), status.HTTP_404_NOT_FOUND)
         return Response({'errors': serializer.errors}, status.HTTP_404_NOT_FOUND)
+
+    @action(url_path='add_asset', methods=['POST'], detail=False,
+            permission_classes=[permissions.IsAuthenticated])
+    def add_asset(self, request):
+        crypto_user = get_object_or_404(CryptoUser, id=request.user.id)
+        serializer = UserAssetSerializer(
+            data={"user": request.user.id, "asset": request}
+        )
+
