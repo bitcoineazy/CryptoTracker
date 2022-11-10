@@ -1,29 +1,24 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 # TODO: Модель активов будет собирать данные с API и хранить в себе информацию про крипту
 # TODO: Модель активов под пользователя будет составлять портфель
 class Asset(models.Model):
     name = models.CharField(
         max_length=200,
         verbose_name='Название актива')
-    # amount = models.DecimalField(
-    #     max_digits=50,
-    #     decimal_places=10,
-    #     verbose_name='Кол-во актива',
-    #     help_text='Введите кол-во актива')
     symbol = models.CharField(
         max_length=100,
-        verbose_name='Сокращенное название актива')
-    rank = models.IntegerField(verbose_name="Ранг актива")
-    add_date = models.DateTimeField(
-        'Дата добавления', auto_now_add=True
-    )
-    # price = models.DecimalField(
-    #     max_digits=50,
-    #     decimal_places=10,
-    #     verbose_name="Цена закупки актива",
-    # )
+        verbose_name='Сокращенное название актива', null=True)
+    rank = models.IntegerField(verbose_name="Ранг актива", null=True, unique=True)
+
+    class Meta:
+        ordering = ["rank"]
+        verbose_name = "Активы"
+
+    def __str__(self):
+        return self.name
 
 
 class CryptoUser(AbstractUser):
