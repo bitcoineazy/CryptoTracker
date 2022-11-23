@@ -5,16 +5,35 @@ from django.db import models
 # TODO: Модель активов будет собирать данные с API и хранить в себе информацию про крипту
 # TODO: Модель активов под пользователя будет составлять портфель
 class Asset(models.Model):
-    name = models.CharField(
-        max_length=200,
-        verbose_name='Название актива')
-    symbol = models.CharField(
-        max_length=100,
-        verbose_name='Сокращенное название актива', null=True)
-    rank = models.IntegerField(verbose_name="Ранг актива", null=True, unique=True)
+    coin_id = models.CharField(max_length=255, verbose_name="Название актива", null=True)
+    symbol = models.CharField(max_length=255, verbose_name='Сокращенное название актива', null=True)
+    name = models.CharField(max_length=255, verbose_name='Название актива', null=True)
+    market_cap_rank = models.IntegerField(verbose_name="Ранг актива по капитализации", null=True)
+    image = models.URLField(max_length=255, verbose_name="Ссылка на картинку", null=True)
+    current_price = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    market_cap = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    fully_diluted_valuation = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    total_volume = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    high_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    low_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    price_change_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    price_change_percentage_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    market_cap_change_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    market_cap_change_percentage_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    circulating_supply = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    total_supply = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    max_supply = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    ath = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    ath_change_percentage = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    ath_date = models.DateTimeField(null=True)
+    atl = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    atl_change_percentage = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    atl_date = models.DateTimeField(null=True)
+    roi = models.JSONField(null=True, default=dict)
+    platforms = models.JSONField(verbose_name="Платформы", null=True, default=dict)
 
     class Meta:
-        ordering = ["rank"]
+        ordering = ["market_cap_rank"]
         verbose_name = "Активы"
 
     def __str__(self):

@@ -1,18 +1,20 @@
 import os
-from dotenv import load_dotenv
+from django.conf import settings
 from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
+from pycoingecko import CoinGeckoAPI
+
 import pandas as pd
-import requests
+import numpy as np
 
 from .models import CryptoUser, Asset
 from .serializers import CreateUserSerializer, UserInfoSerializer, UserAssetSerializer
 
-load_dotenv(".env")  # For local testing purposes, replace with os on deploy
+cg = CoinGeckoAPI()
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -56,18 +58,58 @@ class AssetViewSet(viewsets.ModelViewSet):
     @action(url_path="assets/fill_assets", methods=["POST"], detail=False,
             permission_classes=[permissions.IsAdminUser])
     def fill_assets(self, request):
-        headers = {"X-CMC_PRO_API_KEY": os.environ.get("X-CMC_PRO_API_KEY")}
-        url_cmc_map = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/map"
-        get_cmc_tokens = requests.get(url_cmc_map, headers=headers).json()
+        """CoinGecko api"""
 
-        tokens_df = pd.json_normalize(get_cmc_tokens["data"])[["name", "symbol", "rank"]]
+        # asset_data = pd.read_json("response_1669219617967.json")
+        asset_data = cg.get_coins_list(include_platform=True)
+        json_data = pd.json_normalize(asset_data, max_level=0)
 
         asset_instances = [Asset(
-            name=asset[0],
+            coin_id=asset[0],
             symbol=asset[1],
-            rank=asset[2],
-        ) for asset in tokens_df.values]
+            name=asset[2],
+            platforms=asset[3],
+        ) for asset in json_data.values]
 
         self.queryset.bulk_create(asset_instances)
+        return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_204_NO_CONTENT)
+
+    @action(url_path="assets/update_assets", methods=["POST"], detail=False,
+            permission_classes=[permissions.IsAdminUser])
+    def update_assets(self, request):
+
+        local_data = pd.read_json(os.path.join(settings.BASE_DIR, 'coins_markets.json'))
+        local_data = local_data.replace({np.nan: None})
+        #print(local_data)
+
+
+        for i, coin_id in enumerate(local_data["id"]):
+            local_asset = local_data[local_data["id"] == coin_id]
+            Asset.objects.filter(coin_id=coin_id).update(
+                image=local_asset["image"].values[0],
+                current_price=local_asset["current_price"].values[0],
+                market_cap_rank=local_asset["market_cap_rank"].values[0],
+                market_cap=local_asset["market_cap"].values[0],
+                fully_diluted_valuation=local_asset["fully_diluted_valuation"].values[0],
+                total_volume=local_asset["total_volume"].values[0],
+                high_24h=local_asset["high_24h"].values[0],
+                low_24h=local_asset["low_24h"].values[0],
+                price_change_24h=local_asset["price_change_24h"].values[0],
+                price_change_percentage_24h=local_asset["price_change_percentage_24h"].values[0],
+                market_cap_change_24h=local_asset["market_cap_change_24h"].values[0],
+                market_cap_change_percentage_24h=local_asset["market_cap_change_percentage_24h"].values[0],
+                circulating_supply=local_asset["circulating_supply"].values[0],
+                total_supply=local_asset["total_supply"].values[0],
+                max_supply=local_asset["max_supply"].values[0],
+                ath=local_asset["ath"].values[0],
+                ath_change_percentage=local_asset["ath_change_percentage"].values[0],
+                ath_date=local_asset["ath_date"].values[0],
+                atl=local_asset["atl"].values[0],
+                atl_change_percentage=local_asset["atl_change_percentage"].values[0],
+                atl_date=local_asset["atl_date"].values[0],
+                roi=local_asset["roi"].values[0],
+
+            )
+            print(i)
 
         return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_204_NO_CONTENT)

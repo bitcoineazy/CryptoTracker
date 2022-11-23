@@ -9,8 +9,8 @@ class CryptoUserAdmin(admin.ModelAdmin):
 
 
 class AssetAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "symbol", "rank")
-    list_filter = ("name", "rank")
+    list_display = [field.name for field in Asset._meta.fields if field.name != "id"]
+    list_filter = ("market_cap_rank", )
 
 
 admin.site.register(CryptoUser, CryptoUserAdmin)
