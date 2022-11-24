@@ -2,8 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# TODO: Модель активов будет собирать данные с API и хранить в себе информацию про крипту
-# TODO: Модель активов под пользователя будет составлять портфель
 class Asset(models.Model):
     coin_id = models.CharField(max_length=255, verbose_name="Название актива", null=True)
     symbol = models.CharField(max_length=255, verbose_name='Сокращенное название актива', null=True)
@@ -39,31 +37,12 @@ class Asset(models.Model):
     def __str__(self):
         return self.name
 
-
-class CryptoUser(AbstractUser):
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
-    username = models.CharField(
-        verbose_name='Имя пользователя', unique=True, max_length=100)
-    email = models.EmailField(
-        verbose_name='Адрес электронной почты', unique=True, max_length=150)
-    assets = models.ManyToManyField(Asset, verbose_name="Укажите активы и их количество")
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ('username',)
-
-    def __str__(self):
-        return self.username
-
-
 class AssetForCryptoUser(models.Model):
     # TODO: asset, amount validators
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
                               related_name="asset_amounts")
-    crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
-                                    related_name="asset_amounts")
+    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
+    #                                related_name="asset_amounts")
     add_date = models.DateTimeField(
         'Дата добавления', auto_now_add=True
     )
@@ -77,10 +56,39 @@ class AssetForCryptoUser(models.Model):
         decimal_places=10,
         verbose_name="Цена закупки актива",
     )
+    #portfolio_id = models.IntegerField(max_length=255)
 
     class Meta:
-        verbose_name = "Кол-во актива у пользователя"
+        verbose_name = "Актив для пользователя"
         verbose_name_plural = verbose_name
 
     def __str__(self):
         return f"{self.crypto_user}: {self.asset}"
+
+
+class UserPortfolio(models.Model):
+    # Track and render 30 days
+    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
+    name = models.CharField(max_length=255, null=True)
+    total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
+    portfolio_change_metrics = models.JSONField(null=True, default=dict)
+
+
+class CryptoUser(AbstractUser):
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
+    username = models.CharField(
+        verbose_name='Имя пользователя', unique=True, max_length=100)
+    email = models.EmailField(
+        verbose_name='Адрес электронной почты', unique=True, max_length=150)
+    portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ('username',)
+
+    def __str__(self):
+        return self.username
