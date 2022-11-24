@@ -11,8 +11,8 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 import numpy as np
 
-from .models import CryptoUser, Asset
-from .serializers import CreateUserSerializer, UserInfoSerializer, UserAssetSerializer
+from .models import CryptoUser, Asset, UserPortfolio
+from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer
 
 cg = CoinGeckoAPI()
 
@@ -24,7 +24,7 @@ class UserViewSet(viewsets.ModelViewSet):
             permission_classes=[permissions.IsAuthenticated])
     def user_info(self, request):
         user = request.user
-        return Response({'info': UserInfoSerializer(user).data})
+        return Response({'info': CryptoUserSerializer(user).data})
 
     @action(url_path='users/create', methods=['POST'], detail=False,
             permission_classes=[permissions.AllowAny])
@@ -47,9 +47,10 @@ class UserViewSet(viewsets.ModelViewSet):
             permission_classes=[permissions.IsAuthenticated])
     def add_asset(self, request):
         crypto_user = get_object_or_404(CryptoUser, id=request.user.id)
-        serializer = UserAssetSerializer(
-            data={"user": request.user.id, "asset": request}
-        )
+        serializer = PortfolioSerializer(data={"name": request["name"]})
+        # serializer = UserAssetSerializer(
+        #     data={"user": request.user.id, "asset": request}
+        # )
 
 
 class AssetViewSet(viewsets.ModelViewSet):
@@ -113,3 +114,30 @@ class AssetViewSet(viewsets.ModelViewSet):
             print(i)
 
         return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_204_NO_CONTENT)
+
+
+class PortfolioViewSet(viewsets.ModelViewSet):
+    queryset = UserPortfolio.objects.all()
+
+    @action(url_path="portfolio/add_portfolio", methods=["POST"], detail=False,
+           permission_classes=[permissions.IsAuthenticated])
+    def add_portfolio(self, request):
+        #portfolio = get_object_or_404(UserPortfolio, crypto_user=self.request.user)
+        portfolio_serializer = PortfolioSerializer(data=request.data)
+        if portfolio_serializer.is_valid():
+            portfolio_name = portfolio_serializer.validated_data.get("name")
+            if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
+                portfolio_serializer.create(portfolio_serializer.validated_data)
+                return Response({'Portfolio': f'Portfolio with name {portfolio_name} created'},
+                                status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response(data={"message": "Portfolio with that name and user already exists"},
+                                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(portfolio_serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    def add_asset
+
+        #user = self.request.user
+

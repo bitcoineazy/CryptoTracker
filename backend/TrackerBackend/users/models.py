@@ -66,15 +66,6 @@ class AssetForCryptoUser(models.Model):
         return f"{self.crypto_user}: {self.asset}"
 
 
-class UserPortfolio(models.Model):
-    # Track and render 30 days
-    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
-    name = models.CharField(max_length=255, null=True)
-    total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
-    portfolio_change_metrics = models.JSONField(null=True, default=dict)
-
 
 class CryptoUser(AbstractUser):
     USERNAME_FIELD = "email"
@@ -83,12 +74,26 @@ class CryptoUser(AbstractUser):
         verbose_name='Имя пользователя', unique=True, max_length=100)
     email = models.EmailField(
         verbose_name='Адрес электронной почты', unique=True, max_length=150)
-    portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
+    #portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ('username',)
 
+    # def default_portfolio(self):
+    #     return UserPortfolio.objects.create()
+
     def __str__(self):
         return self.username
+
+
+class UserPortfolio(models.Model):
+    # Track and render 30 days
+    # crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
+    crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
+    name = models.CharField(max_length=255, null=True, unique=True)
+    total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
+    portfolio_change_metrics = models.JSONField(null=True, default=dict)
