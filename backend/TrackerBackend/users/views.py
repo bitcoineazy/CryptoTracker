@@ -11,8 +11,8 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 import numpy as np
 
-from .models import CryptoUser, Asset, UserPortfolio
-from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer
+from .models import CryptoUser, Asset, UserPortfolio, AssetForCryptoUser
+from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer, GetPortfolioSerializer
 
 cg = CoinGeckoAPI()
 
@@ -117,16 +117,25 @@ class AssetViewSet(viewsets.ModelViewSet):
 class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = UserPortfolio.objects.all()
 
+    @action(url_path="portfolio/get_portfolio", methods=["POST"], detail=False,
+            permission_classes=[permissions.IsAuthenticated])
+    def get_portfolio(self, request):
+        portfolio_serializer = PortfolioSerializer(data=request.data)
+        if portfolio_serializer.is_valid():
+            portfolio_name = portfolio_serializer.validated_data.get("name")
+            portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
+            get_portfolio_serializer = GetPortfolioSerializer(portfolio)
+            return Response(data=get_portfolio_serializer.data)
+        else:
+            return Response(portfolio_serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
     @action(url_path="portfolio/add_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.IsAuthenticated])
     def add_portfolio(self, request):
-        # portfolio = get_object_or_404(UserPortfolio, crypto_user=self.request.user)
-        print(request.data)
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
-            print(portfolio_serializer.validated_data)
             portfolio_name = portfolio_serializer.validated_data.get("name")
-            # portfolio_asset = portfolio_serializer.validated_data.get("asset")
             if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
                 portfolio_serializer.create(portfolio_serializer.validated_data)
                 return Response({'Portfolio': f'Portfolio with name {portfolio_name} created'},

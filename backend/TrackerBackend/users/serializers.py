@@ -53,7 +53,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)
 
     name = serializers.CharField(max_length=255)
-    asset = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id")
+    asset = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", many=True)
     # assets = serializers.SlugRelatedField(queryset=AssetForCryptoUser.objects.all(), slug_field="asset", many=True)
 
     class Meta:
@@ -80,3 +80,11 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
         return portfolio
 
+
+class GetPortfolioSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=255)
+    assets = AssetForUserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = UserPortfolio
+        fields = ["name", "assets"]
