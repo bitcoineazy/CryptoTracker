@@ -63,7 +63,7 @@ class AssetForCryptoUser(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f"{self.crypto_user}: {self.asset}"
+        return self.asset
 
 
 
@@ -75,6 +75,7 @@ class CryptoUser(AbstractUser):
     email = models.EmailField(
         verbose_name='Адрес электронной почты', unique=True, max_length=150)
     #portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
+    # wallet =
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -97,3 +98,10 @@ class UserPortfolio(models.Model):
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
+
+    class Meta:
+        verbose_name = "Портфель пользователя"
+        verbose_name_plural = "Портфели пользователя"
+
+        def __str__(self):
+            return f"Пользователь: {self.crypto_user.username} - Портфель: {self.name}"

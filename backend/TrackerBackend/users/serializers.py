@@ -17,7 +17,7 @@ class AssetSerializer(serializers.ModelSerializer):
 
 
 class AssetForUserSerializer(serializers.ModelSerializer):
-    asset = serializers.SlugRelatedField(Asset, read_only=True)
+    asset = AssetSerializer(read_only=True)
     add_date = serializers.DateTimeField()
     amount = serializers.DecimalField(max_digits=50, decimal_places=10)
     price = serializers.DecimalField(max_digits=50, decimal_places=10)
@@ -67,6 +67,9 @@ class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)
 
     name = serializers.CharField(max_length=255)
+    assets = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", many=True)
+    # assets = serializers.SlugRelatedField(queryset=AssetForCryptoUser.objects.all(), slug_field="asset", many=True)
+    #assets = serializers
     # total_balance = serializers.DecimalField(max_digits=100, decimal_places=15)
     # total_profit = serializers.DecimalField(max_digits=100, decimal_places=15)
     # assets = AssetForUserSerializer(many=True, read_only=True)
@@ -75,7 +78,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserPortfolio
-        fields = ["crypto_user", "name"]
+        fields = ["crypto_user", "name", "assets"]
 
     def create(self, validated_data):
         #request = self.context.get("request")
@@ -83,4 +86,27 @@ class PortfolioSerializer(serializers.ModelSerializer):
         #crypto_user = validated_data.get("crypto_user_id")
         crypto_user = get_object_or_404(CryptoUser)
         name = validated_data.get("name")
+        # asset_coin_ids = validated_data.get("asset_coin_ids")
+
+        # assets_in_portfolio = [AssetForCryptoUser(
+        #     asset=get_object_or_404(Asset, coin_id=asset_coin_id["coin_id"])
+        # ) for asset_coin_id in asset_coin_ids]
+        #AssetForCryptoUser.objects.bulk_create(assets_in_portfolio)
         return UserPortfolio.objects.create(crypto_user_id=crypto_user.id, name=name)
+
+    def update(self, portfolio, validated_data):
+        print(f"update validated_data: {validated_data}")
+        assets = validated_data.get("assets")
+        print(assets)
+
+        portfolio_data = UserPortfolio.objects.get(name=portfolio.name)
+        print(portfolio_data)
+        portfolio_data.update_or_create(**validated_data)
+
+        # asset_coin_ids = validated_data.get("asset_coin_ids")
+        # assets_in_portfolio = [AssetForCryptoUser(
+        #     asset=get_object_or_404(Asset, coin_id=asset_coin_id["coin_id"])
+        # ) for asset_coin_id in asset_coin_ids]
+
+        return portfolio
+
