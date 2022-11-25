@@ -63,7 +63,7 @@ class AssetForCryptoUser(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.asset
+        return self.asset.coin_id
 
 
 

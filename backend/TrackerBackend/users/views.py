@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from .models import CryptoUser, Asset, UserPortfolio
-from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer
+from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer
 
 cg = CoinGeckoAPI()
 
@@ -144,8 +144,6 @@ class PortfolioViewSet(viewsets.ModelViewSet):
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
             portfolio_name = portfolio_serializer.validated_data.get("name")
-            portfolio_asset = portfolio_serializer.validated_data.get("assets")
-            print(f"viewset name: {portfolio_name}, asset: {portfolio_asset}")
 
             if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
                 portfolio_serializer.create(portfolio_serializer.validated_data)
@@ -153,11 +151,15 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                                 status=status.HTTP_204_NO_CONTENT)
             else:
                 portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
-                print(portfolio_serializer.validated_data)
-                portfolio_serializer.update(portfolio, portfolio_serializer.validated_data)
+                asset_in_portfolio_serializer = AssetForUserSerializer(data=request.data)
+                if asset_in_portfolio_serializer.is_valid():
+                    portfolio_serializer.update(portfolio, asset_in_portfolio_serializer.validated_data)
 
-                return Response(data={"message": "Add assets"},
-                                status=status.HTTP_204_NO_CONTENT)
+                    return Response(data={"message": "Add assets"},
+                                    status=status.HTTP_204_NO_CONTENT)
+                else:
+                    return Response(asset_in_portfolio_serializer.errors,
+                                    status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
