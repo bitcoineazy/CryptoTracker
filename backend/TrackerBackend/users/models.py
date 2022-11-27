@@ -3,11 +3,11 @@ from django.db import models
 
 
 class Asset(models.Model):
-    coin_id = models.CharField(max_length=255, verbose_name="Название актива", null=True)
-    symbol = models.CharField(max_length=255, verbose_name='Сокращенное название актива', null=True)
-    name = models.CharField(max_length=255, verbose_name='Название актива', null=True)
+    coin_id = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    symbol = models.CharField(max_length=500, verbose_name='Сокращенное название актива', null=True)
+    name = models.CharField(max_length=500, verbose_name='Название актива', null=True)
     market_cap_rank = models.IntegerField(verbose_name="Ранг актива по капитализации", null=True)
-    image = models.URLField(max_length=255, verbose_name="Ссылка на картинку", null=True)
+    image = models.URLField(max_length=500, verbose_name="Ссылка на картинку", null=True)
     current_price = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     market_cap = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     fully_diluted_valuation = models.DecimalField(max_digits=100, decimal_places=15, null=True)
@@ -37,12 +37,28 @@ class Asset(models.Model):
     def __str__(self):
         return self.name
 
+
+class CryptoUser(AbstractUser):
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
+    username = models.CharField(
+        verbose_name='Имя пользователя', unique=True, max_length=100)
+    email = models.EmailField(
+        verbose_name='Адрес электронной почты', unique=True, max_length=150)
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ('username',)
+
+    def __str__(self):
+        return self.username
+
+
 class AssetForCryptoUser(models.Model):
     # TODO: asset, amount validators
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
                               related_name="asset_amounts")
-    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
-    #                                related_name="asset_amounts")
     add_date = models.DateTimeField(
         'Дата добавления', auto_now_add=True
     )
@@ -50,13 +66,13 @@ class AssetForCryptoUser(models.Model):
         max_digits=50,
         decimal_places=10,
         verbose_name='Кол-во актива',
-        help_text='Введите кол-во актива')
+        help_text='Введите кол-во актива',
+    )
     price = models.DecimalField(
         max_digits=50,
         decimal_places=10,
         verbose_name="Цена закупки актива",
     )
-    #portfolio_id = models.IntegerField(max_length=255)
 
     class Meta:
         verbose_name = "Актив для пользователя"
@@ -66,37 +82,12 @@ class AssetForCryptoUser(models.Model):
         return self.asset.coin_id
 
 
-
-class CryptoUser(AbstractUser):
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
-    username = models.CharField(
-        verbose_name='Имя пользователя', unique=True, max_length=100)
-    email = models.EmailField(
-        verbose_name='Адрес электронной почты', unique=True, max_length=150)
-    #portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
-    # wallet =
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ('username',)
-
-    # def default_portfolio(self):
-    #     return UserPortfolio.objects.create()
-
-    def __str__(self):
-        return self.username
-
-
 class UserPortfolio(models.Model):
-    # Track and render 30 days
-    # crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
-    name = models.CharField(max_length=255, null=True, unique=True)
+    name = models.CharField(max_length=255, unique=True, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
+    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default={})
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
 
     class Meta:

@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: postgres:12.4
+    image: postgres:13.0-alpine
     restart: always
     ports:
       - "5432:5432"
@@ -35,7 +35,7 @@ services:
     restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      #- frontend_value:/usr/share/nginx/html/
+      - frontend_value:/usr/share/nginx/html/
       - static_value:/code/static/
       - media_value:/code/media/
     depends_on:
@@ -46,4 +46,4 @@ volumes:
   postgres_data:
   static_value:
   media_value:
-  #frontend_value:
+  frontend_value:

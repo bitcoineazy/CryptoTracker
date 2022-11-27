@@ -5,6 +5,9 @@ from .models import CryptoUser, Asset, AssetForCryptoUser, UserPortfolio
 
 
 class CryptoUserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+
     class Meta:
         model = CryptoUser
         fields = "__all__"
@@ -24,7 +27,7 @@ class AssetForUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetForCryptoUser
-        fields = "__all__"
+        fields = ["asset", "add_date", "amount", "price"]
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -41,24 +44,25 @@ class UserInfoSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class AssetForCryptoUserSerializer(serializers.ModelSerializer):
-    pass
-
-
-class AssetForPortfolioCreateSerializer(serializers.ModelSerializer):
-    amount = serializers.DecimalField(max_digits=50, decimal_places=10)
+# class AssetForPortfolioCreateSerializer(AssetForUserSerializer):
+#     add_date = serializers.DateTimeField(write_only=True)
+#     amount = serializers.DecimalField(max_digits=50, decimal_places=10, write_only=True)
+#     price = serializers.DecimalField(max_digits=50, decimal_places=10, write_only=True)
+#
+#     def to_representation(self, instance):
+#         return AssetForUserSerializer(AssetForCryptoUser.objects.filter(portfolio=instance.portfolio), many=True).data
 
 
 class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)
 
     name = serializers.CharField(max_length=255)
-    asset = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", many=True)
-    # assets = serializers.SlugRelatedField(queryset=AssetForCryptoUser.objects.all(), slug_field="asset", many=True)
+    assets = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", write_only=True,
+                                          many=True)
 
     class Meta:
         model = UserPortfolio
-        fields = ["crypto_user", "name", "asset"]
+        fields = ["crypto_user", "name", "assets"]
 
     def create(self, validated_data):
         crypto_user = get_object_or_404(CryptoUser)
@@ -72,7 +76,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
             asset=asset,
             add_date=validated_data.get("add_date"),
             amount=validated_data.get("amount"),
-            price=validated_data.get("price")
+            price=validated_data.get("price"),
         )
 
         portfolio.assets.add(asset_in_portfolio)
