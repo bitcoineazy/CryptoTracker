@@ -1,7 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MinValueValidator
 from django.db import models
-
 
 
 class Asset(models.Model):
@@ -40,9 +38,6 @@ class Asset(models.Model):
         return self.name
 
 
-
-
-
 class CryptoUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
@@ -50,48 +45,20 @@ class CryptoUser(AbstractUser):
         verbose_name='Имя пользователя', unique=True, max_length=100)
     email = models.EmailField(
         verbose_name='Адрес электронной почты', unique=True, max_length=150)
-    #portfolios = models.ManyToManyField(UserPortfolio, verbose_name="Портфели пользователя")
-    # wallet =
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ('username',)
 
-    # def default_portfolio(self):
-    #     return UserPortfolio.objects.create()
-
     def __str__(self):
         return self.username
-
-
-
-class UserPortfolio(models.Model):
-    # Track and render 30 days
-    # crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
-    crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
-    name = models.CharField(max_length=255, unique=True, default="Main portfolio")
-    total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    assets = models.ManyToManyField(Asset, through="AssetForCryptoUser", verbose_name="Активы в портфеле", default={})
-    portfolio_change_metrics = models.JSONField(null=True, default=dict)
-
-    class Meta:
-        verbose_name = "Портфель пользователя"
-        verbose_name_plural = "Портфели пользователя"
-
-        def __str__(self):
-            return f"Пользователь: {self.crypto_user.username} - Портфель: {self.name}"
 
 
 class AssetForCryptoUser(models.Model):
     # TODO: asset, amount validators
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
                               related_name="asset_amounts")
-    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
-    #                                related_name="asset_amounts")
-    portfolio = models.ForeignKey(UserPortfolio, on_delete=models.CASCADE,
-                                  related_name="asset_amounts", null=True)
     add_date = models.DateTimeField(
         'Дата добавления', auto_now_add=True
     )
@@ -106,7 +73,6 @@ class AssetForCryptoUser(models.Model):
         decimal_places=10,
         verbose_name="Цена закупки актива",
     )
-    #portfolio_id = models.IntegerField(max_length=255)
 
     class Meta:
         verbose_name = "Актив для пользователя"
@@ -114,3 +80,19 @@ class AssetForCryptoUser(models.Model):
 
     def __str__(self):
         return self.asset.coin_id
+
+
+class UserPortfolio(models.Model):
+    crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
+    name = models.CharField(max_length=255, unique=True, default="Main portfolio")
+    total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default={})
+    portfolio_change_metrics = models.JSONField(null=True, default=dict)
+
+    class Meta:
+        verbose_name = "Портфель пользователя"
+        verbose_name_plural = "Портфели пользователя"
+
+        def __str__(self):
+            return f"Пользователь: {self.crypto_user.username} - Портфель: {self.name}"

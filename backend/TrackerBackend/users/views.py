@@ -155,25 +155,29 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     @action(url_path="update_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])   # isAuth
     def update_portfolio(self, request):
+        print(request.data)
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
+            print("ytes")
+            print(portfolio_serializer.data)
             portfolio_name = portfolio_serializer.validated_data.get("name")
+            asset_in_portfolio_serializer = AssetForUserSerializer(data={"asset": request.data.get("assets"),
+                                                                         "add_date": request.data.get("add_date"),
+                                                                         "amount": request.data.get("amount"),
+                                                                         "price": request.data.get("price")})
+            if asset_in_portfolio_serializer.is_valid():
+                print("tttt")
+                portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
 
-            if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
-                portfolio_serializer.create(portfolio_serializer.validated_data)
-                return Response({'Portfolio': f'Portfolio with name {portfolio_name} created'},
+                #if asset_in_portfolio_serializer.is_valid():
+                portfolio_serializer.update(portfolio, validated_data=asset_in_portfolio_serializer.validated_data)
+
+                return Response({"message": "Add assets"},
                                 status=status.HTTP_204_NO_CONTENT)
             else:
-                portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
-                asset_in_portfolio_serializer = AssetForUserSerializer(data=request.data)
-                if asset_in_portfolio_serializer.is_valid():
-                    portfolio_serializer.update(portfolio, asset_in_portfolio_serializer.validated_data)
-
-                    return Response({"message": "Add assets"},
-                                    status=status.HTTP_204_NO_CONTENT)
-                else:
-                    return Response(asset_in_portfolio_serializer.errors,
-                                    status=status.HTTP_400_BAD_REQUEST)
+               return Response(asset_in_portfolio_serializer.errors,
+                               status=status.HTTP_400_BAD_REQUEST)
         else:
+            print(portfolio_serializer.errors)
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
