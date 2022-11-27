@@ -45,15 +45,6 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(str(e), status.HTTP_404_NOT_FOUND)
         return Response({'errors': serializer.errors}, status.HTTP_404_NOT_FOUND)
 
-    @action(url_path='add_asset', methods=['GET', 'POST'], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
-    def add_asset(self, request):
-        crypto_user = get_object_or_404(CryptoUser, id=request.user.id)
-        serializer = PortfolioSerializer(data={"name": request["name"]})
-        # serializer = UserAssetSerializer(
-        #     data={"user": request.user.id, "asset": request}
-        # )
-
 
 class AssetViewSet(viewsets.ModelViewSet):
     queryset = Asset.objects.all()
@@ -64,7 +55,6 @@ class AssetViewSet(viewsets.ModelViewSet):
     def fill_assets(self, request):
         """CoinGecko api"""
 
-        # asset_data = pd.read_json("response_1669219617967.json")
         asset_data = cg.get_coins_list(include_platform=True)
         json_data = pd.json_normalize(asset_data, max_level=0)
 
@@ -153,12 +143,10 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
     @action(url_path="update_portfolio", methods=["POST"], detail=False,
-            permission_classes=[permissions.AllowAny])   # isAuth
+            permission_classes=[permissions.AllowAny])  # isAuth
     def update_portfolio(self, request):
-        print(request.data)
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
-            print("ytes")
             print(portfolio_serializer.data)
             portfolio_name = portfolio_serializer.validated_data.get("name")
             asset_in_portfolio_serializer = AssetForUserSerializer(data={"asset": request.data.get("assets"),
@@ -166,17 +154,16 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                                                                          "amount": request.data.get("amount"),
                                                                          "price": request.data.get("price")})
             if asset_in_portfolio_serializer.is_valid():
-                print("tttt")
                 portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
-
-                #if asset_in_portfolio_serializer.is_valid():
                 portfolio_serializer.update(portfolio, validated_data=asset_in_portfolio_serializer.validated_data)
 
-                return Response({"message": "Add assets"},
+                return Response({"message": f"Successfully added: {asset_in_portfolio_serializer.data}, "
+                                            f"to user: {request.user.username}, "
+                                            f"in portfolio: {request.data.get('name')}"},
                                 status=status.HTTP_204_NO_CONTENT)
             else:
-               return Response(asset_in_portfolio_serializer.errors,
-                               status=status.HTTP_400_BAD_REQUEST)
+                return Response(asset_in_portfolio_serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST)
         else:
             print(portfolio_serializer.errors)
             return Response(portfolio_serializer.errors,
