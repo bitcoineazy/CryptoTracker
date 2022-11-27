@@ -1,14 +1,15 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
 
 class Asset(models.Model):
-    coin_id = models.CharField(max_length=255, verbose_name="Название актива", null=True)
-    symbol = models.CharField(max_length=255, verbose_name='Сокращенное название актива', null=True)
-    name = models.CharField(max_length=255, verbose_name='Название актива', null=True)
+    coin_id = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    symbol = models.CharField(max_length=500, verbose_name='Сокращенное название актива', null=True)
+    name = models.CharField(max_length=500, verbose_name='Название актива', null=True)
     market_cap_rank = models.IntegerField(verbose_name="Ранг актива по капитализации", null=True)
-    image = models.URLField(max_length=255, verbose_name="Ссылка на картинку", null=True)
+    image = models.URLField(max_length=500, verbose_name="Ссылка на картинку", null=True)
     current_price = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     market_cap = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     fully_diluted_valuation = models.DecimalField(max_digits=100, decimal_places=15, null=True)
@@ -38,33 +39,7 @@ class Asset(models.Model):
     def __str__(self):
         return self.name
 
-class AssetForCryptoUser(models.Model):
-    # TODO: asset, amount validators
-    asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
-                              related_name="asset_amounts")
-    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
-    #                                related_name="asset_amounts")
-    add_date = models.DateTimeField(
-        'Дата добавления', auto_now_add=True
-    )
-    amount = models.DecimalField(
-        max_digits=50,
-        decimal_places=10,
-        verbose_name='Кол-во актива',
-        help_text='Введите кол-во актива')
-    price = models.DecimalField(
-        max_digits=50,
-        decimal_places=10,
-        verbose_name="Цена закупки актива",
-    )
-    #portfolio_id = models.IntegerField(max_length=255)
 
-    class Meta:
-        verbose_name = "Актив для пользователя"
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.asset.coin_id
 
 
 
@@ -98,7 +73,7 @@ class UserPortfolio(models.Model):
     name = models.CharField(max_length=255, unique=True, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default="")
+    assets = models.ManyToManyField(Asset, through="AssetForCryptoUser", verbose_name="Активы в портфеле", default={})
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
 
     class Meta:
@@ -107,3 +82,35 @@ class UserPortfolio(models.Model):
 
         def __str__(self):
             return f"Пользователь: {self.crypto_user.username} - Портфель: {self.name}"
+
+
+class AssetForCryptoUser(models.Model):
+    # TODO: asset, amount validators
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
+                              related_name="asset_amounts")
+    #crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE,
+    #                                related_name="asset_amounts")
+    portfolio = models.ForeignKey(UserPortfolio, on_delete=models.CASCADE,
+                                  related_name="asset_amounts", null=True)
+    add_date = models.DateTimeField(
+        'Дата добавления', auto_now_add=True
+    )
+    amount = models.DecimalField(
+        max_digits=50,
+        decimal_places=10,
+        verbose_name='Кол-во актива',
+        help_text='Введите кол-во актива',
+    )
+    price = models.DecimalField(
+        max_digits=50,
+        decimal_places=10,
+        verbose_name="Цена закупки актива",
+    )
+    #portfolio_id = models.IntegerField(max_length=255)
+
+    class Meta:
+        verbose_name = "Актив для пользователя"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.asset.coin_id
