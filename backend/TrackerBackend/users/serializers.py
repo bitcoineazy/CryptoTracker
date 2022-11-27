@@ -5,6 +5,10 @@ from .models import CryptoUser, Asset, AssetForCryptoUser, UserPortfolio
 
 
 class CryptoUserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+
+
     class Meta:
         model = CryptoUser
         fields = "__all__"
@@ -53,12 +57,12 @@ class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)
 
     name = serializers.CharField(max_length=255)
-    asset = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", many=True)
+    assets = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id", many=True)
     # assets = serializers.SlugRelatedField(queryset=AssetForCryptoUser.objects.all(), slug_field="asset", many=True)
 
     class Meta:
         model = UserPortfolio
-        fields = ["crypto_user", "name", "asset"]
+        fields = ["crypto_user", "name", "assets"]
 
     def create(self, validated_data):
         crypto_user = get_object_or_404(CryptoUser)
@@ -67,7 +71,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
         return UserPortfolio.objects.create(crypto_user_id=crypto_user.id, name=name)
 
     def update(self, portfolio, validated_data):
-        asset = validated_data.get("asset")
+        asset = validated_data.get("assets")
         asset_in_portfolio = AssetForCryptoUser.objects.create(
             asset=asset,
             add_date=validated_data.get("add_date"),

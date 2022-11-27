@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+
 class Asset(models.Model):
     coin_id = models.CharField(max_length=255, verbose_name="Название актива", null=True)
     symbol = models.CharField(max_length=255, verbose_name='Сокращенное название актива', null=True)
@@ -89,14 +90,15 @@ class CryptoUser(AbstractUser):
         return self.username
 
 
+
 class UserPortfolio(models.Model):
     # Track and render 30 days
     # crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio")
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
-    name = models.CharField(max_length=255, null=True, unique=True)
+    name = models.CharField(max_length=255, unique=True, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", null=True)
+    assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default="")
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
 
     class Meta:
