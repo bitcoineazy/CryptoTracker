@@ -28,6 +28,7 @@ class Asset(models.Model):
     atl_change_percentage = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     atl_date = models.DateTimeField(null=True)
     roi = models.JSONField(null=True, default=dict)
+    last_updated = models.DateTimeField(null=True)
     platforms = models.JSONField(verbose_name="Платформы", null=True, default=dict)
 
     class Meta:

@@ -49,6 +49,7 @@ class Command(BaseCommand):
                 atl=remote_asset["atl"].values[0],
                 atl_change_percentage=remote_asset["atl_change_percentage"].values[0],
                 atl_date=remote_asset["atl_date"].values[0],
+                last_updated=remote_asset["last_updated"].values[0],
                 roi=remote_asset["roi"].values[0],
             )
 
