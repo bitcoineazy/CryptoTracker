@@ -29,7 +29,7 @@ class UserDataGrid extends React.Component {
     for (let i = 0; i < this.state.content.length; i++) {
       let line = this.state.content[i]
       content.push(
-          <div className="user_assets_data_grid_box-content ser_assets_data_grid_box-start">
+          <div className="user_assets_data_grid_box-content user_assets_data_grid_box-content-start">
             <img src="free-icon-star-1828970.png"/>
             <p> {i+1} </p>
             <img src="./free-icon-star-1828970.png"/>
@@ -45,27 +45,27 @@ class UserDataGrid extends React.Component {
       )
       content.push(
           <div className="user_assets_data_grid_box-content-end">
-            {line.prise}
+            <div>{line.prise}</div>
           </div>
       )
       content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            {line.up_1}
+          <div className="user_assets_data_grid_box-content-end user_assets_up">
+            <div>{line.up_1}</div>
           </div>
       )
       content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            {line.up_2}
+          <div className="user_assets_data_grid_box-content-end user_assets_up">
+            <div>{line.up_2}</div>
           </div>
       )
       content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            {line.up_3}
+          <div className="user_assets_data_grid_box-content-end user_assets_up">
+            <div>{line.up_3}</div>
           </div>
       )
       content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            {line.up_4}
+          <div className="user_assets_data_grid_box-content-end user_assets_up">
+            <div>{line.up_4} </div>
           </div>
       )
     }
@@ -75,14 +75,12 @@ class UserDataGrid extends React.Component {
             this.state.headers.map(
                 (header) => (
                     <div className="user_assets_data_grid_box-header">
-                      <div>{header}</div>
+                      <div style={{border: 1}}>{header}</div>
                     </div>
                 )
             )
           }
-          {
-            content
-          }
+          {content}
         </div>
     );
   }
@@ -130,7 +128,7 @@ class Top extends React.Component {
 
 const HomePage = () => {
   return (
-      <div>
+      <div className="body">
         {
           //<Header/>
         }

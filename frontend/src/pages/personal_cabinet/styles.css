@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}
+
+.main {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 5fr);
+
+    padding: 10px;
+    gap: 10px;
+
+    max-width: 1400px;
+
+    border: black solid 1px;
+
+    flex: 1;
+
+}
+
+.row_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+
+}
+
+.column_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.text_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    padding: 0px;
+    gap: 10px;
+
+}
+
+.bold_text {
+    font-family: 'Ubuntu';
+    font-weight: 700;
+    font-style: normal;
+
+    letter-spacing: 0em;
+
+    color: #000000;
+}
+
+.grey_text {
+    color: #757575;
+}
+
+.user_portfolios {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 0px;
+    gap: 20px;
+
+}
+
+.portfolio {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 10px;
+
+    border: black solid 1px;
+}
+
+.portfolios_container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 10px;
+
+    border: black solid 1px;
+
+    flex: 1;
+}
+
+.user_portfolio_reference {
+    display: flex;
+    flex-direction: row;
+
+    padding: 10px;
+    gap: 10px;
+
+    flex: 1;
+}
+
+.portfolio_reference_text {
+    display: inline-block;
+
+    font-family: Ubuntu;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0em;
+
+    flex: 1;
+
+}
+
+.portfolio_reference_text_cost {
+
+    font-family: Ubuntu;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0em;
+
+    flex: 1;
+
+}
+
+.add_portfolio_button {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    gap: 10px;
+
+    border-top: 1px solid #000000;
+
+    flex: 1;
+}

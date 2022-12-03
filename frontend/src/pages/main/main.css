@@ -2,8 +2,14 @@
     box-sizing: border-box;
 }
 
-body {
+.body {
     font-size: 14px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .null_element {
@@ -13,15 +19,18 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     padding: 0px;
     gap: 20px;
     background: #FAFEFE;
 
+    /*  */
+    max-width: 1400px;
+
     flex: 1;
-    order: 1;
     align-self: stretch;
-    flex-grow: 1;
+
 }
 
 .days_price {
@@ -248,12 +257,12 @@ body {
 }
 
 .user_assets_data_grid {
-    border: solid black 1px;
+
     display: grid;
 
     row-gap:  10px;
 
-    /* ! */
+    /*  border: solid black 1px; */
     grid-template-columns: repeat(7, 1fr);
     flex: 1;
 }
@@ -263,30 +272,86 @@ body {
     /* Размещаем контейнеры по центру */
 
     min-height: 70px;
+    max-height: 100px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    border: black solid 1px;
+    /* border: black solid 1px; */
+    box-sizing: border-box;
 }
 
 .user_assets_data_grid_box-header {
     display: flex;
-    place-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: flex-start;
+
+    padding: 10px;
+    gap: 7px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 20px;
+}
+
+.user_assets_data_grid_box-header:first-of-type {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: flex-start;
 }
 
 [class^="user_assets_data_grid_box-content"] {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding: 10px;
     gap: 7px;
 
 }
 
 .user_assets_data_grid_box-content-start {
-    place-items: start;
-
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 20px;
+}
+.user_assets_data_grid_box-content-end {
+    justify-content: flex-end;
 
 }
-.user_assets_data_grid_box-content-start-end {
-    place-items: end;
 
+.user_assets_up {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #00AE50;
+}
+
+.user_assets_down {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FF1F00;
 }
