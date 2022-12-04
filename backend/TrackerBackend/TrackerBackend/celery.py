@@ -25,6 +25,10 @@ app.conf.beat_schedule = {
         'task': 'TrackerBackend.tasks.update_portfolio_assets',
         "schedule": 5.0,
     },
+    "update_categories": {
+        "task": "TrackerBackend.tasks.update_categories",
+        "schedule": 5.0,
+    }
 }
 app.conf.timezone = 'UTC'
 

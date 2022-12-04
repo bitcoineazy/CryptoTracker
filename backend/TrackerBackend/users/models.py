@@ -39,6 +39,21 @@ class Asset(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    category_id = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    name = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    market_cap = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    market_cap_change_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    content = models.CharField(max_length=1000, verbose_name="Название актива", null=True)
+    volume_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    last_updated = models.DateTimeField(null=True)
+
+    class Meta:
+        verbose_name = "Категории"
+
+    def __str__(self):
+        return self.name
+
 class CryptoUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
