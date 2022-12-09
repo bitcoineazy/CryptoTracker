@@ -98,11 +98,20 @@ class AssetForCryptoUser(models.Model):
         return self.asset.coin_id
 
 
+class GlobalMetrics(models.Model):
+    total_market_cap = models.DecimalField(decimal_places=5, max_digits=100, null=True)
+    total_volume = models.DecimalField(decimal_places=5, max_digits=100, null=True)
+    market_cap_percentage = models.JSONField(null=True, default=dict)
+    market_cap_change_percentage = models.JSONField(null=True, default=dict)
+    # last_updated = models.DateTimeField(null=True, auto_now_add=True)
+
+
 class UserPortfolio(models.Model):
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
     name = models.CharField(max_length=255, unique=True, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    change_24h = models.JSONField(default=dict, null=True)
     assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default={})
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
 

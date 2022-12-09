@@ -28,6 +28,10 @@ app.conf.beat_schedule = {
     "update_categories": {
         "task": "TrackerBackend.tasks.update_categories",
         "schedule": 5.0,
+    },
+    "update_global_metrics": {
+        "task": "TrackerBackend.tasks.update_global_metrics",
+        "schedule": 5.0,
     }
 }
 app.conf.timezone = 'UTC'

@@ -13,3 +13,7 @@ def update_portfolio_assets():
 @shared_task
 def update_categories():
     call_command("update_categories", )
+
+@shared_task
+def update_global_metrics():
+    call_command("update_global_metrics", )
