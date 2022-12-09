@@ -7,15 +7,15 @@ class AssetsInfo extends React.Component {
     this.state = {
       headers: ["Наименование", "Количество", "Цена за единицу", "Активы", "Ср. цена покупки", "Прибыль/Убыток"],
       content: [
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
       ]
     }
   }
@@ -26,26 +26,51 @@ class AssetsInfo extends React.Component {
     for (let i = 0; i < this.state.content.length; i++) {
       let line = this.state.content[i]
       content.push(
-          <div className="grid_box row_list bold_text grid_first_column">
-            <img src=""/>
-            <p> {i+1} </p>
-            <img src=""/>
+          <div className="grid_first_column grid_box row_list bold_text">
+
+            <p> {i + 1} </p>
+            <img src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" alt="img"/>
             <p> {line.name} </p>
           </div>,
-          <div className="grid_box regular_text row_list">
+          <div className="grid_box grid_column_box regular_text column_list">
             <div>{line.count}</div>
           </div>,
-          <div className="grid_box regular_text row_list">
+          <div className="grid_box grid_column_box regular_text column_list">
             <div>{line.prise}</div>
           </div>,
-          <div className="grid_box regular_text row_list">
-            <div>{line.assets}</div>
+          <div className="grid_box grid_column_box regular_text column_list" style={{alignItems: "self-end"}}>
+            <div className="row_list">
+              <p className="">
+                {"$ " + line.assets[0]}
+              </p>
+            </div>
+            <div className="row_list" style={{gap: 5, alignItems: "self-start"}}>
+              <p>
+                {line.assets[1]}
+              </p>
+              <p>
+                {line.assets[2]}
+              </p>
+            </div>
           </div>,
-          <div className="grid_box regular_text row_list">
-            <div>{line.buy_prise}</div>
+          <div className="grid_box grid_column_box regular_text column_list">
+            <div>
+              {"$ " + line.buy_prise}
+            </div>
           </div>,
-          <div className="grid_box regular_text row_list">
-            <div>{line.up_down}</div>
+          <div className="column_list grid_box grid_column_box regular_text column_list" >
+            <div style={{paddingRight: 5}}>
+              {"$" + line.up_down[0]}
+            </div>
+            <div className="row_list green_background" style={{gap: 10, alignItems: "center", borderRadius: 5, paddingTop: 2, paddingBottom: 2, paddingLeft: 5, paddingRight: 5}}>
+              <div>
+                ^
+              </div>
+              <div>
+                {line.up_down[1]}
+              </div>
+
+            </div>
           </div>,
       )
     }
@@ -53,9 +78,9 @@ class AssetsInfo extends React.Component {
         <div className="actives_grid">
           {
             this.state.headers.map(
-                (header) => (
-                    <div className="user_assets_data_grid_box-header">
-                      <div style={{border: 1}}>{header}</div>
+                (header, index) => (
+                    <div className="bold_text grid_box grid_header">
+                      {(index == 0) ? "# " + header : header}
                     </div>
                 )
             )

@@ -233,7 +233,7 @@ p {
 
     border-radius: 10px;
 
-    padding: 10px;
+    padding: 5px;
     gap: 10px;
 }
 
@@ -292,8 +292,8 @@ p {
 }
 
 .button_active_add_text {
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 22px;
+    line-height: 24px;
 }
 
 /* >- контейнер с кнопкой добавления актива */
@@ -305,7 +305,7 @@ p {
 }
 
 .graph_type {
-    padding: 10px;
+    padding: 5px;
     gap: 10px;
     border-radius: 10px;
 }
@@ -314,12 +314,12 @@ p {
     padding: 4px 10px;
     border-radius: 5px;
 
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 22px;
+    line-height: 24px;
 }
 
 .graph_view_interval {
-    padding: 10px;
+    padding: 5px;
     gap: 10px;
     border-radius: 10px;
 }
@@ -328,8 +328,8 @@ p {
     padding: 4px 10px;
     border-radius: 5px;
 
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 22px;
+    line-height: 24px;
 }
 
 /* > контроль графика */
@@ -361,6 +361,31 @@ p {
     border: black solid 1px;
 }
 
+.grid_header {
+    font-size: 21px;
+    line-height: 24px;
+
+    text-align: right;
+}
+.grid_header:first-of-type {
+
+    text-align: left;
+
+}
+
+.grid_first_column {
+    padding: 10px;
+    gap: 7px;
+
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+
+
+    font-size: 21px;
+    line-height: 24px;
+}
+
 .grid_box {
     min-height: 70px;
     max-height: 100px;
@@ -370,21 +395,16 @@ p {
     padding: 10px;
     gap: 7px;
 
-    align-items: center;
-    justify-content: flex-end;
 
     font-size: 21px;
     line-height: 24px;
 
 }
 
-.grid_first_column {
-    padding: 10px;
-    gap: 7px;
-    justify-content: flex-start;
+.grid_column_box {
+    justify-content: center;
 
-    font-size: 21px;
-    line-height: 24px;
+    align-items: flex-end;
 }
 
 /* < сетка с данными активов */
