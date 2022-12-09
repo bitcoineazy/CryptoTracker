@@ -1,143 +1,96 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-body{
-  font-size: 14px;
+body {
+    font-size: 14px;
 }
 
-.name, .currency {
-  color: #fff;
+.mainline {
+    width: 100%;
+    height: 96px;
+    background: linear-gradient(rgba(241,250,255,1), rgba(250,254,254,1));
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
 
-.big_backgr {
-  width: 100%;
-  height: 104px;
-  background: linear-gradient(rgba(241,250,255,1), rgba(255,255,255,1));
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
+.logovalue {
+    width: 295px;
+    height: 59px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    margin: 20px;
+    opacity: 1;
+    position: absolute;
+    top: 18px;
+    left: 19px;
+    overflow: hidden;
 }
 
-.tracker_logo {
-  width: 100%;
-  height: 70px;
-  background: url("../../icons/logo.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
+.logoimg {
+    width: 59px;
+    height: 59px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
 
-.text_logo_1 {
-  width: 295px;
-  height: 59px;
-  background: url("../../icons/logo.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  margin: 20px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 30px;
-  overflow: hidden;
+.textlogo {
+    width: 216px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 12px;
+    left: 79px;
+    font-family: "Viga";
+    font-weight: normal;
+    font-size: 26px;
+    opacity: 1;
+    text-align: left;
 }
 
-.text_logo_2 {
-  width: 59px;
-  height: 59px;
-  background: url("../../icons/logo.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
+.infous {
+    width: 190px;
+    height: 96px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 10 0;
+    margin: 20px;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 1710px;
+    overflow: hidden;
 }
 
-.text_logo_3 {
-  width: 216px;
-  color: rgba(0,0,0,1);
-  position: absolute;
-  top: 12px;
-  left: 79px;
-  font-size: 26px;
-  font-family: 'Viga';
-  font-weight: normal;
-  opacity: 1;
-  text-align: left;
-}
-
-.text_lang_curr {
-  width: 556px;
-  height: 70px;
-  background: url("../images/v125_115.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  margin: 20px;
-  opacity: 1;
-  position: absolute;
-  top: 0px;
-  left: 1354px;
-  overflow: hidden;
-}
-
-.text_lang_2 {
-  width: 141px;
-  height: 28px;
-  background: url("../images/v125_116.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 21px;
-  left: 0px;
-  overflow: hidden;
-}
-
-.text_lang_3 {
-  width: 91px;
-  color: rgba(0,0,0,1);
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  font-family: 'Ubuntu', serif;
-  font-weight: normal;
-  font-size: 24px;
-  opacity: 1;
-  text-align: left;
-}
-
-.text_curr_1{
-  width: 150px;
-  height: 29px;
-  background: url("");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  margin: 10px;
-
+.textinfo {
+    width: 180px;
+    color: rgba(0,0,0,1);
+    position: absolute;
+    top: 9px;
+    left: 0;
+    font-family: "Inter";
+    font-weight: normal;
+    font-size: 16px;
+    opacity: 1;
+    text-align: right;
 }
 
 .main {
-  min-height: calc(100vh - 210px);
+    min-height: calc(100vh - 210px);
 }
 
-
 @media screen and (max-width: 770px) {
-  .main {
-    min-height: calc(100vh - 170px);
-  }
+    .main {
+        min-height: calc(100vh - 170px);
+    }
 }
