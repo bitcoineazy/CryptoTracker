@@ -1,13 +1,29 @@
 import HomePage from './pages/main/index'
 import UserPage from "./pages/personal_cabinet";
+import Log_in from "./Components/Log_in";
+import Registration from "./Components/Registration";
 import './App.css';
-import Footer from "./Components/footer";
+//import Footer from "./Components/footer";
 
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+const Home = lazy(() => import('./pages/main'));
+const User = lazy(() => import('./pages/personal_cabinet'));
 
 function App() {
   return (
     <div className="App">
-      <Footer/>
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/home" element={<Home/>} />
+            <Route path="/user" element={<User/>} />
+            <Route path="/log_in" element={<Log_in/>} />
+            <Route path="/" element={<Registration/>} />
+          </Routes>
+        </Suspense>
+      </Router>
     </div>
   );
 }

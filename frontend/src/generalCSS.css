@@ -1,0 +1,132 @@
+* {
+    caret-color: transparent;
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0;
+}
+
+.grey_background {
+    background: #D9D9D9;
+}
+
+.green_background {
+    background: #16C784;
+}
+
+.red_background {
+    background: #ea3943;
+}
+
+.white_background {
+    background: #FFFFFF;
+}
+
+.row_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+
+}
+
+.row_list_flex_start {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+
+}
+
+.column_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.column_list_flex_start {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+.text_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    padding: 0px;
+    gap: 10px;
+
+}
+
+.space_between_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+
+}
+
+.space_between_column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.bold_text {
+    font-family: 'Ubuntu';
+    font-weight: 700;
+    font-style: normal;
+
+    letter-spacing: 0em;
+
+    color: #000000;
+}
+
+.regular_text {
+    font-family: 'Ubuntu';
+    font-weight: 400;
+    font-style: normal;
+
+    letter-spacing: 0em;
+
+    color: #000000;
+}
+
+.grey_text {
+    color: #757575;
+}
+
+.white_text {
+    color: #FFFFFF;
+}
+
+.green_text {
+    color: #00AE50;
+}
+
+.red_text {
+    color: #FF1F00;
+}

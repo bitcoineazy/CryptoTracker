@@ -1,4 +1,5 @@
 * {
+    caret-color: transparent;
     box-sizing: border-box;
 }
 
@@ -12,6 +13,10 @@ p {
 
 .green_background {
     background: #16C784;
+}
+
+.red_background {
+    background: #ea3943;
 }
 
 .white_background {
@@ -54,7 +59,7 @@ p {
 
 }
 
-.space_between_column {
+.space_between_row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -154,8 +159,9 @@ p {
 
     border: black solid 1px;
 }
-
 .user_portfolio_reference {
+    user-select: none;
+
     display: flex;
     flex-direction: row;
 
@@ -164,6 +170,7 @@ p {
 }
 
 .portfolio_reference_text {
+    user-select: none;
     display: inline-block;
 
     font-family: Ubuntu;
@@ -176,6 +183,7 @@ p {
 }
 
 .portfolio_reference_text_cost {
+    user-select: text;
 
     font-family: Ubuntu;
     font-size: 16px;
@@ -187,6 +195,8 @@ p {
 }
 
 .add_portfolio_button {
+    user-select: none;
+
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -238,7 +248,8 @@ p {
 }
 
 .active_change_percent_status {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
 }
 
 .active_change_percent_text {
@@ -279,7 +290,9 @@ p {
 
 /* <- контейнер с кнопкой добавления актива */
 .button_active_add {
-    padding: 8px 30px;
+    user-select: none;
+
+    padding: 8px 20px;
     gap: 10px;
 
     background: #2260FF;
@@ -287,11 +300,15 @@ p {
 }
 
 .button_active_add_icon {
-    align-items: center;
+    display: flex;
+    align-content: center;
+    align-self: center;
     padding: 5px;
 }
 
 .button_active_add_text {
+    align-self: center;
+
     font-size: 22px;
     line-height: 24px;
 }
@@ -305,6 +322,8 @@ p {
 }
 
 .graph_type {
+    user-select: none;
+
     padding: 5px;
     gap: 10px;
     border-radius: 10px;
@@ -325,6 +344,8 @@ p {
 }
 
 .graph_view_interval_option {
+    user-select: none;
+
     padding: 4px 10px;
     border-radius: 5px;
 
@@ -339,7 +360,7 @@ p {
 
 .graph_img {
     height: 300px;
-    background: rgba(0,213,226,0.2);
+
 }
 
 /* > сетка с данными активов */

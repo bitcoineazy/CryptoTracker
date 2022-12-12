@@ -1,5 +1,6 @@
 import React from "react"
 import "./main.css"
+import styles from "./main.css"
 
 class UserDataGrid extends React.Component {
   constructor(props) {
@@ -132,7 +133,7 @@ const HomePage = () => {
         {
           //<Header/>
         }
-        <div className="main">
+        <div className={styles.main}>
           <div className="days_price">
             <span className="days_price_logo">Сегодняшние цены на криптовалюту по рыночной капитализации</span>
             <span className="days_price_data">
