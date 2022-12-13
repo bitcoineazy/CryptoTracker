@@ -1,4 +1,6 @@
 .log_in_main {
+    user-select: none;
+
     border: black 1px solid;
 
     align-items: flex-start !important;
@@ -33,11 +35,16 @@
     line-height: 22px;
 }
 
-.log_in_text_field_container {
+.log_in_text_field {
     align-self: stretch;
 
+    font-size: 18px;
+
+    user-select: text;
+    caret-color: black;
+
     padding: 10px 5px;
-    gap: 10px;
+
 
     border: 0.2px solid #000000;
     border-radius: 3px;
@@ -50,6 +57,7 @@
 
 .log_in_button_container {
     background: #3861FB;
+    border: 0;
     border-radius: 3px;
 
     padding: 10px 5px;

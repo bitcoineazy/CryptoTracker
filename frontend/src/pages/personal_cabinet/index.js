@@ -7,55 +7,66 @@ import DOWN from "../../icons/DOWN.svg"
 import portfolio_img from "../../icons/portfolio_img.svg"
 import add_portfolio from "../../icons/add_portfolio.svg"
 import add_active from "../../icons/add_active.svg"
+import Modal from "../../Components/Modal/modal_window";
 
 import { ResponsiveBump } from '@nivo/bump'
+import Log_in from "../../Components/Log_in";
+import * as PropTypes from "prop-types";
+import Registration from "../../Components/Registration";
 
-const MyResponsiveBump = ({ data /* see data tab */ }) => (
-    <ResponsiveBump
-        data={data}
-        xPadding={0.5}
-        colors={{ scheme: 'spectral' }}
-        lineWidth={3}
-        activeLineWidth={6}
-        inactiveLineWidth={5}
-        inactiveOpacity={0.15}
-        startLabelPadding={15}
-        startLabelTextColor={{ from: 'color', modifiers: [] }}
-        pointSize={10}
-        activePointSize={16}
-        inactivePointSize={0}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={3}
-        activePointBorderWidth={3}
-        pointBorderColor={{ from: 'serie.color' }}
-        axisTop={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: '',
-          legendPosition: 'middle',
-          legendOffset: -36
-        }}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: '',
-          legendPosition: 'middle',
-          legendOffset: 32
-        }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'ranking',
-          legendPosition: 'middle',
-          legendOffset: -40
-        }}
-        margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
-        axisRight={null}
-    />
-)
+class MyResponsiveBump extends React.Component {
+  render() {
+    let {data /* see data tab */} = this.props;
+    return (
+        <ResponsiveBump
+            data={data}
+            xPadding={0.5}
+            colors={{scheme: 'spectral'}}
+            lineWidth={3}
+            activeLineWidth={6}
+            inactiveLineWidth={5}
+            inactiveOpacity={0.15}
+            startLabelPadding={15}
+            startLabelTextColor={{from: 'color', modifiers: []}}
+            pointSize={10}
+            activePointSize={16}
+            inactivePointSize={0}
+            pointColor={{theme: 'background'}}
+            pointBorderWidth={3}
+            activePointBorderWidth={3}
+            pointBorderColor={{from: 'serie.color'}}
+            axisTop={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: '',
+              legendPosition: 'middle',
+              legendOffset: -36
+            }}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: '',
+              legendPosition: 'middle',
+              legendOffset: 32
+            }}
+            axisLeft={{
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: 'ranking',
+              legendPosition: 'middle',
+              legendOffset: -40
+            }}
+            margin={{top: 40, right: 100, bottom: 40, left: 60}}
+            axisRight={null}
+        />
+    );
+  }
+}
+
+MyResponsiveBump.propTypes = {data: PropTypes.any}
 
 
 class AssetsInfo extends React.Component {
@@ -65,9 +76,9 @@ class AssetsInfo extends React.Component {
       headers: ["Наименование", "Количество", "Цена за единицу", "Активы", "Ср. цена покупки", "Прибыль/Убыток"],
       content: [
         {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [-120, -0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [-120, -0.15]},
         {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, -0.15]},
         {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
         {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
         {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
@@ -223,6 +234,8 @@ class UserPage extends React.Component {
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
+      show_log_in: true ,
+      show_registration: true,
     }
   }
 
@@ -232,7 +245,7 @@ class UserPage extends React.Component {
     const portfoliosClass = className({'column_list': true, 'user_portfolios': true});
     const portfolioClass = className({'column_list': true, 'user_portfolios': true});
     const active_info_container = className({'column_list': true, 'active_info_container': true});
-    const active_info = className({'space_between_column': true, 'active_info': true});
+    const active_info = className({'space_between_row': true, 'active_info': true});
     const active_cost_container = className({'column_list': true, 'active_cost_container': true});
     const active_cost = className({'row_list': true, 'active_cost': true});
     const active_cost_text = className({'bold_text': true, 'active_cost_text': true});
@@ -684,8 +697,7 @@ class UserPage extends React.Component {
                           }
                         ]
                       }
-                    ]
-                    }/>
+                    ]}/>
                   </div>
                 </div>
               </div>
@@ -695,6 +707,13 @@ class UserPage extends React.Component {
           {
             //<Footer/>
           }
+          <Modal show={this.state.show_log_in}>
+            <Log_in onClick={()=> this.setState({'show_log_in': false})}/>
+          </Modal>
+          <Modal show={this.state.show_registration}>
+            <Registration onClick={()=> this.setState({'show_registration': false})}/>
+          </Modal>
+
         </div>
     );
   }
