@@ -1,18 +1,21 @@
 import React from "react"
-import "./personal_cabinet.css"
-import styles from "./personal_cabinet.css"
+import * as PropTypes from "prop-types";
 import className from "classname"
+import { ResponsiveBump } from '@nivo/bump'
+
+import "./personal_cabinet.css"
+//import styles from "./personal_cabinet.css"
+
 import UP from "../../icons/UP.svg"
 import DOWN from "../../icons/DOWN.svg"
-import portfolio_img from "../../icons/portfolio_img.svg"
+import portfolio_img from "../../icons/portfolio_img_2.svg"
 import add_portfolio from "../../icons/add_portfolio.svg"
 import add_active from "../../icons/add_active.svg"
-import Modal from "../../Components/Modal/modal_window";
 
-import { ResponsiveBump } from '@nivo/bump'
+import Modal from "../../Components/Modal/modal_window";
 import Log_in from "../../Components/Log_in";
-import * as PropTypes from "prop-types";
 import Registration from "../../Components/Registration";
+import Add_active from "../../Components/Add_active";
 
 class MyResponsiveBump extends React.Component {
   render() {
@@ -234,8 +237,9 @@ class UserPage extends React.Component {
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
-      show_log_in: true ,
-      show_registration: true,
+      show_log_in: false ,
+      show_registration: false,
+      show_add_active: true,
     }
   }
 
@@ -354,14 +358,14 @@ class UserPage extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="row_list button_active_add">
+                  <button className="row_list button_active_add" onClick={() => {this.setState({'show_add_active': true})}}>
                     <div className="white_text button_active_add_icon">
                       <img src={add_active} style={{width:25, height:25}}/>
                     </div>
                     <p className="white_text button_active_add_text">
                       add new
                     </p>
-                  </div>
+                  </button>
                 </div>
                 <div className="space_between_row graph_control">
                   <div className="row_list grey_background graph_type">
@@ -712,6 +716,9 @@ class UserPage extends React.Component {
           </Modal>
           <Modal show={this.state.show_registration}>
             <Registration onClick={()=> this.setState({'show_registration': false})}/>
+          </Modal>
+          <Modal show={this.state.show_add_active}>
+            <Add_active cost={524} onClick={()=> this.setState({'show_add_active': false})} onClose={()=> this.setState({'show_add_active': false})}/>
           </Modal>
 
         </div>

@@ -19,8 +19,6 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home/>} />
             <Route path="/user" element={<User/>} />
-            <Route path="/log_in" element={<Log_in/>} />
-            <Route path="/" element={<Registration/>} />
           </Routes>
         </Suspense>
       </Router>

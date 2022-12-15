@@ -1,0 +1,96 @@
+.add_active_main {
+    user-select: none;
+
+    border: black 1px solid;
+
+    align-items: flex-start !important;
+    align-content: stretch;
+
+    padding: 10px 20px;
+    gap: 15px;
+
+    width: 450px;
+    height: 450px;
+
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.add_active_title_container {
+    align-items: center;
+    align-self: stretch;
+}
+
+.add_active_title {
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.add_active_close_button {
+
+    padding: 0;
+    border: 0;
+    background: rgba(0,0,0,0);
+}
+
+.add_active_choose_currency {
+
+}
+
+.add_active_input_container {
+    align-self: stretch;
+    gap: 5px;
+    padding: 0px;
+
+}
+
+.input_text_row {
+
+}
+
+.add_active_input_text {
+    padding: 0px 4px;
+
+    font-size: 20px;
+    line-height: 22px;
+
+
+}
+
+.add_active_text_field_container {
+    align-self: stretch;
+}
+
+.add_active_text_field {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    align-self: flex-start;
+
+    text-align: start;
+
+    font-size: 18px;
+
+    user-select: text;
+    caret-color: black;
+
+    padding: 10px 5px;
+
+
+    border: 0.2px solid #000000;
+    border-radius: 3px;
+}
+
+.add_active_button_container {
+    background: #3861FB;
+    border: 0;
+    border-radius: 3px;
+
+    padding: 10px 5px;
+
+    font-size: 24px;
+    line-height: 22px;
+    align-self: stretch;
+}
