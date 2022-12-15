@@ -38,7 +38,7 @@ class Modal extends React.Component {
     };
 
     return (
-        <div className="backdrop" style={backdropStyle}>
+        <div className="backdrop" style={backdropStyle} onClick={this.props.onClose}>
           <div className="modal" style={modalStyle}>
             {this.props.children}
           </div>
@@ -48,6 +48,7 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
   show: PropTypes.bool,
   children: PropTypes.node,
 }

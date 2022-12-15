@@ -237,9 +237,9 @@ class UserPage extends React.Component {
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
-      show_log_in: false ,
-      show_registration: false,
-      show_add_active: true,
+      show_log_in: true ,
+      show_registration: true,
+      show_add_active: false,
     }
   }
 
@@ -711,13 +711,13 @@ class UserPage extends React.Component {
           {
             //<Footer/>
           }
-          <Modal show={this.state.show_log_in}>
+          <Modal show={this.state.show_log_in} onClose={()=> this.setState({'show_log_in': false})}>
             <Log_in onClick={()=> this.setState({'show_log_in': false})}/>
           </Modal>
-          <Modal show={this.state.show_registration}>
+          <Modal onClose={()=> this.setState({'show_registration': false})} show={this.state.show_registration}>
             <Registration onClick={()=> this.setState({'show_registration': false})}/>
           </Modal>
-          <Modal show={this.state.show_add_active}>
+          <Modal onClose={()=> this.setState({'show_add_active': false})} show={this.state.show_add_active}>
             <Add_active cost={524} onClick={()=> this.setState({'show_add_active': false})} onClose={()=> this.setState({'show_add_active': false})}/>
           </Modal>
 

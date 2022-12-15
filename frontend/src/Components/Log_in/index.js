@@ -53,6 +53,7 @@ class Log_in extends React.Component {
 
 Log_in.propTypes = {
   onClick: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
 }
 
