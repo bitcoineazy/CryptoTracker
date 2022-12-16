@@ -10,7 +10,11 @@ import Log_in from "../Log_in";
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      login: null,
+      password: null,
+      password_2: null,
+    }
   }
 
 
@@ -34,21 +38,47 @@ class Registration extends React.Component {
           <span className={title}>Регистрация</span>
           <div className={registration_input_container}>
             <span className={registration_input_text}>Адрес эл. почты</span>
-            <input className={registration_text_field} />
+            <input className={registration_text_field} onChange={e => this.setState({login: e.target.value})}/>
           </div>
-          <div className={registration_input_container}>
-            <span className={registration_input_text}>Имя пользователя</span>
-            <input className={registration_text_field}/>
-          </div>
+          {
+           /*
+            <div className={registration_input_container}>
+              <span className={registration_input_text}>Имя пользователя</span>
+              <input className={registration_text_field}/>
+            </div>
+            */
+          }
+
           <div className={registration_input_container}>
             <span className={registration_input_text}>Пароль</span>
-            <input className={registration_text_field} type="password"/>
+            <input className={registration_text_field} onChange={e => this.setState({password: e.target.value})} type="password"/>
           </div>
           <div className={registration_input_container}>
             <span className={registration_input_text}>Повторите пароль</span>
-            <input className={registration_text_field} type="password"/>
+            <input className={registration_text_field} onChange={e => this.setState({password_2: e.target.value})} type="password"/>
           </div>
-          <button className={registration_button_container} onClick={this.props.onClick}>
+          <button className={registration_button_container} onClick={() => {
+            if (this.state.login === null) {
+              alert("Введите логин!")
+              return;
+            }
+            if (this.state.password === null) {
+              alert("Введите пароль!")
+              return;
+            }
+            if (this.state.password_2 === null) {
+              alert("Повторите пароль!")
+              return;
+            }
+            if (this.state.password_2 !== this.state.password) {
+              alert("Пароли не совпадают!")
+              return;
+            }
+            this.props.onClick(this.state.login, this.state.password)
+          }
+
+
+          }>
             <span>Создать аккаунт</span>
           </button>
         </div>

@@ -8,18 +8,18 @@ class UserDataGrid extends React.Component {
     this.state = {
       headers: ["Наименование", "Количество", "Цена", "Подъём 1", "Подъём 2", "Подъём 3", "Подъём 4"],
       content: [
-        {name: "name1", count: 3, prise: 80, up_1: 0.9, up_2: 0.14, up_3: 0.15, up_4: 0.20},
-        {name: "name2", count: 4, prise: 70, up_1: 0.1, up_2: 0.13, up_3: 0.16, up_4: 0.19},
-        {name: "name3", count: 5, prise: 60, up_1: 0.11, up_2: 0.12, up_3: 0.17, up_4: 0.18},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, prise: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name1", count: 3, price: 80, up_1: 0.9, up_2: 0.14, up_3: 0.15, up_4: 0.20},
+        {name: "name2", count: 4, price: 70, up_1: 0.1, up_2: 0.13, up_3: 0.16, up_4: 0.19},
+        {name: "name3", count: 5, price: 60, up_1: 0.11, up_2: 0.12, up_3: 0.17, up_4: 0.18},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
+        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
       ]
     }
   }
@@ -46,7 +46,7 @@ class UserDataGrid extends React.Component {
       )
       content.push(
           <div className="user_assets_data_grid_box-content-end">
-            <div>{line.prise}</div>
+            <div>{line.price}</div>
           </div>
       )
       content.push(

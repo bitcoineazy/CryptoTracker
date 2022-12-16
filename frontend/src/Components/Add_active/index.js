@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import className from "classname";
+import ChooseActive from "../ChooseActive";
 
 import cross from '../../icons/cross_grey.svg'
 import './Add_active_window.css'
@@ -30,15 +31,12 @@ class Add_active extends Component {
     const text_field_container = className({
       'column_list_flex_start': true,
       'add_active_text_field_container': true,
-      'regular_text':true,
-      'lite_black_text': true,
 
     })
     const text_field = className({
       'add_active_text_field': true,
       'regular_text':true,
       'lite_black_text': true,
-
     })
     const button_container = className({'add_active_button_container': true, 'white_text':true, 'bold_text':true})
 
@@ -46,17 +44,11 @@ class Add_active extends Component {
         <div className={add_active_main}>
           <div className={title_container}>
             <span className={title}>Добавить актив</span>
-            <button className={close_button} onClick={this.props.onClose}><img src={cross} style={{height: 20, width: 20}}/></button>
+            <button className={close_button} onClick={this.props.onClose}>
+              <img src={cross} style={{height: 20, width: 20}}/>
+            </button>
           </div>
-          <div className={choose_currency}>
-            <div className="v41_276">
-              <div className="v41_337"></div>
-              <span className="v41_278">Bitcoin</span>
-              <span className="v41_279">BTC</span>
-              <div className="v41_280"></div>
-              <div className="name"></div>
-            </div>
-          </div>
+          <ChooseActive/>
           <div className={input_text_row}>
             <div className={input_container}>
               <span className={input_text}>Количество</span>

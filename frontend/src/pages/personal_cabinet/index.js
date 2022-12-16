@@ -1,7 +1,7 @@
 import React from "react"
 import * as PropTypes from "prop-types";
 import className from "classname"
-import { ResponsiveBump } from '@nivo/bump'
+import {ResponsiveBump} from '@nivo/bump'
 
 import "./personal_cabinet.css"
 //import styles from "./personal_cabinet.css"
@@ -76,26 +76,27 @@ class AssetsInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      headers: ["Наименование", "Количество", "Цена за единицу", "Активы", "Ср. цена покупки", "Прибыль/Убыток"],
+      headers: ["Наименование", "Количество", "Цена покупки", "Активы", "Текущая цена покупки", "Прибыль/Убыток"],
       content: [
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [-120, -0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [-120, -0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, -0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, prise: 80, assets: [1023, 0.09, "BTC"], buy_prise: 1200, up_down: [120, 0.15]},
-      ]
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [-120, -0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [-120, -0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, -0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
+      ],
+      isLoaded: false,
+      error: null,
     }
   }
 
-
   render() {
     const content = []
-    for (let i = 0; i < this.state.content.length; i++) {
-      let line = this.state.content[i]
+    for (let i = 0; i < this.props.content.length; i++) {
+      let line = this.props.content[i]
       const active_change_percent_container = className(
           {
             'row_list': true,
@@ -110,15 +111,14 @@ class AssetsInfo extends React.Component {
       })
       content.push(
           <div className="grid_first_column grid_box row_list bold_text">
-            <p> {i + 1} </p>
-            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" style={{height: 50, width: 50}}/>
+            <img src={line.img} style={{height: 50, width: 50}}/>
             <p> {line.name} </p>
           </div>,
           <div className="grid_box grid_column_box regular_text column_list">
             <div>{line.count}</div>
           </div>,
           <div className="grid_box grid_column_box regular_text column_list">
-            <div>{line.prise}</div>
+            <div>{line.price}</div>
           </div>,
           <div className="grid_box grid_column_box regular_text column_list" style={{alignItems: "self-end"}}>
             <div className="row_list">
@@ -130,19 +130,16 @@ class AssetsInfo extends React.Component {
               <p>
                 {line.assets[1]}
               </p>
-              <p>
-                {line.assets[2]}
-              </p>
             </div>
           </div>,
           <div className="grid_box grid_column_box regular_text column_list">
             <div>
-              {"$ " + line.buy_prise}
+              {"$ " + line.buy_price}
             </div>
           </div>,
           <div className="column_list grid_box grid_column_box regular_text column_list">
-            <div style={{paddingRight: 5}} >
-              {line.up_down[0] === 0 ? null : line.up_down[0] > 0 ? "+" : "-"} $ { Math.abs(line.up_down[0])}
+            <div style={{paddingRight: 5}}>
+              {line.up_down[0] === 0 ? null : line.up_down[0] > 0 ? "+" : "-"} $ {Math.abs(line.up_down[0])}
             </div>
             <div className={active_change_percent_container}>
               <div>
@@ -171,10 +168,14 @@ class AssetsInfo extends React.Component {
                 )
             )
           }
-          {content}
+          {
+            //this.state.isLoaded ? this.state.error === null ? <div>Error</div> : content : <div>Loading...</div>
+            content
+          }
         </div>
     );
   }
+
 }
 
 class Portfolios extends React.Component {
@@ -237,11 +238,124 @@ class UserPage extends React.Component {
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
-      show_log_in: true ,
-      show_registration: true,
+      show_log_in: true,
+      show_registration: false,
       show_add_active: false,
+      login: null,
+      password: null,
+      token: null,
+      rootUrl: 'http://143.244.205.59/api/',
+      content: []
     }
   }
+
+  getToken(username, password) {
+    fetch(this.state.rootUrl + "api-token-auth/",
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+              this.setState({
+                token: result.token,
+              });
+              this.getActives(result.token).then(r => null)
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error: error,
+              });
+            }
+        )
+
+  }
+
+  result2content(result, assets_by_coin_id) {
+    console.log(assets_by_coin_id);
+    let content = [];
+    let data = result.assets;
+    console.log(data)
+    let coin_id;
+    let price;
+    let symbol;
+    let img;
+    let price_change_24h;
+    let price_change_percentage_24h;
+    for (const row in data) {
+      coin_id = data[row].asset;
+      price = assets_by_coin_id[coin_id]['current_price'];
+      symbol = assets_by_coin_id[coin_id].symbol;
+      img = assets_by_coin_id[coin_id].image;
+      price_change_24h = assets_by_coin_id[coin_id].price_change_24h;
+      price_change_percentage_24h = assets_by_coin_id[coin_id].price_change_percentage_24h;
+          content.push(
+              {
+                name: assets_by_coin_id[coin_id].name,
+                count: parseFloat(data[row].amount).toFixed(2),
+                buy_price: parseFloat(price).toFixed(2),
+                assets: [parseFloat(price * data[row].amount).toFixed(2), symbol.toUpperCase()],
+                price: parseFloat(data[row].price).toFixed(2),
+                up_down: [parseFloat(price_change_24h).toFixed(4), parseFloat(price_change_percentage_24h).toFixed(4)],
+                img: img
+              }
+          );
+    }
+    this.setState({content: content})
+  }
+
+  async getActives(token) {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Token " + token);
+
+    var formData = new FormData();
+    formData.append("name", "1");
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formData,
+      redirect: 'follow'
+    };
+
+    let result = await fetch("http://143.244.205.59/api/portfolio/get_portfolio/", requestOptions)
+    result = await result.json();
+    let assets = result.assets
+    let assets_by_coin_id = {}
+    for (const assetsKey in assets) {
+      let coin_id = assets[assetsKey].asset
+      if (!(coin_id in assets_by_coin_id)) {
+        var formData1 = new FormData();
+        formData1.append("coin_id", coin_id);
+
+        var requestOptions = {
+          method: 'POST',
+          body: formData1,
+          redirect: 'follow'
+        };
+        let assets_data = await fetch("http://143.244.205.59/api/assets/by_coin_id/", requestOptions)
+        assets_by_coin_id[coin_id] = await assets_data.json()
+      }
+
+    }
+
+    this.result2content(result, assets_by_coin_id)
+  }
+
+  addUser(username, password) {
+
+
+  }
+
 
   render() {
     const bodyClass = className({'body': true});
@@ -358,9 +472,11 @@ class UserPage extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <button className="row_list button_active_add" onClick={() => {this.setState({'show_add_active': true})}}>
+                  <button className="row_list button_active_add" onClick={() => {
+                    this.setState({'show_add_active': true})
+                  }}>
                     <div className="white_text button_active_add_icon">
-                      <img src={add_active} style={{width:25, height:25}}/>
+                      <img src={add_active} style={{width: 25, height: 25}}/>
                     </div>
                     <p className="white_text button_active_add_text">
                       add new
@@ -380,19 +496,24 @@ class UserPage extends React.Component {
                     </p>
                   </div>
                   <div className="row_list grey_background graph_view_interval">
-                    <p className={graph_view_interval_option_0} onClick={() => this.setState({"history_interval": 0})}>
+                    <p className={graph_view_interval_option_0}
+                       onClick={() => this.setState({"history_interval": 0})}>
                       24 ч.
                     </p>
-                    <p className={graph_view_interval_option_1} onClick={() => this.setState({"history_interval": 1})}>
+                    <p className={graph_view_interval_option_1}
+                       onClick={() => this.setState({"history_interval": 1})}>
                       7D
                     </p>
-                    <p className={graph_view_interval_option_2} onClick={() => this.setState({"history_interval": 2})}>
+                    <p className={graph_view_interval_option_2}
+                       onClick={() => this.setState({"history_interval": 2})}>
                       30D
                     </p>
-                    <p className={graph_view_interval_option_3} onClick={() => this.setState({"history_interval": 3})}>
+                    <p className={graph_view_interval_option_3}
+                       onClick={() => this.setState({"history_interval": 3})}>
                       90D
                     </p>
-                    <p className={graph_view_interval_option_4} onClick={() => this.setState({"history_interval": 4})}>
+                    <p className={graph_view_interval_option_4}
+                       onClick={() => this.setState({"history_interval": 4})}>
                       ALL
                     </p>
 
@@ -425,300 +546,54 @@ class UserPage extends React.Component {
                             "y": 3
                           }
                         ]
-                      },
-                      {
-                        "id": "Serie 2",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 3
-                          },
-                          {
-                            "x": 2001,
-                            "y": 8
-                          },
-                          {
-                            "x": 2002,
-                            "y": 11
-                          },
-                          {
-                            "x": 2003,
-                            "y": 4
-                          },
-                          {
-                            "x": 2004,
-                            "y": 7
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 3",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 10
-                          },
-                          {
-                            "x": 2001,
-                            "y": 12
-                          },
-                          {
-                            "x": 2002,
-                            "y": 9
-                          },
-                          {
-                            "x": 2003,
-                            "y": 3
-                          },
-                          {
-                            "x": 2004,
-                            "y": 9
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 4",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 7
-                          },
-                          {
-                            "x": 2001,
-                            "y": 7
-                          },
-                          {
-                            "x": 2002,
-                            "y": 4
-                          },
-                          {
-                            "x": 2003,
-                            "y": 2
-                          },
-                          {
-                            "x": 2004,
-                            "y": 10
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 5",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 6
-                          },
-                          {
-                            "x": 2001,
-                            "y": 3
-                          },
-                          {
-                            "x": 2002,
-                            "y": 3
-                          },
-                          {
-                            "x": 2003,
-                            "y": 5
-                          },
-                          {
-                            "x": 2004,
-                            "y": 5
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 6",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 2
-                          },
-                          {
-                            "x": 2001,
-                            "y": 4
-                          },
-                          {
-                            "x": 2002,
-                            "y": 6
-                          },
-                          {
-                            "x": 2003,
-                            "y": 10
-                          },
-                          {
-                            "x": 2004,
-                            "y": 12
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 7",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 12
-                          },
-                          {
-                            "x": 2001,
-                            "y": 2
-                          },
-                          {
-                            "x": 2002,
-                            "y": 8
-                          },
-                          {
-                            "x": 2003,
-                            "y": 7
-                          },
-                          {
-                            "x": 2004,
-                            "y": 2
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 8",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 11
-                          },
-                          {
-                            "x": 2001,
-                            "y": 11
-                          },
-                          {
-                            "x": 2002,
-                            "y": 1
-                          },
-                          {
-                            "x": 2003,
-                            "y": 1
-                          },
-                          {
-                            "x": 2004,
-                            "y": 4
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 9",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 9
-                          },
-                          {
-                            "x": 2001,
-                            "y": 10
-                          },
-                          {
-                            "x": 2002,
-                            "y": 10
-                          },
-                          {
-                            "x": 2003,
-                            "y": 9
-                          },
-                          {
-                            "x": 2004,
-                            "y": 6
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 10",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 5
-                          },
-                          {
-                            "x": 2001,
-                            "y": 1
-                          },
-                          {
-                            "x": 2002,
-                            "y": 12
-                          },
-                          {
-                            "x": 2003,
-                            "y": 8
-                          },
-                          {
-                            "x": 2004,
-                            "y": 1
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 11",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 8
-                          },
-                          {
-                            "x": 2001,
-                            "y": 5
-                          },
-                          {
-                            "x": 2002,
-                            "y": 5
-                          },
-                          {
-                            "x": 2003,
-                            "y": 12
-                          },
-                          {
-                            "x": 2004,
-                            "y": 8
-                          }
-                        ]
-                      },
-                      {
-                        "id": "Serie 12",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 4
-                          },
-                          {
-                            "x": 2001,
-                            "y": 6
-                          },
-                          {
-                            "x": 2002,
-                            "y": 7
-                          },
-                          {
-                            "x": 2003,
-                            "y": 11
-                          },
-                          {
-                            "x": 2004,
-                            "y": 11
-                          }
-                        ]
                       }
                     ]}/>
                   </div>
                 </div>
               </div>
-              <AssetsInfo/>
+              {this.state.token}
+              <AssetsInfo token={this.state.token} content={this.state.content}/>
             </div>
           </div>
           {
             //<Footer/>
           }
-          <Modal show={this.state.show_log_in} onClose={()=> this.setState({'show_log_in': false})}>
-            <Log_in onClick={()=> this.setState({'show_log_in': false})}/>
+          <Modal show={this.state.show_log_in}>
+            <Log_in
+                registration={() => this.setState(
+                    {
+                      show_registration: true,
+                      show_log_in: false,
+                    })
+                }
+                onClick={(login, password) => {
+                  this.setState({
+                        show_log_in: false,
+                        login: login,
+                        password: password
+                      }
+                  );
+                  this.getToken(login, password)
+                }}/>
           </Modal>
-          <Modal onClose={()=> this.setState({'show_registration': false})} show={this.state.show_registration}>
-            <Registration onClick={()=> this.setState({'show_registration': false})}/>
+          <Modal show={this.state.show_registration}>
+            <Registration onClick={
+              (login, password) => {
+                this.setState({
+                  'show_registration': false,
+                  login: login,
+                  password: password,
+                })
+                this.addUser(login, password)
+              }
+            }/>
           </Modal>
-          <Modal onClose={()=> this.setState({'show_add_active': false})} show={this.state.show_add_active}>
-            <Add_active cost={524} onClick={()=> this.setState({'show_add_active': false})} onClose={()=> this.setState({'show_add_active': false})}/>
+          <Modal onClose={
+            () => this.setState({'show_add_active': false})
+          }
+                 show={this.state.show_add_active}>
+            <Add_active cost={524} onClick={() => this.setState({'show_add_active': false})}
+                        onClose={() => this.setState({'show_add_active': false})}/>
           </Modal>
 
         </div>

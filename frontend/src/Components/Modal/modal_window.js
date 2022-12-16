@@ -39,7 +39,7 @@ class Modal extends React.Component {
 
     return (
         <div className="backdrop" style={backdropStyle} onClick={this.props.onClose}>
-          <div className="modal" style={modalStyle}>
+          <div className="modal" style={modalStyle} onClick={e => e.stopPropagation()}>
             {this.props.children}
           </div>
         </div>
