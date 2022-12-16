@@ -50,6 +50,17 @@ class AssetViewSet(viewsets.ModelViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
 
+    @action(url_path="by_coin_id", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])
+    def get_asset_by_coin_id(self, request):
+        coin_id = request.data.get("coin_id")
+        # print(coin_id)
+        assets = get_object_or_404(Asset, coin_id=coin_id)
+        # print(assets)
+        asset_serializer = AssetSerializer(assets)
+        return Response(data=asset_serializer.data)
+
+
     @action(url_path="fill_assets", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAdmin
     def fill_assets(self, request):
@@ -112,7 +123,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     serializer_class = PortfolioSerializer
 
     # Получение портфеля
-    @action(url_path="get_portfolio", methods=["GET"], detail=False,
+    @action(url_path="get_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAuth
     def get_portfolio(self, request):
         portfolio_serializer = PortfolioSerializer(data=request.data)

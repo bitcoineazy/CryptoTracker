@@ -19,6 +19,10 @@ class AssetSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class GetAssetSerializer(serializers.ModelSerializer):
+    pass
+
+
 class AssetForUserSerializer(serializers.ModelSerializer):
     asset = serializers.SlugRelatedField(queryset=Asset.objects.all(), slug_field="coin_id")
     add_date = serializers.DateTimeField()

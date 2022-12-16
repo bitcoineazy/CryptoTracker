@@ -24,10 +24,10 @@ SECRET_KEY = '$2=(%$m&ou^x%v9#dc)lz*1kol(fc-!rw6hdt$x#bc)7-_cg#^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "cryptotrackerproject.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://cryptotrackerproject.herokuapp.com"
+    "https://cryptotrackerproject.herokuapp.com", "http://143.244.205.59"
 ]
 
 # Application definition
@@ -89,7 +89,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
+    'http://localhost:3000',
 )
 
 WSGI_APPLICATION = 'TrackerBackend.wsgi.application'
