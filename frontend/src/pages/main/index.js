@@ -1,6 +1,7 @@
 import React from "react"
 import "./main.css"
 import styles from "./main.css"
+import Footer from "../../Components/footer";
 
 class UserDataGrid extends React.Component {
   constructor(props) {
@@ -164,9 +165,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        {
-          //<Footer/>
-        }
+        <Footer/>
       </div>
   );
 }
