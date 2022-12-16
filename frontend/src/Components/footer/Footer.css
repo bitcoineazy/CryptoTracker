@@ -10,7 +10,12 @@
     background-position: center center;
     background-size: cover;
     margin: 20px;
-    opacity: 1;
+
+    gap: 10px;
+
+    justify-content: flex-start;
+    align-content: stretch;
+    justify-items: center;
 
 }
 
@@ -18,7 +23,6 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    opacity: 1;
 }
 
 .text_logo {
@@ -26,8 +30,8 @@
     font-family: "Viga";
     font-weight: normal;
     font-size: 26px;
-    opacity: 1;
-    text-align: left;
+
+    align-self: center;
 }
 
 .in_focus {
@@ -41,6 +45,7 @@
 }
 
 .text_info {
+    align-self: flex-end;
     color: rgba(0,0,0,1);
     font-family: "Inter";
     font-weight: normal;

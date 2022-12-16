@@ -8,12 +8,17 @@ class Footer extends React.Component {
   render() {
     return (
         <div className="main_line space_between_row">
-          <div className="logo_value">
+          <div className="logo_value row_list">
             <img src={logo} className="logo_img" alt="logo" style={{width: 59, height: 59}}/>
             <span className="text_logo">CRYPTO TRACKER</span>
           </div>
           <div className="in_focus">
-            <span className="text_info">Информация о нас<br/>Номера телефонов<br/>Ссылки на инструкции<br/>Почта для связи</span>
+            <div className="text_info column_list">
+              <span>Информация о нас</span>
+              <span>Номера телефонов</span>
+              <span>Ссылки на инструкции</span>
+              <span>Почта для связи</span>
+            </div>
           </div>
         </div>
     );
