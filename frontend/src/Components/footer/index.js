@@ -8,7 +8,7 @@ class Footer extends React.Component {
   render() {
     return (
         <div className="main_line space_between_row">
-          <div className="logo_value row_list">
+          <div className="logo_value">
             <img src={logo} className="logo_img" alt="logo" style={{width: 59, height: 59}}/>
             <span className="text_logo">CRYPTO TRACKER</span>
           </div>
