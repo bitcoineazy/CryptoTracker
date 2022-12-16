@@ -4,6 +4,7 @@ import Log_in from "./Components/Log_in";
 import Registration from "./Components/Registration";
 import './App.css';
 import Footer from "./Components/footer";
+import Header from "./Components/Header";
 
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -17,9 +18,10 @@ function App() {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/home" element={<Home/>} />
-            <Route path="/user" element={<User/>} />
-            <Route path="/" element={<Footer/>} />
+            {/*<Route path="/home" element={<Home/>} />*/}
+            {/*<Route path="/user" element={<User/>} />*/}
+            {/*<Route path="/" element={<Footer/>} />*/}
+            <Route path="/" element={<Header/>}/>
           </Routes>
         </Suspense>
       </Router>
