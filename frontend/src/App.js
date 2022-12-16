@@ -21,6 +21,7 @@ function App() {
             <Route path="/home" element={<Home/>} />
             <Route path="/user" element={<User/>} />
             <Route path="/" element={<Header/>}/>
+            <Route path="/footer" element={<Footer/>}/>
           </Routes>
         </Suspense>
       </Router>

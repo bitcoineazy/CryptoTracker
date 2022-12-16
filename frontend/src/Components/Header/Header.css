@@ -1,17 +1,26 @@
 .big_background {
-  width: 100%;
   height: 104px;
   background: linear-gradient(rgba(241,250,255,1), rgba(255,255,255,1));
 }
 
 .tracker_logo {
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 30px;
   height: 70px;
 }
 
 .text_logo_1 {
-  background-size: cover;
-  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+
+  width: 295px;
+  height: 59px;
 }
 
 .text_logo_2 {
@@ -19,7 +28,6 @@
 }
 
 .text_logo_3 {
-  color: rgba(0,0,0,1);
   font-size: 26px;
   font-family: 'Viga', sans-serif;
   font-weight: normal;
@@ -27,8 +35,13 @@
 }
 
 .text_lang_curr {
-  background-size: cover;
-  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+  height: 70px;
 }
 
 .text_lang_2 {
@@ -47,9 +60,16 @@
 }
 
 .text_curr_1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px 0 0;
+  gap: 10px;
+
+  height: 29px;
   background-size: cover;
   margin: 10px;
-
 }
 
 .text_curr_2 {
@@ -82,29 +102,40 @@
 }
 
 .panel_menu {
-  width: 70px;
-  height: 70px;
   background-size: cover;
-  padding: 10px 10px;
-  margin: 10px;
 }
 
 .v125_126 {
-  width: 50px;
-  height: 50px;
-  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  width: 70px;
+  height: 70px;
 }
 
 .panel_text {
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 5px 5px 0;
+  gap: 10px;
   height: 34px;
-  background: rgba(225,245,255,1);
-  padding: 5px 0;
+
+  background: #E1F5FF;
   margin: 10px;
 }
 
 .crypto {
-  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
   height: 23px;
   background-size: cover;
   margin: 10px;
@@ -129,7 +160,12 @@
 }
 
 .exchange-place {
-  width: 137px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
   height: 23px;
   background-size: cover;
   margin: 10px;
@@ -156,6 +192,13 @@
 }
 
 .market-cap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+  height: 23px;
   background-size: cover;
   margin: 10px;
 }
@@ -179,6 +222,13 @@
 }
 
 .volume24 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+  height: 23px;
   background-size: cover;
   margin: 10px;
 }
@@ -202,9 +252,15 @@
 }
 
 .domination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+  height: 23px;
   background-size: cover;
   margin: 10px;
-  overflow: hidden;
 }
 
 .v125_141 {
