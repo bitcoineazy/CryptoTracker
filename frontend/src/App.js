@@ -3,7 +3,7 @@ import UserPage from "./pages/personal_cabinet";
 import Log_in from "./Components/Log_in";
 import Registration from "./Components/Registration";
 import './App.css';
-//import Footer from "./Components/footer";
+import Footer from "./Components/footer";
 
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -19,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/home" element={<Home/>} />
             <Route path="/user" element={<User/>} />
+            <Route path="/" element={<Footer/>} />
           </Routes>
         </Suspense>
       </Router>

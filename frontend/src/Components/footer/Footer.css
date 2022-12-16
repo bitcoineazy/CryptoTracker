@@ -1,0 +1,50 @@
+
+.main_line {
+    background: linear-gradient(rgba(241,250,255,1), rgba(250,254,254,1));
+    opacity: 1;
+
+}
+
+.logo_value {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    margin: 20px;
+    opacity: 1;
+
+}
+
+.logo_img {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+}
+
+.text_logo {
+    color: rgba(0,0,0,1);
+    font-family: "Viga";
+    font-weight: normal;
+    font-size: 26px;
+    opacity: 1;
+    text-align: left;
+}
+
+.in_focus {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 10 0;
+    margin: 20px;
+    opacity: 1;
+
+}
+
+.text_info {
+    color: rgba(0,0,0,1);
+    font-family: "Inter";
+    font-weight: normal;
+    font-size: 16px;
+    opacity: 1;
+    text-align: right;
+}
