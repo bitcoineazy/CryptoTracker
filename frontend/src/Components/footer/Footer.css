@@ -1,9 +1,6 @@
 
 .main_line {
-    /*
     background: linear-gradient(rgba(255,255,255,1), rgba(241,250,255,1));
-     */
-    background: rgba(255,255,255,1);
 }
 
 .logo_value {
@@ -23,7 +20,7 @@
 
 .text_logo {
     color: rgba(0,0,0,1);
-    font-family: "Viga";
+    font-family: "Viga", sans-serif;
     font-weight: normal;
     font-size: 26px;
 
@@ -43,7 +40,7 @@
 .text_info {
     align-self: flex-end;
     color: rgba(0,0,0,1);
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
     font-weight: normal;
     font-size: 16px;
     opacity: 1;

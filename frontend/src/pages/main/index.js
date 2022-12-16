@@ -259,8 +259,8 @@ class HomePage extends React.Component {
                 <span className="days_price_logo">Сегодняшние цены на криптовалюту по рыночной капитализации</span>
                 <span className="days_price_data">
                         Глобальная капитализация рынка криптовалют составляет
-                        <span className="blue_text">₽{56.39}T.</span>
-                        Снижение за предыдущий день на <span className="blue_text">{1.14}%</span>
+                        <span className="blue_text"> ₽{56.39} тыс </span>
+                        . Снижение за предыдущий день на <span className="blue_text">{1.14} %</span>.
                     </span>
               </div>
               <div className="header_tops">
