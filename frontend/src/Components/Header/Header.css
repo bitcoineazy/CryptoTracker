@@ -1,6 +1,9 @@
 .big_background {
   height: 104px;
+  /*
   background: linear-gradient(rgba(241,250,255,1), rgba(255,255,255,1));
+   */
+  background: rgba(255,255,255,1);
 }
 
 .tracker_logo {
