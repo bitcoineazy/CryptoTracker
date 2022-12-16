@@ -130,7 +130,7 @@ class Top extends React.Component {
 
 const HomePage = () => {
   return (
-      <div className="body">
+      <div className="body column_list">
         {
           //<Header/>
         }
