@@ -172,8 +172,13 @@ class UserPage extends React.Component {
               });
             }
         )
+  }
+
+  getPortfolios(token) {
 
   }
+
+
 
   result2content(result, assets_by_coin_id) {
     console.log(assets_by_coin_id);

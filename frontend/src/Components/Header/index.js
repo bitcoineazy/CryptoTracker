@@ -21,7 +21,6 @@ class Header extends React.Component {
                     <div className="text_lang_curr">
                         <div className="text_curr_1">
                             <span className="text_curr_2">Валюта $</span>
-                            <img src={downBlack} alt="triangle here"/>
                         </div>
                         <div className="portfolio">
                             <div className="v125_122">

@@ -7,6 +7,7 @@ import Log_in from "../../Components/Log_in";
 import Registration from "../../Components/Registration";
 import Add_active from "../../Components/Add_active";
 import AssetsInfo from "../../Components/AssetsInfo";
+import Header from "../../Components/Header";
 
 class UserDataGrid extends React.Component {
   constructor(props) {
@@ -251,9 +252,8 @@ class HomePage extends React.Component {
     return (
         <div className="main_body">
           <div className="column_list main_center">
-            {
-              //<Header/>
-            }
+            <Header/>
+
             <div className="main_home">
               <div className="days_price">
                 <span className="days_price_logo">Сегодняшние цены на криптовалюту по рыночной капитализации</span>
