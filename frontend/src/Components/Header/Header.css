@@ -2,89 +2,43 @@
   width: 100%;
   height: 104px;
   background: linear-gradient(rgba(241,250,255,1), rgba(255,255,255,1));
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
 }
 
 .tracker_logo {
   width: 100%;
   height: 70px;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
 }
 
 .text_logo_1 {
-  width: 295px;
-  height: 59px;
   background-size: cover;
   margin: 20px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 30px;
-  overflow: hidden;
 }
 
 .text_logo_2 {
-  width: 59px;
-  height: 59px;
   background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
 }
 
 .text_logo_3 {
-  width: 216px;
   color: rgba(0,0,0,1);
-  position: absolute;
-  top: 12px;
-  left: 79px;
   font-size: 26px;
   font-family: 'Viga', sans-serif;
   font-weight: normal;
-  opacity: 1;
   text-align: left;
 }
 
 .text_lang_curr {
-  width: 556px;
-  height: 70px;
   background-size: cover;
   margin: 20px;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 1354px;
-  overflow: hidden;
 }
 
 .text_lang_2 {
-  width: 141px;
-  height: 28px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 21px;
-  left: 0;
-  overflow: hidden;
 }
 
 .text_lang_3 {
   width: 91px;
   color: rgba(0,0,0,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: 'Ubuntu', sans-serif;
   font-weight: normal;
   font-size: 24px;
@@ -93,8 +47,6 @@
 }
 
 .text_curr_1{
-  width: 150px;
-  height: 29px;
   background-size: cover;
   margin: 10px;
 
@@ -103,13 +55,9 @@
 .text_curr_2 {
   width: 110px;
   color: rgba(0,0,0,1);
-  position: absolute;
-  top: 0;
-  left: 0;
   font-family: "Inter", sans-serif;
   font-weight: normal;
   font-size: 24px;
-  opacity: 1;
   text-align: right;
 }
 
@@ -118,22 +66,12 @@
   height: 50px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 10px;
-  left: 331px;
-  overflow: hidden;
 }
 
 .v125_122 {
   width: 50px;
   height: 50px;
   background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
 }
 
 .star {
@@ -141,11 +79,6 @@
   height: 65px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 2px;
-  left: 401px;
-  overflow: hidden;
 }
 
 .panel_menu {
@@ -154,22 +87,12 @@
   background-size: cover;
   padding: 10px 10px;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 486px;
-  overflow: hidden;
 }
 
 .v125_126 {
   width: 50px;
   height: 50px;
   background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  overflow: hidden;
 }
 
 .panel_text {
@@ -178,11 +101,6 @@
   background: rgba(225,245,255,1);
   padding: 5px 0;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 70px;
-  left: 0;
-  overflow: hidden;
 }
 
 .crypto {
@@ -190,32 +108,19 @@
   height: 23px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 0;
-  overflow: hidden;
 }
 
 .v125_129 {
   width: 158px;
   color: rgba(24,74,110,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
-  opacity: 1;
-  text-align: left;
 }
 
 .crypto-value {
   width: 62px;
   color: rgba(26,137,172,1);
-  position: absolute;
-  top: 0;
-  left: 178px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -228,19 +133,11 @@
   height: 23px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 260px;
-  overflow: hidden;
 }
 
 .v125_132 {
   width: 72px;
   color: rgba(24,74,110,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -251,9 +148,6 @@
 .exchange-value {
   width: 35px;
   color: rgba(26,137,172,1);
-  position: absolute;
-  top: 0;
-  left: 92px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -262,23 +156,12 @@
 }
 
 .market-cap {
-  width: 492px;
-  height: 23px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 407px;
-  overflow: hidden;
 }
 
 .v125_135 {
-  width: 260px;
   color: rgba(24,74,110,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -287,11 +170,7 @@
 }
 
 .market-cap-value {
-  width: 202px;
   color: rgba(26,137,172,1);
-  position: absolute;
-  top: 0;
-  left: 280px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -300,23 +179,12 @@
 }
 
 .volume24 {
-  width: 347px;
-  height: 23px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 909px;
-  overflow: hidden;
 }
 
 .v125_138 {
-  width: 138px;
   color: rgba(24,74,110,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -325,11 +193,7 @@
 }
 
 .volume24value {
-  width: 179px;
   color: rgba(26,137,172,1);
-  position: absolute;
-  top: 0;
-  left: 158px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -338,23 +202,13 @@
 }
 
 .domination {
-  width: 416px;
-  height: 23px;
   background-size: cover;
   margin: 10px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 1266px;
   overflow: hidden;
 }
 
 .v125_141 {
-  width: 169px;
   color: rgba(24,74,110,1);
-  position: absolute;
-  top: 0;
-  left: 10px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -365,9 +219,6 @@
 .domination-value {
   width: 217px;
   color: rgba(26,137,172,1);
-  position: absolute;
-  top: 0;
-  left: 189px;
   font-family: Ubuntu, sans-serif;
   font-weight: Bold;
   font-size: 20px;
@@ -381,31 +232,16 @@
   background: rgba(217,217,217,1);
   padding: 5px 5px;
   margin: 5px;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 1692px;
-  border-radius: 5px;
-  overflow: hidden;
 }
 
 .textsearch {
   width: 13px;
   height: 13px;
   background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  overflow: hidden;
 }
 
 .v125_145 {
-  width: 55px;
   color: rgba(146,146,146,1);
-  position: absolute;
-  top: 5px;
-  left: 23px;
   font-family: Ubuntu, sans-serif;
   font-weight: normal;
   font-size: 14px;
@@ -417,15 +253,4 @@
   width: 135px;
   height: 14px;
   background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 5px;
-  left: 83px;
-  overflow: hidden;
-}
-
-@media screen and (max-width: 770px) {
-  .main {
-    min-height: calc(100vh - 170px);
-  }
 }
