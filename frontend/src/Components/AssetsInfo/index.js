@@ -4,6 +4,8 @@ import className from "classname";
 import UP from "../../icons/UP.svg";
 import DOWN from "../../icons/DOWN.svg";
 
+import './AssetsInfo.css'
+
 class AssetsInfo extends React.Component {
   constructor(props) {
     super(props);

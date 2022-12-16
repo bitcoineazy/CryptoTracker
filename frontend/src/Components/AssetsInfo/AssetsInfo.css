@@ -1,0 +1,69 @@
+
+/* > сетка с данными активов */
+
+.actives_grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+
+    justify-items : stretch;
+    align-items: stretch;
+
+    padding: 10px;
+
+    row-gap:  10px;
+
+    max-width: 1400px;
+
+    /*
+    border: black solid 1px;
+    */
+}
+
+.grid_header {
+    font-size: 21px;
+    line-height: 24px;
+
+    text-align: right;
+}
+.grid_header:first-of-type {
+
+    text-align: left;
+
+}
+
+.grid_first_column {
+    padding: 10px;
+    gap: 7px;
+
+    justify-content: flex-start !important;
+    align-content: center !important;
+    align-items: center !important;
+
+
+    font-size: 21px;
+    line-height: 24px;
+}
+
+.grid_box {
+    min-height: 70px;
+    max-height: 100px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    padding: 10px;
+    gap: 7px;
+
+
+    font-size: 21px;
+    line-height: 24px;
+
+}
+
+.grid_column_box {
+    justify-content: center !important;
+
+    align-items: flex-end !important;
+}
+
+/* < сетка с данными активов */

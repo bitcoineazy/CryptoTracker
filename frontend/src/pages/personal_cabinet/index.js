@@ -193,17 +193,17 @@ class UserPage extends React.Component {
       img = assets_by_coin_id[coin_id].image;
       price_change_24h = assets_by_coin_id[coin_id].price_change_24h;
       price_change_percentage_24h = assets_by_coin_id[coin_id].price_change_percentage_24h;
-          content.push(
-              {
-                name: assets_by_coin_id[coin_id].name,
-                count: parseFloat(data[row].amount).toFixed(2),
-                buy_price: parseFloat(price).toFixed(2),
-                assets: [parseFloat(price * data[row].amount).toFixed(2), symbol.toUpperCase()],
-                price: parseFloat(data[row].price).toFixed(2),
-                up_down: [parseFloat(price_change_24h).toFixed(4), parseFloat(price_change_percentage_24h).toFixed(4)],
-                img: img
-              }
-          );
+      content.push(
+          {
+            name: assets_by_coin_id[coin_id].name,
+            count: parseFloat(data[row].amount).toFixed(2),
+            buy_price: parseFloat(price).toFixed(2),
+            assets: [parseFloat(price * data[row].amount).toFixed(2), symbol.toUpperCase()],
+            price: parseFloat(data[row].price).toFixed(2),
+            up_down: [parseFloat(price_change_24h).toFixed(4), parseFloat(price_change_percentage_24h).toFixed(4)],
+            img: img
+          }
+      );
     }
     this.setState({content: content})
   }
@@ -446,7 +446,9 @@ class UserPage extends React.Component {
                   </div>
                 </div>
               </div>
-              {this.state.token}
+              {
+                //this.state.token
+              }
               <AssetsInfo token={this.state.token} content={this.state.content}/>
             </div>
           </div>
