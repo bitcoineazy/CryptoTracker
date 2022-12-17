@@ -136,125 +136,21 @@ class UserPage extends React.Component {
       show_log_in: true,
       show_registration: false,
       show_add_active: false,
+      rootUrl: 'http://143.244.205.59/api/',
       login: null,
       password: null,
       token: null,
-      rootUrl: 'http://143.244.205.59/api/',
-      content: []
+      portfolio_name: "1",
+      content: [],
     }
   }
 
-  getToken(username, password) {
-    fetch(this.state.rootUrl + "api-token-auth/",
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': '*/*',
-          },
-          body: JSON.stringify({
-            username,
-            password
-          })
-        })
-        .then(res => res.json())
-        .then(
-            (result) => {
-              this.setState({
-                token: result.token,
-              });
-              this.getActives(result.token).then(r => null)
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error: error,
-              });
-            }
-        )
-  }
-
-  getPortfolios(token) {
-
-  }
-
-
-
-  result2content(result, assets_by_coin_id) {
-    console.log(assets_by_coin_id);
-    let content = [];
-    let data = result.assets;
-    console.log(data)
-    let coin_id;
-    let price;
-    let symbol;
-    let img;
-    let price_change_24h;
-    let price_change_percentage_24h;
-    for (const row in data) {
-      coin_id = data[row].asset;
-      price = assets_by_coin_id[coin_id]['current_price'];
-      symbol = assets_by_coin_id[coin_id].symbol;
-      img = assets_by_coin_id[coin_id].image;
-      price_change_24h = assets_by_coin_id[coin_id].price_change_24h;
-      price_change_percentage_24h = assets_by_coin_id[coin_id].price_change_percentage_24h;
-      content.push(
-          {
-            name: assets_by_coin_id[coin_id].name,
-            count: parseFloat(data[row].amount).toFixed(2),
-            buy_price: parseFloat(price).toFixed(2),
-            assets: [parseFloat(price * data[row].amount).toFixed(2), symbol.toUpperCase()],
-            price: parseFloat(data[row].price).toFixed(2),
-            up_down: [parseFloat(price_change_24h).toFixed(4), parseFloat(price_change_percentage_24h).toFixed(4)],
-            img: img
-          }
-      );
-    }
-    this.setState({content: content})
-  }
-
-  async getActives(token) {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Token " + token);
-
-    var formData = new FormData();
-    formData.append("name", "1");
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: formData,
-      redirect: 'follow'
-    };
-
-    let result = await fetch("http://143.244.205.59/api/portfolio/get_portfolio/", requestOptions)
-    result = await result.json();
-    let assets = result.assets
-    let assets_by_coin_id = {}
-    for (const assetsKey in assets) {
-      let coin_id = assets[assetsKey].asset
-      if (!(coin_id in assets_by_coin_id)) {
-        var formData1 = new FormData();
-        formData1.append("coin_id", coin_id);
-
-        var requestOptions = {
-          method: 'POST',
-          body: formData1,
-          redirect: 'follow'
-        };
-        let assets_data = await fetch("http://143.244.205.59/api/assets/by_coin_id/", requestOptions)
-        assets_by_coin_id[coin_id] = await assets_data.json()
-      }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.token !== null && prevState.token !== this.state.token) {
 
     }
-
-    this.result2content(result, assets_by_coin_id)
   }
 
-  addUser(username, password) {
-
-
-  }
 
 
   render() {
@@ -376,7 +272,7 @@ class UserPage extends React.Component {
                     this.setState({'show_add_active': true})
                   }}>
                     <div className="white_text button_active_add_icon">
-                      <img src={add_active} style={{width: 25, height: 25}}/>
+                      <img src={add_active} style={{width: 25, height: 25}} alt=''/>
                     </div>
                     <p className="white_text button_active_add_text">
                       add new
@@ -454,14 +350,22 @@ class UserPage extends React.Component {
               {
                 //this.state.token
               }
-              <AssetsInfo token={this.state.token} content={this.state.content}/>
+              <AssetsInfo token={this.state.token} portfolioName={this.state.portfolio_name} mod={0}/>
+              {
+                //this.state.AssetsInfo
+              }
+
             </div>
           </div>
           {
-            //<Footer/>
+            /*
+
+            <Footer/>
+             */
           }
-          <Modal show={this.state.show_log_in}>
+          <Modal show={this.state.show_log_in} onClose={() => null}>
             <Log_in
+                onClose={()=>null}
                 registration={() => this.setState(
                     {
                       show_registration: true,
@@ -475,25 +379,29 @@ class UserPage extends React.Component {
                         password: password
                       }
                   );
-                  this.getToken(login, password)
-                }}/>
+                  //this.getToken(login, password)
+                }}
+                tokenGet={(token) => this.setState({token: token})}
+            />
           </Modal>
-          <Modal show={this.state.show_registration}>
-            <Registration onClick={
-              (login, password) => {
-                this.setState({
-                  'show_registration': false,
-                  login: login,
-                  password: password,
-                })
-                this.addUser(login, password)
-              }
-            }/>
+          <Modal show={this.state.show_registration} onClose={() => null}>
+            <Registration
+                onClick={
+                  (login, password) => {
+                    this.setState({
+                      'show_registration': false,
+                      login: login,
+                      password: password,
+                    })
+                    this.addUser(login, password)
+                  }
+                }
+                tokenGet={(token) => this.setState({token: token})}
+            />
           </Modal>
-          <Modal onClose={
-            () => this.setState({'show_add_active': false})
-          }
-                 show={this.state.show_add_active}>
+          <Modal
+              onClose={() => this.setState({'show_add_active': false})}
+              show={this.state.show_add_active}>
             <Add_active cost={524} onClick={() => this.setState({'show_add_active': false})}
                         onClose={() => this.setState({'show_add_active': false})}/>
           </Modal>

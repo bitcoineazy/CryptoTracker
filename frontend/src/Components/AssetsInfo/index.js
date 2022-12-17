@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import className from "classname";
+import projectAPI from "../../API/projectAPI";
+
 import UP from "../../icons/UP.svg";
 import DOWN from "../../icons/DOWN.svg";
 
@@ -11,26 +13,38 @@ class AssetsInfo extends React.Component {
     super(props);
     this.state = {
       headers: ["Наименование", "Количество", "Цена покупки", "Активы", "Текущая цена покупки", "Прибыль/Убыток"],
-      content: [
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [-120, -0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [-120, -0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, -0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-        {name: "name1", count: 3, price: 80, assets: [1023, 0.09, "BTC"], buy_price: 1200, up_down: [120, 0.15]},
-      ],
       isLoaded: false,
       error: null,
+      content: [],
+
     }
+    this.projectAPI = new projectAPI();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if ((prevProps.token !== this.props.token || prevProps.portfolioName !== this.props.portfolioName) && this.props.mod === 0) {
+      this.projectAPI.getPortfolio(this.props.token, this.props.portfolioName).then(portfolio => {
+        let coin_id = [];
+        for (let portfolioElement of portfolio) {
+          coin_id.push(portfolioElement.asset);
+        }
+        console.log("get coin_id - start");
+        console.log(coin_id)
+        console.log("get coin_id - end");
+        this.projectAPI.getAssetsByCoinID(coin_id).then(assets => {
+          let content = this.projectAPI.result2content(portfolio, assets)
+          console.log(content)
+          this.setState({content: content})
+        })
+      })
+    }
+
   }
 
   render() {
     const content = []
-    for (let i = 0; i < this.props.content.length; i++) {
-      let line = this.props.content[i]
+    for (let i = 0; i < this.state.content.length; i++) {
+      let line = this.state.content[i]
       const active_change_percent_container = className(
           {
             'row_list': true,
@@ -93,11 +107,12 @@ class AssetsInfo extends React.Component {
     }
     return (
         <div className="actives_grid">
+
           {
             this.state.headers.map(
                 (header, index) => (
                     <div className="bold_text grid_box grid_header">
-                      {(index == 0) ? "# " + header : header}
+                      {(index == 0) ? header : header}
                     </div>
                 )
             )

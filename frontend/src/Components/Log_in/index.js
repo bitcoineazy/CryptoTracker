@@ -1,10 +1,15 @@
 import React from 'react';
+
+import className from 'classname'
+import PropTypes from "prop-types";
+import projectAPI from "../../API/projectAPI";
+
+import Modal from "../Modal/modal_window";
+
 import '../../generalCSS.css'
 import gcss from '../../generalCSS.css'
 import styles from './Log_in.css';
-import className from 'classname'
-import PropTypes from "prop-types";
-import Modal from "../Modal/modal_window";
+
 
 class Log_in extends React.Component {
   constructor(props) {
@@ -12,7 +17,10 @@ class Log_in extends React.Component {
     this.state = {
       login: null,
       password: null,
+      rootURL: 'http://143.244.205.59/api/',
+      token: null,
     };
+    this.projectAPI = new projectAPI();
   }
 
 
@@ -46,7 +54,8 @@ class Log_in extends React.Component {
             <input className={log_in_text_field} onChange={e => this.setState({password: e.target.value})} type="password" placeholder="Пароль"/>
             <button className={log_in_forgot_password} onClick={this.props.registration}>Зарегистрироваться</button>
           </div>
-          <button className={log_in_button_container} onClick={(e) => {
+          <button className={log_in_button_container} onClick={async (e) => {
+            console.log("Click on log_ig button")
             if (this.state.login === null) {
               alert("Введите логин!")
               return;
@@ -55,7 +64,9 @@ class Log_in extends React.Component {
               alert("Введите пароль!")
               return;
             }
-            this.props.onClick(this.state.login, this.state.password)}
+            this.props.tokenGet(await this.projectAPI.getToken(this.state.login, this.state.password))
+            this.props.onClick(this.state.login, this.state.password)
+          }
           }>
             <span className="v62_69">Войти</span>
           </button>
@@ -66,6 +77,7 @@ class Log_in extends React.Component {
 
 Log_in.propTypes = {
   registration: PropTypes.func.isRequired,
+  tokenGet: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,

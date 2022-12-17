@@ -17,22 +17,28 @@ class Registration extends React.Component {
     }
   }
 
-
   render() {
-    const registration_main = className({"registration_main": true, 'space_between_column':true})
-    const title = className({"registration_title": true, 'bold_text':true})
-    const registration_input_container = className({'column_list_flex_start': true, 'registration_input_container':true})
-    const registration_input_text = className({'regular_text': true, 'registration_input_text':true})
+    const registration_main = className({"registration_main": true, 'space_between_column': true})
+    const title = className({"registration_title": true, 'bold_text': true})
+    const registration_input_container = className({
+      'column_list_flex_start': true,
+      'registration_input_container': true
+    })
+    const registration_input_text = className({'regular_text': true, 'registration_input_text': true})
     const registration_text_field = className({
       'column_list_flex_start': true,
       'log_in_text_field': true,
-      'regular_text':true,
+      'regular_text': true,
       'lite_black_text': true,
 
     })
     // Введите ваш адрес эл. почты...
     // Пароль...
-    const registration_button_container = className({'registration_button_container': true, 'white_text':true, 'bold_text':true})
+    const registration_button_container = className({
+      'registration_button_container': true,
+      'white_text': true,
+      'bold_text': true
+    })
     return (
         <div className={registration_main}>
           <span className={title}>Регистрация</span>
@@ -41,41 +47,46 @@ class Registration extends React.Component {
             <input className={registration_text_field} onChange={e => this.setState({login: e.target.value})}/>
           </div>
           {
-           /*
-            <div className={registration_input_container}>
-              <span className={registration_input_text}>Имя пользователя</span>
-              <input className={registration_text_field}/>
-            </div>
-            */
+            /*
+             <div className={registration_input_container}>
+               <span className={registration_input_text}>Имя пользователя</span>
+               <input className={registration_text_field}/>
+             </div>
+             */
           }
 
           <div className={registration_input_container}>
             <span className={registration_input_text}>Пароль</span>
-            <input className={registration_text_field} onChange={e => this.setState({password: e.target.value})} type="password"/>
+            <input className={registration_text_field} onChange={e => this.setState({password: e.target.value})}
+                   type="password"/>
           </div>
           <div className={registration_input_container}>
             <span className={registration_input_text}>Повторите пароль</span>
-            <input className={registration_text_field} onChange={e => this.setState({password_2: e.target.value})} type="password"/>
+            <input className={registration_text_field} onChange={e => this.setState({password_2: e.target.value})}
+                   type="password"/>
           </div>
-          <button className={registration_button_container} onClick={() => {
-            if (this.state.login === null) {
-              alert("Введите логин!")
-              return;
+          <button className={registration_button_container} onClick={
+            () => {
+              if (this.state.login === null) {
+                alert("Введите логин!")
+                return;
+              }
+              if (this.state.password === null) {
+                alert("Введите пароль!")
+                return;
+              }
+              if (this.state.password_2 === null) {
+                alert("Повторите пароль!")
+                return;
+              }
+              if (this.state.password_2 !== this.state.password) {
+                alert("Пароли не совпадают!")
+                return;
+              }
+              console.log(this.state.login, this.state.password)
+              this.props.tokenGet(this.getToken(this.state.login, this.state.password))
+              this.props.onClick(this.state.login, this.state.password)
             }
-            if (this.state.password === null) {
-              alert("Введите пароль!")
-              return;
-            }
-            if (this.state.password_2 === null) {
-              alert("Повторите пароль!")
-              return;
-            }
-            if (this.state.password_2 !== this.state.password) {
-              alert("Пароли не совпадают!")
-              return;
-            }
-            this.props.onClick(this.state.login, this.state.password)
-          }
 
 
           }>
@@ -89,6 +100,7 @@ class Registration extends React.Component {
 
 Registration.propTypes = {
   onClick: PropTypes.func.isRequired,
+  tokenGet: PropTypes.func.isRequired,
   children: PropTypes.node,
 }
 
