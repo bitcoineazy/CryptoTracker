@@ -39,7 +39,7 @@
     align-items: flex-start;
     padding: 20px 25px;
     gap: 10px;
-
+    height: 105px;
     flex: 1;
     order: 0;
     align-self: stretch;
@@ -47,11 +47,13 @@
 }
 
 .days_price_logo {
-    font-family: 'Ubuntu';
+    height: 32px;
+
+    font-family: 'Ubuntu', sans-serif;
     font-style: normal;
-    font-weight: 550;
-    font-size: 24px;
-    line-height: 29px;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 32px;
     display: flex;
     align-items: center;
     color: #000000;
@@ -63,7 +65,8 @@
 }
 
 .days_price_data {
-    font-family: 'Ubuntu';
+    height: 23px;
+    font-family: 'Ubuntu', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
