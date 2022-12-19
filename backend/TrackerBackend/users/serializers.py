@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
-from .models import CryptoUser, Asset, AssetForCryptoUser, UserPortfolio
+from .models import CryptoUser, Asset, AssetForCryptoUser, UserPortfolio, GlobalMetrics
 
 
 class CryptoUserSerializer(serializers.ModelSerializer):
@@ -103,3 +103,13 @@ class GetPortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPortfolio
         fields = ["name", "assets"]
+
+class GlobalMetricsSerializer(serializers.ModelSerializer):
+    total_market_cap = serializers.DecimalField(decimal_places=5, max_digits=100, read_only=True)
+    total_volume = serializers.DecimalField(decimal_places=5, max_digits=100, read_only=True)
+    market_cap_percentage = serializers.JSONField(read_only=True)
+    market_cap_change_percentage = serializers.DecimalField(decimal_places=5, max_digits=100, read_only=True)
+
+    class Meta:
+        model = GlobalMetrics
+        fields = "__all__"

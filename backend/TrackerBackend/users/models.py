@@ -102,9 +102,7 @@ class GlobalMetrics(models.Model):
     total_market_cap = models.DecimalField(decimal_places=5, max_digits=100, null=True)
     total_volume = models.DecimalField(decimal_places=5, max_digits=100, null=True)
     market_cap_percentage = models.JSONField(null=True, default=dict)
-    market_cap_change_percentage = models.JSONField(null=True, default=dict)
-    # last_updated = models.DateTimeField(null=True, auto_now_add=True)
-
+    market_cap_change_percentage = models.DecimalField(decimal_places=5, max_digits=100, null=True)
 
 class UserPortfolio(models.Model):
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)

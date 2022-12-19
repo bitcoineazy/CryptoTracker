@@ -11,9 +11,9 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 import numpy as np
 
-from .models import CryptoUser, Asset, UserPortfolio
+from .models import CryptoUser, Asset, UserPortfolio, GlobalMetrics
 from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer, \
-    GetPortfolioSerializer, AssetSerializer, GetPortfolioByUserSerializer
+    GetPortfolioSerializer, AssetSerializer, GetPortfolioByUserSerializer, GlobalMetricsSerializer
 
 cg = CoinGeckoAPI()
 
@@ -58,7 +58,7 @@ class AssetViewSet(viewsets.ModelViewSet):
         assets = get_object_or_404(Asset, coin_id=coin_id)
         # print(assets)
         asset_serializer = AssetSerializer(assets)
-        return Response(data=asset_serializer.data)
+        return Response(data=asset_serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
     @action(url_path="fill_assets", methods=["POST"], detail=False,
@@ -141,7 +141,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     def get_portfolio_by_user(self, request):
         portfolio_names = get_list_or_404(UserPortfolio, crypto_user=request.user)
         portfolio_serializer = GetPortfolioByUserSerializer(portfolio_names, many=True)
-        return Response(data=portfolio_serializer.data)
+        return Response(data=portfolio_serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     @action(url_path="add_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAuth
@@ -186,3 +186,15 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             print(portfolio_serializer.errors)
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class GlobalMetricsViewSet(viewsets.ModelViewSet):
+    queryset = GlobalMetrics.objects.all()
+    serializer_class = GlobalMetricsSerializer
+
+    @action(url_path="get_global_metrics", methods=["GET"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def get_global_metrics(self, request):
+        global_metrics = get_object_or_404(GlobalMetrics, id=1)
+        global_metrics_serializer = GlobalMetricsSerializer(global_metrics)
+        return Response(global_metrics_serializer.data, status=status.HTTP_204_NO_CONTENT)

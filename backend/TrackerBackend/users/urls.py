@@ -4,13 +4,14 @@ from rest_framework.authtoken import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import UserViewSet, AssetViewSet, PortfolioViewSet
+from .views import UserViewSet, AssetViewSet, PortfolioViewSet, GlobalMetricsViewSet
 
 router_v1 = DefaultRouter()
 
 router_v1.register("users", UserViewSet)
 router_v1.register("assets", AssetViewSet)
 router_v1.register("portfolio", PortfolioViewSet)
+router_v1.register("global", GlobalMetricsViewSet)
 
 urlpatterns = [
     path("api-token-auth/", auth_views.obtain_auth_token, name="api_token"),
