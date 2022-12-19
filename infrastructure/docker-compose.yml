@@ -57,6 +57,17 @@ services:
       - backend
       #- frontend
 
+  flower:
+    build: ../backend/TrackerBackend
+    command: celery -A TrackerBackend flower --port=5566 --broker=redis://redis:6379/0
+    ports:
+      - "5566:5566"
+    depends_on:
+      - redis
+      - backend
+      - celery
+      - celery-beat
+
 volumes:
   postgres_data:
   static_value:
