@@ -8,6 +8,22 @@ services:
     env_file:
       - ./.env
 
+  redis:
+    image: redis:5.0-alpine
+
+  celery:
+    build: ../backend/TrackerBackend
+    command: celery -A TrackerBackend worker -l info
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: ../backend/TrackerBackend
+    command: celery -A TrackerBackend beat -l info
+    depends_on:
+      - redis
+
+
   backend:
     image: noble6/cryptotracker_backend:latest
     restart: always
@@ -16,6 +32,7 @@ services:
       - media_value:/code/media/
     depends_on:
       - db
+      - redis
     env_file:
       - ./.env
 

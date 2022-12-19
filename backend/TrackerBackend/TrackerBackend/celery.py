@@ -21,17 +21,17 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'add-every-30-seconds': {
+    'update_assets_in_portfolio': {
         'task': 'TrackerBackend.tasks.update_portfolio_assets',
-        "schedule": 5.0,
+        "schedule": 300.0,
     },
     "update_categories": {
         "task": "TrackerBackend.tasks.update_categories",
-        "schedule": 5.0,
+        "schedule": 300.0,
     },
     "update_global_metrics": {
         "task": "TrackerBackend.tasks.update_global_metrics",
-        "schedule": 5.0,
+        "schedule": 300.0,
     }
 }
 app.conf.timezone = 'UTC'
