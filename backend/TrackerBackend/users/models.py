@@ -28,6 +28,7 @@ class Asset(models.Model):
     atl_change_percentage = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     atl_date = models.DateTimeField(null=True)
     roi = models.JSONField(null=True, default=dict)
+    last_updated = models.DateTimeField(null=True)
     platforms = models.JSONField(verbose_name="Платформы", null=True, default=dict)
 
     class Meta:
@@ -37,6 +38,21 @@ class Asset(models.Model):
     def __str__(self):
         return self.name
 
+
+class Category(models.Model):
+    category_id = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    name = models.CharField(max_length=500, verbose_name="Название актива", null=True)
+    market_cap = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    market_cap_change_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    content = models.CharField(max_length=1000, verbose_name="Название актива", null=True)
+    volume_24h = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    last_updated = models.DateTimeField(null=True)
+
+    class Meta:
+        verbose_name = "Категории"
+
+    def __str__(self):
+        return self.name
 
 class CryptoUser(AbstractUser):
     USERNAME_FIELD = "email"
@@ -82,11 +98,18 @@ class AssetForCryptoUser(models.Model):
         return self.asset.coin_id
 
 
+class GlobalMetrics(models.Model):
+    total_market_cap = models.DecimalField(decimal_places=5, max_digits=100, null=True)
+    total_volume = models.DecimalField(decimal_places=5, max_digits=100, null=True)
+    market_cap_percentage = models.JSONField(null=True, default=dict)
+    market_cap_change_percentage = models.DecimalField(decimal_places=5, max_digits=100, null=True)
+
 class UserPortfolio(models.Model):
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
     name = models.CharField(max_length=255, unique=True, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
+    change_24h = models.JSONField(default=dict, null=True)
     assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default={})
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
 

@@ -5,15 +5,15 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from pycoingecko import CoinGeckoAPI
 
 import pandas as pd
 import numpy as np
 
-from .models import CryptoUser, Asset, UserPortfolio
+from .models import CryptoUser, Asset, UserPortfolio, GlobalMetrics
 from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer, \
-    GetPortfolioSerializer, AssetSerializer
+    GetPortfolioSerializer, AssetSerializer, GetPortfolioByUserSerializer, GlobalMetricsSerializer
 
 cg = CoinGeckoAPI()
 
@@ -49,6 +49,17 @@ class UserViewSet(viewsets.ModelViewSet):
 class AssetViewSet(viewsets.ModelViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
+
+    @action(url_path="by_coin_id", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])
+    def get_asset_by_coin_id(self, request):
+        coin_id = request.data.get("coin_id")
+        # print(coin_id)
+        assets = get_object_or_404(Asset, coin_id=coin_id)
+        # print(assets)
+        asset_serializer = AssetSerializer(assets)
+        return Response(data=asset_serializer.data, status=status.HTTP_204_NO_CONTENT)
+
 
     @action(url_path="fill_assets", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAdmin
@@ -112,7 +123,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     serializer_class = PortfolioSerializer
 
     # Получение портфеля
-    @action(url_path="get_portfolio", methods=["GET"], detail=False,
+    @action(url_path="get_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAuth
     def get_portfolio(self, request):
         portfolio_serializer = PortfolioSerializer(data=request.data)
@@ -124,6 +135,13 @@ class PortfolioViewSet(viewsets.ModelViewSet):
         else:
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    @action(url_path="get_portfolio_by_user", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def get_portfolio_by_user(self, request):
+        portfolio_names = get_list_or_404(UserPortfolio, crypto_user=request.user)
+        portfolio_serializer = GetPortfolioByUserSerializer(portfolio_names, many=True)
+        return Response(data=portfolio_serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     @action(url_path="add_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAuth
@@ -168,3 +186,15 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             print(portfolio_serializer.errors)
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class GlobalMetricsViewSet(viewsets.ModelViewSet):
+    queryset = GlobalMetrics.objects.all()
+    serializer_class = GlobalMetricsSerializer
+
+    @action(url_path="get_global_metrics", methods=["GET"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def get_global_metrics(self, request):
+        global_metrics = get_object_or_404(GlobalMetrics, id=1)
+        global_metrics_serializer = GlobalMetricsSerializer(global_metrics)
+        return Response(global_metrics_serializer.data, status=status.HTTP_204_NO_CONTENT)
