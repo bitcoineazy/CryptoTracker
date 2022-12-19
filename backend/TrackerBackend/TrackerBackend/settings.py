@@ -170,5 +170,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 #
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
