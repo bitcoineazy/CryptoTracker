@@ -56,6 +56,13 @@ class UserInfoSerializer(serializers.ModelSerializer):
 #     def to_representation(self, instance):
 #         return AssetForUserSerializer(AssetForCryptoUser.objects.filter(portfolio=instance.portfolio), many=True).data
 
+class GetPortfolioByUserSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=255, read_only=True)
+    assets = AssetForUserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = UserPortfolio
+        fields = ["name", "assets"]
 
 class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)

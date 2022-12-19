@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from pycoingecko import CoinGeckoAPI
 
 import pandas as pd
@@ -13,7 +13,7 @@ import numpy as np
 
 from .models import CryptoUser, Asset, UserPortfolio
 from .serializers import PortfolioSerializer, CryptoUserSerializer, CreateUserSerializer, AssetForUserSerializer, \
-    GetPortfolioSerializer, AssetSerializer
+    GetPortfolioSerializer, AssetSerializer, GetPortfolioByUserSerializer
 
 cg = CoinGeckoAPI()
 
@@ -135,6 +135,13 @@ class PortfolioViewSet(viewsets.ModelViewSet):
         else:
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    @action(url_path="get_portfolio_by_user", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def get_portfolio_by_user(self, request):
+        portfolio_names = get_list_or_404(UserPortfolio, crypto_user=request.user)
+        portfolio_serializer = GetPortfolioByUserSerializer(portfolio_names, many=True)
+        return Response(data=portfolio_serializer.data)
 
     @action(url_path="add_portfolio", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAuth
