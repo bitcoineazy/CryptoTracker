@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404, get_list_or_404
+from rest_framework.authtoken.models import Token
 from pycoingecko import CoinGeckoAPI
 
 import pandas as pd
@@ -26,23 +27,25 @@ class UserViewSet(viewsets.ModelViewSet):
             permission_classes=[permissions.IsAuthenticated])  # isAuth
     def user_info(self, request):
         user = request.user
-        return Response({'info': CryptoUserSerializer(user).data})
+        return Response({'info': CryptoUserSerializer(user).data}, status=status.HTTP_200_OK)
 
     @action(url_path='create', methods=['POST'], detail=False,
             permission_classes=[permissions.AllowAny])
     def create_user(self, request):
+
         serializer = CreateUserSerializer(data=request.data)
         if serializer.is_valid():
             password = serializer.validated_data['password']
-            try:
-                validate_password(password)
-                user = CryptoUser.objects.create_user(
-                    username=serializer.validated_data['username'],
-                    password=serializer.validated_data['password'],
-                    email=serializer.validated_data.get('email'))
-                return Response({'Created successfully!': user.username}, status=status.HTTP_200_OK)
-            except ValidationError as e:
-                return Response({"errors": {"password": e}}, status.HTTP_404_NOT_FOUND)
+            # try:
+            #     validate_password(password)
+            user = CryptoUser.objects.create_user(
+                username=serializer.validated_data['username'],
+                password=serializer.validated_data['password'],
+                email=serializer.validated_data.get('email'))
+            token = Token.objects.create(user=user)
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
+            # except ValidationError as e:
+            #     return Response({"errors": {"password": e}}, status.HTTP_404_NOT_FOUND)
         return Response({'errors': serializer.errors}, status.HTTP_404_NOT_FOUND)
 
 
@@ -150,8 +153,8 @@ class PortfolioViewSet(viewsets.ModelViewSet):
         if portfolio_serializer.is_valid():
             portfolio_name = portfolio_serializer.validated_data.get("name")
             if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
-                portfolio_serializer.create(portfolio_serializer.validated_data)
-                return Response({'Portfolio': f'Portfolio with name {portfolio_name} created'},
+                new_portfolio = UserPortfolio.objects.create(crypto_user_id=request.user.id, name=portfolio_name)
+                return Response({'Portfolio': f'Portfolio with name {new_portfolio.name} created'},
                                 status=status.HTTP_200_OK)
             else:
                 return Response(data={"message": "Portfolio with that name and user already exists"},
@@ -190,6 +193,39 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             print(portfolio_serializer.errors)
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    @action(url_path="statistics", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def update_statistics(self, request):
+        for user in CryptoUser.objects.all():
+            print(user)
+            if UserPortfolio.objects.filter(crypto_user=user).exists():
+                print(UserPortfolio.objects.filter(crypto_user=user))
+                for portfolio in  UserPortfolio.objects.filter(crypto_user=user):
+                    start_portfolio_equity = 0
+                    end_portfolio_equity = 0
+                    assets_in_portfolio_set = set()
+                    assets_value = {}
+                    for asset in portfolio.assets.all():
+                        print(portfolio.name, asset.amount, asset.price)
+                        print(asset.asset.coin_id)
+                        start_portfolio_equity += asset.amount * asset.price
+                        assets_in_portfolio_set.add(asset.asset.coin_id)
+                        if not asset.asset.coin_id in assets_value.keys():
+                            assets_value[asset.asset.coin_id] = asset.amount
+                        else:
+                            assets_value[asset.asset.coin_id] += asset.amount
+                    print(f"total portfolio equity: {start_portfolio_equity}")
+                    print(f"assets_in_portfolio_set: {assets_in_portfolio_set}")
+                    print(f"assets_amount: {assets_value}")
+
+                    final_equity = 0
+                    for coin_id, amount in assets_value.items():
+                        final_equity += amount * Asset.objects.get(coin_id=coin_id).current_price
+                    print(f"final equity: {final_equity}")
+                    portfolio.portfolio_change_metrics={"final_equity": float(final_equity)}
+                    portfolio.save()
+        return Response({"data": "OK"}, status=status.HTTP_200_OK)
 
 
 class GlobalMetricsViewSet(viewsets.ModelViewSet):
