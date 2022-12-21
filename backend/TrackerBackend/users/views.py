@@ -23,12 +23,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = CryptoUserSerializer
 
     @action(url_path='info', methods=['GET'], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.IsAuthenticated])  # isAuth
     def user_info(self, request):
         user = request.user
         return Response({'info': CryptoUserSerializer(user).data})
 
-    @action(url_path='users/create', methods=['POST'], detail=False,
+    @action(url_path='create', methods=['POST'], detail=False,
             permission_classes=[permissions.AllowAny])
     def create_user(self, request):
         serializer = CreateUserSerializer(data=request.data)
@@ -42,7 +42,7 @@ class UserViewSet(viewsets.ModelViewSet):
                     email=serializer.validated_data.get('email'))
                 return Response({'Created successfully!': user.username}, status=status.HTTP_200_OK)
             except ValidationError as e:
-                return Response(str(e), status.HTTP_404_NOT_FOUND)
+                return Response({"errors": {"password": e}}, status.HTTP_404_NOT_FOUND)
         return Response({'errors': serializer.errors}, status.HTTP_404_NOT_FOUND)
 
 
@@ -164,13 +164,9 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             permission_classes=[permissions.IsAuthenticated])  # isAuth
     def update_portfolio(self, request):
         symbol_assets = Asset.objects.filter(symbol=request.data.get("assets"))
-        print(symbol_assets[0].coin_id)
         portfolio_serializer = PortfolioSerializer(data={"crypto_user": request.user,
                                                          "name": request.data.get("name"),
                                                          "assets": [symbol_assets[0].coin_id]})
-
-        for asset in symbol_assets:
-            print(asset.market_cap)
 
         if portfolio_serializer.is_valid():
             print(portfolio_serializer.data)
@@ -201,7 +197,7 @@ class GlobalMetricsViewSet(viewsets.ModelViewSet):
     serializer_class = GlobalMetricsSerializer
 
     @action(url_path="get_global_metrics", methods=["GET"], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.AllowAny])
     def get_global_metrics(self, request):
         global_metrics = get_object_or_404(GlobalMetrics, id=1)
         global_metrics_serializer = GlobalMetricsSerializer(global_metrics)
