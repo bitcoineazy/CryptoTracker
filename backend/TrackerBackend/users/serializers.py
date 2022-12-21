@@ -39,7 +39,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CryptoUser
-        fields = ["id", "username", "email"]
+        fields = ["id", "username", "password", "email"]
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

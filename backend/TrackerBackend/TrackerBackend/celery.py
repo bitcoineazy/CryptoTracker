@@ -23,7 +23,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "update_top_250_assets": {
         "task": 'TrackerBackend.tasks.update_top_250_assets',
-        "schedule": 5.0,
+        "schedule": 300.0,
     },
     'update_assets_in_portfolio': {
         'task': 'TrackerBackend.tasks.update_portfolio_assets',
