@@ -83,6 +83,7 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
     def update(self, portfolio, validated_data):
         asset = validated_data.get("asset")
+        print(f"add date: {validated_data.get('add_date')}")
         asset_in_portfolio = AssetForCryptoUser.objects.create(
             asset=asset,
             add_date=validated_data.get("add_date"),
