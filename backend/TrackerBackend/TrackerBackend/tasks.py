@@ -17,3 +17,7 @@ def update_categories():
 @shared_task
 def update_global_metrics():
     call_command("update_global_metrics", )
+
+@shared_task
+def update_top_250_assets():
+    call_command("update_top_250_assets", )

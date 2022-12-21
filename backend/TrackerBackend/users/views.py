@@ -40,7 +40,7 @@ class UserViewSet(viewsets.ModelViewSet):
                     username=serializer.validated_data['username'],
                     password=serializer.validated_data['password'],
                     email=serializer.validated_data.get('email'))
-                return Response({'Created successfully!': user.username})
+                return Response({'Created successfully!': user.username}, status=status.HTTP_200_OK)
             except ValidationError as e:
                 return Response(str(e), status.HTTP_404_NOT_FOUND)
         return Response({'errors': serializer.errors}, status.HTTP_404_NOT_FOUND)
@@ -58,7 +58,7 @@ class AssetViewSet(viewsets.ModelViewSet):
         assets = get_object_or_404(Asset, coin_id=coin_id)
         # print(assets)
         asset_serializer = AssetSerializer(assets)
-        return Response(data=asset_serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(data=asset_serializer.data, status=status.HTTP_200_OK)
 
 
     @action(url_path="fill_assets", methods=["POST"], detail=False,
@@ -77,7 +77,7 @@ class AssetViewSet(viewsets.ModelViewSet):
         ) for asset in json_data.values]
 
         self.queryset.bulk_create(asset_instances)
-        return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_200_OK)
 
     @action(url_path="update_assets", methods=["POST"], detail=False,
             permission_classes=[permissions.AllowAny])  # isAdmin
@@ -115,7 +115,7 @@ class AssetViewSet(viewsets.ModelViewSet):
             )
             print(i)
 
-        return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(data={"message": "База данных успешно обновлена"}, status=status.HTTP_200_OK)
 
 
 class PortfolioViewSet(viewsets.ModelViewSet):
@@ -124,27 +124,27 @@ class PortfolioViewSet(viewsets.ModelViewSet):
 
     # Получение портфеля
     @action(url_path="get_portfolio", methods=["POST"], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.IsAuthenticated])  # isAuth
     def get_portfolio(self, request):
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
             portfolio_name = portfolio_serializer.validated_data.get("name")
             portfolio = get_object_or_404(UserPortfolio, crypto_user_id=request.user.id, name=portfolio_name)
             get_portfolio_serializer = GetPortfolioSerializer(portfolio)
-            return Response(data=get_portfolio_serializer.data)
+            return Response(data=get_portfolio_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(portfolio_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
     @action(url_path="get_portfolio_by_user", methods=["POST"], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.IsAuthenticated])  # isAuth
     def get_portfolio_by_user(self, request):
         portfolio_names = get_list_or_404(UserPortfolio, crypto_user=request.user)
         portfolio_serializer = GetPortfolioByUserSerializer(portfolio_names, many=True)
-        return Response(data=portfolio_serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(data=portfolio_serializer.data, status=status.HTTP_200_OK)
 
     @action(url_path="add_portfolio", methods=["POST"], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.IsAuthenticated])  # isAuth
     def add_portfolio(self, request):
         portfolio_serializer = PortfolioSerializer(data=request.data)
         if portfolio_serializer.is_valid():
@@ -152,7 +152,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
             if not UserPortfolio.objects.filter(crypto_user_id=request.user.id, name=portfolio_name).exists():
                 portfolio_serializer.create(portfolio_serializer.validated_data)
                 return Response({'Portfolio': f'Portfolio with name {portfolio_name} created'},
-                                status=status.HTTP_204_NO_CONTENT)
+                                status=status.HTTP_200_OK)
             else:
                 return Response(data={"message": "Portfolio with that name and user already exists"},
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -161,13 +161,21 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
     @action(url_path="update_portfolio", methods=["POST"], detail=False,
-            permission_classes=[permissions.AllowAny])  # isAuth
+            permission_classes=[permissions.IsAuthenticated])  # isAuth
     def update_portfolio(self, request):
-        portfolio_serializer = PortfolioSerializer(data=request.data)
+        symbol_assets = Asset.objects.filter(symbol=request.data.get("assets"))
+        print(symbol_assets[0].coin_id)
+        portfolio_serializer = PortfolioSerializer(data={"crypto_user": request.user,
+                                                         "name": request.data.get("name"),
+                                                         "assets": [symbol_assets[0].coin_id]})
+
+        for asset in symbol_assets:
+            print(asset.market_cap)
+
         if portfolio_serializer.is_valid():
             print(portfolio_serializer.data)
             portfolio_name = portfolio_serializer.validated_data.get("name")
-            asset_in_portfolio_serializer = AssetForUserSerializer(data={"asset": request.data.get("assets"),
+            asset_in_portfolio_serializer = AssetForUserSerializer(data={"asset": symbol_assets[0].coin_id,
                                                                          "add_date": request.data.get("add_date"),
                                                                          "amount": request.data.get("amount"),
                                                                          "price": request.data.get("price")})
@@ -178,7 +186,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                 return Response({"message": f"Successfully added: {asset_in_portfolio_serializer.data}, "
                                             f"to user: {request.user.username}, "
                                             f"in portfolio: {request.data.get('name')}"},
-                                status=status.HTTP_204_NO_CONTENT)
+                                status=status.HTTP_200_OK)
             else:
                 return Response(asset_in_portfolio_serializer.errors,
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -197,4 +205,4 @@ class GlobalMetricsViewSet(viewsets.ModelViewSet):
     def get_global_metrics(self, request):
         global_metrics = get_object_or_404(GlobalMetrics, id=1)
         global_metrics_serializer = GlobalMetricsSerializer(global_metrics)
-        return Response(global_metrics_serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(global_metrics_serializer.data, status=status.HTTP_200_OK)
