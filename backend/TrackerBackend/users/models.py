@@ -76,7 +76,7 @@ class AssetForCryptoUser(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
                               related_name="asset_amounts")
     add_date = models.DateTimeField(
-        'Дата добавления', auto_now_add=True
+        'Дата добавления', auto_now_add=False, auto_now=False
     )
     amount = models.DecimalField(
         max_digits=50,
@@ -106,7 +106,7 @@ class GlobalMetrics(models.Model):
 
 class UserPortfolio(models.Model):
     crypto_user = models.ForeignKey(CryptoUser, on_delete=models.CASCADE, related_name="user_portfolio", null=True)
-    name = models.CharField(max_length=255, unique=True, default="Main portfolio")
+    name = models.CharField(max_length=255, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     change_24h = models.JSONField(default=dict, null=True)

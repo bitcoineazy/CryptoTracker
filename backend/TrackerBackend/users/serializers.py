@@ -75,12 +75,6 @@ class PortfolioSerializer(serializers.ModelSerializer):
         model = UserPortfolio
         fields = ["crypto_user", "name", "assets"]
 
-    def create(self, validated_data):
-        crypto_user = get_object_or_404(CryptoUser)
-        name = validated_data.get("name")
-
-        return UserPortfolio.objects.create(crypto_user_id=crypto_user.id, name=name)
-
     def update(self, portfolio, validated_data):
         asset = validated_data.get("asset")
         print(f"add date: {validated_data.get('add_date')}")
