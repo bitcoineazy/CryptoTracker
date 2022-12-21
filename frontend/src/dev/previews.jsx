@@ -5,6 +5,7 @@ import HomePage from "../pages/main";
 import UserPage from "../pages/personal_cabinet";
 import Log_in from "../Components/Log_in";
 import ChooseActive from "../Components/ChooseActive";
+import AddPortfolio from "../Components/AddPortfolio";
 
 const ComponentPreviews = () => {
     return (
@@ -20,6 +21,9 @@ const ComponentPreviews = () => {
           </ComponentPreview>
           <ComponentPreview path="/ChooseActive">
             <ChooseActive/>
+          </ComponentPreview>
+          <ComponentPreview path="/AddPortfolio">
+            <AddPortfolio/>
           </ComponentPreview>
         </Previews>
     );

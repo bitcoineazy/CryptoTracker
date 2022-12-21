@@ -17,6 +17,8 @@ import Log_in from "../../Components/Log_in";
 import Registration from "../../Components/Registration";
 import Add_active from "../../Components/Add_active";
 import AssetsInfo from "../../Components/AssetsInfo";
+import Portfolios from "../../Components/Portfilios";
+import AddPortfolio from "../../Components/AddPortfolio";
 
 class MyResponsiveBump extends React.Component {
   render() {
@@ -73,49 +75,22 @@ class MyResponsiveBump extends React.Component {
 MyResponsiveBump.propTypes = {data: PropTypes.any}
 
 
-class Portfolios extends React.Component {
+class AddPortfolioButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [
-        {name: "Портфель № x", total_cost: 1000},
-        {name: "Портфель № x + 1", total_cost: 1200},
-        {name: "Портфель № x + 1 Очень длинное название", total_cost: 1200},
-      ]
-    }
+
   }
 
-  render() {
-    const portfolios_container = className({'column_list': true, 'portfolios_container': true})
-    return (
-        <div className={portfolios_container}>
-          {this.state.data.map(
-              (item) => (
-                  <div className="row_list user_portfolio_reference">
-                    <img src={portfolio_img} alt="" style={{height: 25, width: 25}}/>
-                    <div className="text_list">
-                      <p className="bold_text portfolio_reference_text" style={{userSelect: "text"}}>
-                        {item.name}
-                      </p>
-                      <p className="bold_text grey_text portfolio_reference_text_cost">
-                        {item.total_cost}
-                      </p>
-                    </div>
-                  </div>
-              )
-          )}
-        </div>
-    )
-  }
-}
-
-class AddPortfolio extends React.Component {
   render() {
     return (
         <div className="row_list add_portfolio_button">
           <img src={add_portfolio} alt="" style={{height: 25, width: 25}}/>
-          <div className="bold_text portfolio_reference_text">
-            Add new Portfolio
+          <div className="portfolio_reference_text bold_text">
+            <button className="portfolio_reference_text bold_text" style={{border: 0, background: "rgb(0,0,0,0)"}}
+                    onClick={this.props.onClick}>
+              Add new Portfolio
+            </button>
+
           </div>
 
         </div>
@@ -136,6 +111,9 @@ class UserPage extends React.Component {
       show_log_in: true,
       show_registration: false,
       show_add_active: false,
+      show_add_portfolio: false,
+      update_portfolio_list: false,
+      update_active_list: false,
       rootUrl: 'http://143.244.205.59/api/',
       login: null,
       password: null,
@@ -150,7 +128,6 @@ class UserPage extends React.Component {
 
     }
   }
-
 
 
   render() {
@@ -233,8 +210,15 @@ class UserPage extends React.Component {
           }
           <div className={mainClass}>
             <div className={portfoliosClass}>
-              <Portfolios/>
-              <AddPortfolio/>
+              <Portfolios
+                  token={this.state.token}
+                  update={this.state.update_portfolio_list}
+                  update_done={() => this.setState({update_portfolio_list: false})}
+                  onClick={(name) => this.setState({portfolio_name: name})}
+              />
+              <AddPortfolioButton onClick={() => {
+                this.setState({show_add_portfolio: true})
+              }}/>
             </div>
             <div className={portfolioClass}>
               <div className={active_info_container}>
@@ -350,7 +334,13 @@ class UserPage extends React.Component {
               {
                 //this.state.token
               }
-              <AssetsInfo token={this.state.token} portfolioName={this.state.portfolio_name} mod={0}/>
+              <AssetsInfo
+                  token={this.state.token}
+                  portfolioName={this.state.portfolio_name}
+                  mod={0}
+                  update={this.state.update_active_list}
+                  update_done={() => this.setState({update_active_list: false})}
+              />
               {
                 //this.state.AssetsInfo
               }
@@ -365,7 +355,7 @@ class UserPage extends React.Component {
           }
           <Modal show={this.state.show_log_in} onClose={() => null}>
             <Log_in
-                onClose={()=>null}
+                onClose={() => null}
                 registration={() => this.setState(
                     {
                       show_registration: true,
@@ -402,8 +392,32 @@ class UserPage extends React.Component {
           <Modal
               onClose={() => this.setState({'show_add_active': false})}
               show={this.state.show_add_active}>
-            <Add_active cost={524} onClick={() => this.setState({'show_add_active': false})}
-                        onClose={() => this.setState({'show_add_active': false})}/>
+            <Add_active
+                token={this.state.token}
+                name={this.state.portfolio_name}
+                cost={524}
+                onClick={
+                  () => {
+                    this.setState({show_add_active: false});
+                    this.setState({update_active_list: true});
+                  }
+                }
+                onClose={() => this.setState({show_add_active: false})}
+
+            />
+          </Modal>
+          <Modal
+              onClose={() => this.setState({show_add_portfolio: false})}
+              show={this.state.show_add_portfolio}>
+            <AddPortfolio
+                token={this.state.token}
+                onClick={
+                  () => {
+                    this.setState({show_add_portfolio: false});
+                    this.setState({update_portfolio_list: true});
+                  }}
+                onClose={() => this.setState({show_add_portfolio: false})}
+            />
           </Modal>
 
         </div>

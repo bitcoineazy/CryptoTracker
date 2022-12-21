@@ -29,6 +29,30 @@ export default class projectAPI {
     }
   }
 
+  async getPortfolios(token) {
+    console.log("getPortfolios - start");
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", "Token " + token);
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    let res = await fetch(this.rootUrl + "portfolio/get_portfolio_by_user/", requestOptions)
+    if (res.ok) {
+      res = await res.json();
+      console.log(res);
+      console.log("getPortfolios - end");
+      return res;
+    } else {
+      alert("Не удалось получить доступ к: portfolio/get_portfolio_by_user/")
+      console.log(res.status + " " + await res.json())
+      return null;
+    }
+  }
+
   async getPortfolio(token, name) {
     console.log("getPortfolio - start");
     const myHeaders = new Headers();
@@ -77,6 +101,49 @@ export default class projectAPI {
     console.log(assets);
     console.log("getAssetsByCoinID - end");
     return assets
+  }
+
+  async addPortfolio(token, name) {
+    console.log("addPortfolio - start");
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", "Token " + token);
+
+    let formData = new FormData();
+    formData.append("name", name);
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formData,
+      redirect: 'follow'
+    };
+
+    let res = await fetch(this.rootUrl + "portfolio/add_portfolio/", requestOptions)
+    console.log("addPortfolio - send data");
+    return res
+  }
+
+  async addAsset(token, name, coin_id, data, amount, price) {
+    console.log("addAsset - start");
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", "Token " + token);
+
+    let formData = new FormData();
+    formData.append("name", name);
+    formData.append("assets", coin_id);
+    formData.append("add_date", data);
+    formData.append("amount", amount);
+    formData.append("price", price);
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formData,
+      redirect: 'follow'
+    };
+
+    fetch(this.rootUrl + "portfolio/update_portfolio/", requestOptions)
+    console.log("addAsset - send data");
   }
 
   result2content(portfolio, assets) {

@@ -22,7 +22,13 @@ class AssetsInfo extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if ((prevProps.token !== this.props.token || prevProps.portfolioName !== this.props.portfolioName) && this.props.mod === 0) {
+    if (
+        (
+            prevProps.token !== this.props.token ||
+            prevProps.portfolioName !== this.props.portfolioName ||
+            this.props.update
+        ) && this.props.mod === 0
+    ) {
       this.projectAPI.getPortfolio(this.props.token, this.props.portfolioName).then(portfolio => {
         let coin_id = [];
         for (let portfolioElement of portfolio) {
@@ -35,6 +41,7 @@ class AssetsInfo extends React.Component {
           let content = this.projectAPI.result2content(portfolio, assets)
           console.log(content)
           this.setState({content: content})
+          this.props.update_done()
         })
       })
     }
@@ -59,7 +66,7 @@ class AssetsInfo extends React.Component {
       })
       content.push(
           <div className="grid_first_column grid_box row_list bold_text">
-            <img src={line.img} style={{height: 50, width: 50}}/>
+            <img src={line.img} style={{height: 50, width: 50}} alt=''/>
             <p> {line.name} </p>
           </div>,
           <div className="grid_box grid_column_box regular_text column_list">
@@ -119,12 +126,20 @@ class AssetsInfo extends React.Component {
           }
           {
             //this.state.isLoaded ? this.state.error === null ? <div>Error</div> : content : <div>Loading...</div>
-            content
+            content.map((item) => (
+                item
+            ))
           }
         </div>
     );
   }
 
+}
+
+AssetsInfo.propTypes = {
+  token: PropTypes.string,
+  portfolioName: PropTypes.string,
+  mod: PropTypes.number,
 }
 
 

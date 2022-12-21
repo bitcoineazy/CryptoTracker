@@ -1,0 +1,76 @@
+.AddPortfolio_main {
+    user-select: none;
+
+    border: black 1px solid;
+
+    align-items: flex-start !important;
+    align-content: stretch;
+
+    padding: 10px 20px;
+    gap: 15px;
+
+    width: 450px;
+    height: 200px;
+
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.AddPortfolio_title {
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.AddPortfolio_title_line {
+    align-self: stretch;
+}
+
+.AddPortfolio_close_button {
+    border: 0;
+    background: rgb(0,0,0,0);
+}
+
+.AddPortfolio_input_container {
+    align-self: stretch;
+    gap: 5px;
+    padding: 0px;
+}
+
+.AddPortfolio_input_text {
+    padding: 0px 4px;
+
+    font-size: 20px;
+    line-height: 22px;
+}
+
+.AddPortfolio_text_field {
+    align-self: stretch;
+
+    font-size: 18px;
+
+    user-select: text;
+    caret-color: black;
+
+    padding: 10px 5px;
+
+
+    border: 0.2px solid #000000;
+    border-radius: 3px;
+
+}
+
+.AddPortfolio_forgot_password {
+    align-self: flex-end;
+}
+
+.AddPortfolio_button_container {
+    background: #3861FB;
+    border: 0;
+    border-radius: 3px;
+
+    padding: 10px 5px;
+
+    font-size: 24px;
+    line-height: 22px;
+    align-self: stretch;
+}

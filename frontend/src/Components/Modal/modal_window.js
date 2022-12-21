@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Modal extends React.Component {
+export default class Modal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,5 +52,3 @@ Modal.propTypes = {
   show: PropTypes.bool,
   children: PropTypes.node,
 }
-
-export default Modal;

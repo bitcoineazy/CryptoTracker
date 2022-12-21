@@ -39,7 +39,7 @@ class UserDataGrid extends React.Component {
       content.push(
           <div className="user_assets_data_grid_box-content user_assets_data_grid_box-content-start">
             <img src="free-icon-star-1828970.png"/>
-            <p> {i+1} </p>
+            <p> {i + 1} </p>
             <img src="./free-icon-star-1828970.png"/>
             <p> {line.name} </p>
 
@@ -142,6 +142,7 @@ class HomePage extends React.Component {
       password: null,
       token: null,
       rootUrl: 'http://143.244.205.59/api/',
+      portfolio_name: "1",
       content: []
     }
   }
@@ -259,8 +260,8 @@ class HomePage extends React.Component {
                 <span className="days_price_logo">Сегодняшние цены на криптовалюту по рыночной капитализации</span>
                 <span className="days_price_data">
                         Глобальная капитализация рынка криптовалют составляет
-                        <span className="blue_text"> ₽{56.39} тыс </span>
-                        . Снижение за предыдущий день на <span className="blue_text">{1.14} %</span>.
+                        <span className="blue_text"> ₽{56.39} тыс </span>
+                        . Снижение за предыдущий день на <span className="blue_text">{1.14} %</span>.
                     </span>
               </div>
               <div className="header_tops">
@@ -273,19 +274,20 @@ class HomePage extends React.Component {
               <div className="user_assets">
                 <div className="user_assets_menu">
                   <div className="user_assets_menu_item_show">
-                    <span className="top_head_text">Портфель</span>
+                    <span className="top_head_text">Активы</span>
                   </div>
                   <div className="user_assets_menu_fill"/>
                 </div>
                 <div className="user_assets_data">
-                  <AssetsInfo token={this.state.token} content={this.state.content}/>
+                  <AssetsInfo token={this.state.token} portfolioName={this.state.portfolio_name} mod={0}/>
                 </div>
               </div>
             </div>
             <Footer/>
           </div>
-          <Modal show={this.state.show_log_in}>
+          <Modal show={this.state.show_log_in} onClose={() => null}>
             <Log_in
+                onClose={() => null}
                 registration={() => this.setState(
                     {
                       show_registration: true,
@@ -300,9 +302,11 @@ class HomePage extends React.Component {
                       }
                   );
                   this.getToken(login, password)
-                }}/>
+                }}
+                tokenGet={(token) => this.setState({token: token})}
+            />
           </Modal>
-          <Modal show={this.state.show_registration}>
+          <Modal show={this.state.show_registration} onClose={() => null}>
             <Registration onClick={
               (login, password) => {
                 this.setState({
@@ -312,7 +316,8 @@ class HomePage extends React.Component {
                 })
                 this.addUser(login, password)
               }
-            }/>
+            } tokenGet={(token) => this.setState({token: token})}
+            />
           </Modal>
         </div>
 
