@@ -93,6 +93,7 @@ class AssetForCryptoUser(models.Model):
     class Meta:
         verbose_name = "Актив для пользователя"
         verbose_name_plural = verbose_name
+        ordering = ("add_date", )
 
     def __str__(self):
         return self.asset.coin_id
@@ -109,9 +110,9 @@ class UserPortfolio(models.Model):
     name = models.CharField(max_length=255, default="Main portfolio")
     total_balance = models.DecimalField(max_digits=100, decimal_places=15, null=True)
     total_profit = models.DecimalField(max_digits=100, decimal_places=15, null=True)
-    change_24h = models.JSONField(default=dict, null=True)
     assets = models.ManyToManyField(AssetForCryptoUser, verbose_name="Активы в портфеле", default={})
     portfolio_change_metrics = models.JSONField(null=True, default=dict)
+    portfolio_historical_graph = models.JSONField(null=True, default=dict)
 
     class Meta:
         verbose_name = "Портфель пользователя"

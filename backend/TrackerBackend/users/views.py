@@ -1,4 +1,5 @@
 import os
+import time
 from django.conf import settings
 from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action
@@ -224,6 +225,49 @@ class PortfolioViewSet(viewsets.ModelViewSet):
                         final_equity += amount * Asset.objects.get(coin_id=coin_id).current_price
                     print(f"final equity: {final_equity}")
                     portfolio.portfolio_change_metrics={"final_equity": float(final_equity)}
+                    portfolio.save()
+        return Response({"data": "OK"}, status=status.HTTP_200_OK)
+
+    @action(url_path="statistics_graph", methods=["POST"], detail=False,
+            permission_classes=[permissions.AllowAny])  # isAuth
+    def update_statistics_graph(self, request):
+        for user in CryptoUser.objects.all():
+            # print(user)
+            if UserPortfolio.objects.filter(crypto_user=user).exists():
+                # print(UserPortfolio.objects.filter(crypto_user=user))
+                for portfolio in UserPortfolio.objects.filter(crypto_user=user):
+                    start_portfolio_equity = 0
+                    end_portfolio_equity = 0
+                    assets_in_portfolio_set = set()
+                    assets_value = {}
+                    days_set = []
+                    historical_graph = {}
+                    for asset in portfolio.assets.all():
+                        print(portfolio.name, asset.amount, asset.price, int(time.mktime(asset.add_date.timetuple())), asset.add_date.strftime("%d-%m-%Y"))
+                        if not asset.add_date.strftime("%d-%m-%Y") in historical_graph.keys():
+                            historical_graph[asset.add_date.strftime("%d-%m-%Y")] = [{asset.asset.coin_id: asset.amount}]
+                        else:
+                            if not any([item.get(asset.asset.coin_id) for item in historical_graph[asset.add_date.strftime("%d-%m-%Y")]]):
+                                historical_graph[asset.add_date.strftime("%d-%m-%Y")].append({asset.asset.coin_id: asset.amount})
+                            else:
+                                historical_graph[asset.add_date.strftime("%d-%m-%Y")].
+                        # print(asset.asset.coin_id)
+                        start_portfolio_equity += asset.amount * asset.price
+                        assets_in_portfolio_set.add(asset.asset.coin_id)
+                        if not asset.asset.coin_id in assets_value.keys():
+                            assets_value[asset.asset.coin_id] = asset.amount
+                        else:
+                            assets_value[asset.asset.coin_id] += asset.amount
+                    print(f"total portfolio equity: {start_portfolio_equity}")
+                    print(f"assets_in_portfolio_set: {assets_in_portfolio_set}")
+                    print(f"assets_amount: {assets_value}")
+
+                    final_equity = 0
+                    for coin_id, amount in assets_value.items():
+                        final_equity += amount * Asset.objects.get(coin_id=coin_id).current_price
+                    print(f"final equity: {final_equity}")
+                    print(f"historical_graph: {historical_graph}")
+                    portfolio.portfolio_change_metrics = {"final_equity": float(final_equity)}
                     portfolio.save()
         return Response({"data": "OK"}, status=status.HTTP_200_OK)
 

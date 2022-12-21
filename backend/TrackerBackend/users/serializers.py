@@ -59,10 +59,11 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class GetPortfolioByUserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=255, read_only=True)
     assets = AssetForUserSerializer(many=True, read_only=True)
+    portfolio_change_metrics = serializers.JSONField(read_only=True)
 
     class Meta:
         model = UserPortfolio
-        fields = ["name", "assets"]
+        fields = ["name", "assets", "portfolio_change_metrics"]
 
 class PortfolioSerializer(serializers.ModelSerializer):
     crypto_user = CryptoUserSerializer(read_only=True)
