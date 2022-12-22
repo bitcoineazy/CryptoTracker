@@ -24,3 +24,7 @@ def update_top_250_assets():
 @shared_task
 def update_portfolio_statistics():
     call_command("update_portfolio_statistics", )
+
+@shared_task
+def update_portfolio_graph():
+    call_command("update_portfolio_graph", )
