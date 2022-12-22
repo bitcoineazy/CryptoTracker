@@ -28,8 +28,8 @@ app.conf.beat_schedule = {
         "task": "TrackerBackend.tasks.update_portfolio_statistics",
         "schedule": 15.0,
     },
-    "update_portfolio_graph": {
-        "task": "TrackerBackend.tasks.update_portfolio_graph",
+    "update_portfolio_historical_graph": {
+        "task": "TrackerBackend.tasks.update_portfolio_historical_graph",
         "schedule": 30.0,
     },
     "update_categories": {

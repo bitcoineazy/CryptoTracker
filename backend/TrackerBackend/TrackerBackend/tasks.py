@@ -26,5 +26,5 @@ def update_portfolio_statistics():
     call_command("update_portfolio_statistics", )
 
 @shared_task
-def update_portfolio_graph():
-    call_command("update_portfolio_graph", )
+def update_portfolio_historical_graph():
+    call_command("update_portfolio_historical_graph", )
