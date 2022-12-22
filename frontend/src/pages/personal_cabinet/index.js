@@ -2,6 +2,7 @@ import React from "react"
 import * as PropTypes from "prop-types";
 import className from "classname"
 import {ResponsiveBump} from '@nivo/bump'
+import { ResponsiveLine } from '@nivo/line'
 
 import "./personal_cabinet.css"
 //import styles from "./personal_cabinet.css"
@@ -22,6 +23,178 @@ import AddPortfolio from "../../Components/AddPortfolio";
 import Footer from "../../Components/footer";
 import Header from "../../Components/Header";
 
+class MyResponsiveLine extends React.Component {
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
+    return (
+        <ResponsiveLine
+            data={this.props.data}
+            margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+            xScale={{ type: 'point' }}
+            yScale={{
+              type: 'linear',
+              min: 'auto',
+              max: 'auto',
+              stacked: true,
+              reverse: false
+            }}
+            yFormat=" >-.2f"
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+              orient: 'bottom',
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: 'transportation',
+              legendOffset: 36,
+              legendPosition: 'middle'
+            }}
+            axisLeft={{
+              orient: 'left',
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: 'count',
+              legendOffset: -40,
+              legendPosition: 'middle'
+            }}
+            pointSize={10}
+            pointColor={{ theme: 'background' }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: 'serieColor' }}
+            pointLabelYOffset={-12}
+            useMesh={true}
+            legends={[
+              {
+                anchor: 'bottom-right',
+                direction: 'column',
+                justify: false,
+                translateX: 100,
+                translateY: 0,
+                itemsSpacing: 0,
+                itemDirection: 'left-to-right',
+                itemWidth: 80,
+                itemHeight: 20,
+                itemOpacity: 0.75,
+                symbolSize: 12,
+                symbolShape: 'circle',
+                symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                effects: [
+                  {
+                    on: 'hover',
+                    style: {
+                      itemBackground: 'rgba(0, 0, 0, .03)',
+                      itemOpacity: 1
+                    }
+                  }
+                ]
+              }
+            ]}
+            theme={{
+              "background": "#ffffff",
+              "textColor": "#333333",
+              "fontSize": 11,
+              "axis": {
+                "domain": {
+                  "line": {
+                    "stroke": "#777777",
+                    "strokeWidth": 1
+                  }
+                },
+                "legend": {
+                  "text": {
+                    "fontSize": 0,
+                    "fill": "#333333"
+                  }
+                },
+                "ticks": {
+                  "line": {
+                    "stroke": "#777777",
+                    "strokeWidth": 1
+                  },
+                  "text": {
+                    "fontSize": 9,
+                    "fill": "#333333"
+                  }
+                }
+              },
+              "grid": {
+                "line": {
+                  "stroke": "#dddddd",
+                  "strokeWidth": 1
+                }
+              },
+              "legends": {
+                "title": {
+                  "text": {
+                    "fontSize": 11,
+                    "fill": "#333333"
+                  }
+                },
+                "text": {
+                  "fontSize": 11,
+                  "fill": "#333333"
+                },
+                "ticks": {
+                  "line": {},
+                  "text": {
+                    "fontSize": 10,
+                    "fill": "#333333"
+                  }
+                }
+              },
+              "annotations": {
+                "text": {
+                  "fontSize": 13,
+                  "fill": "#333333",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "link": {
+                  "stroke": "#000000",
+                  "strokeWidth": 1,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "outline": {
+                  "stroke": "#000000",
+                  "strokeWidth": 2,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "symbol": {
+                  "fill": "#000000",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                }
+              },
+              "tooltip": {
+                "container": {
+                  "background": "#ffffff",
+                  "color": "#333333",
+                  "fontSize": 12
+                },
+                "basic": {},
+                "chip": {},
+                "table": {},
+                "tableCell": {},
+                "tableCellValue": {}
+              }
+            }}
+        />
+    );
+  }
+}
+
 class MyResponsiveBump extends React.Component {
   constructor(props) {
     super(props);
@@ -32,33 +205,22 @@ class MyResponsiveBump extends React.Component {
     return (
         <ResponsiveBump
             data={this.props.data}
-            xPadding={0.5}
-            colors={{scheme: 'spectral'}}
+            colors={{ scheme: 'spectral' }}
             lineWidth={3}
-            activeLineWidth={6}
-            inactiveLineWidth={5}
+            activeLineWidth={5}
+            inactiveLineWidth={3}
             inactiveOpacity={0.15}
-            startLabelPadding={15}
-            startLabelTextColor={{from: 'color', modifiers: []}}
             pointSize={10}
             activePointSize={16}
-            inactivePointSize={0}
-            pointColor={{theme: 'background'}}
+            pointColor={{ theme: 'background' }}
             pointBorderWidth={3}
             activePointBorderWidth={3}
-            pointBorderColor={{from: 'serie.color'}}
-            axisTop={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: '',
-              legendPosition: 'middle',
-              legendOffset: -36
-            }}
+            pointBorderColor={{ from: 'serie.color' }}
+            axisTop={null}
             axisBottom={{
               tickSize: 5,
               tickPadding: 5,
-              tickRotation: 0,
+              tickRotation: 33,
               legend: '',
               legendPosition: 'middle',
               legendOffset: 32
@@ -71,8 +233,103 @@ class MyResponsiveBump extends React.Component {
               legendPosition: 'middle',
               legendOffset: -40
             }}
-            margin={{top: 40, right: 100, bottom: 40, left: 60}}
+            margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
             axisRight={null}
+            theme={{
+              "background": "#ffffff",
+              "textColor": "#333333",
+              "fontSize": 11,
+              "axis": {
+                "domain": {
+                  "line": {
+                    "stroke": "#777777",
+                    "strokeWidth": 1
+                  }
+                },
+                "legend": {
+                  "text": {
+                    "fontSize": 0,
+                    "fill": "#333333"
+                  }
+                },
+                "ticks": {
+                  "line": {
+                    "stroke": "#777777",
+                    "strokeWidth": 1
+                  },
+                  "text": {
+                    "fontSize": 9,
+                    "fill": "#333333"
+                  }
+                }
+              },
+              "grid": {
+                "line": {
+                  "stroke": "#dddddd",
+                  "strokeWidth": 1
+                }
+              },
+              "legends": {
+                "title": {
+                  "text": {
+                    "fontSize": 11,
+                    "fill": "#333333"
+                  }
+                },
+                "text": {
+                  "fontSize": 11,
+                  "fill": "#333333"
+                },
+                "ticks": {
+                  "line": {},
+                  "text": {
+                    "fontSize": 10,
+                    "fill": "#333333"
+                  }
+                }
+              },
+              "annotations": {
+                "text": {
+                  "fontSize": 13,
+                  "fill": "#333333",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "link": {
+                  "stroke": "#000000",
+                  "strokeWidth": 1,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "outline": {
+                  "stroke": "#000000",
+                  "strokeWidth": 2,
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                },
+                "symbol": {
+                  "fill": "#000000",
+                  "outlineWidth": 2,
+                  "outlineColor": "#ffffff",
+                  "outlineOpacity": 1
+                }
+              },
+              "tooltip": {
+                "container": {
+                  "background": "#ffffff",
+                  "color": "#333333",
+                  "fontSize": 12
+                },
+                "basic": {},
+                "chip": {},
+                "table": {},
+                "tableCell": {},
+                "tableCellValue": {}
+              }
+            }}
         />
     );
   }
@@ -316,9 +573,8 @@ class UserPage extends React.Component {
                   </div>
                   <div className="graph">
                     <div className="graph_img">
-                      <MyResponsiveBump data={[
-                        this.state.graphData
-                      ]}/>
+                      <MyResponsiveLine data={[this.state.graphData]}/>
+
                     </div>
                   </div>
                 </div>

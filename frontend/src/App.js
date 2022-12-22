@@ -20,10 +20,8 @@ function App() {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/home" element={<Home/>} />
+            <Route path="/" element={<Home/>} />
             <Route path="/user" element={<User/>} />
-            <Route path="/header" element={<Header/>}/>
-            <Route path="/footer" element={<Footer/>}/>
           </Routes>
         </Suspense>
       </Router>

@@ -32,6 +32,12 @@ export default class Portfolios extends React.Component {
           }
 
         }
+        data.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name == b.name) return 0;
+          if (a.name < b.name) return -1;
+        })
+        console.log(graph)
         this.setState({data: data});
         this.props.update_done(portfolio_cost, graph)
       })

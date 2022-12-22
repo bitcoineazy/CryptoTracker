@@ -23,7 +23,7 @@ class Header extends React.Component {
               <div className="text_curr_1">
                 <span className="text_curr_2">Валюта $</span>
               </div>
-              <a href="home">
+              <a href="/">
                 <div className="panel_menu">
                   <div className="v125_126">
                     <img src={home_svg} alt="pannel here"/>
