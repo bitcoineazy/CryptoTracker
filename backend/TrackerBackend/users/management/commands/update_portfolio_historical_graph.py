@@ -108,14 +108,16 @@ class Command(BaseCommand):
                                                     assets_timeline[date][suitable_index][coin_id]
                                             if not coin_id in historical_api_dict.keys():
                                                 print(f"pair {pair[0]} {pair[1]}")
-                                                historical_api_dict[coin_id] = [
-                                                    {date: pair[1] * float(asset_amounts_for_api[coin_id])}]
+                                                if coin_id in asset_amounts_for_api.keys():
+                                                    historical_api_dict[coin_id] = [
+                                                        {date: pair[1] * float(asset_amounts_for_api[coin_id])}]
                                             else:
                                                 print(f"pair {pair[0]} {pair[1]}")
-                                                print(
-                                                    f"dynamic amount for now: {float(asset_amounts_for_api[coin_id])}")
-                                                historical_api_dict[coin_id].append(
-                                                    {date: pair[1] * float(asset_amounts_for_api[coin_id])})
+                                                if coin_id in asset_amounts_for_api.keys():
+                                                    print(
+                                                        f"dynamic amount for now: {float(asset_amounts_for_api[coin_id])}")
+                                                    historical_api_dict[coin_id].append(
+                                                        {date: pair[1] * float(asset_amounts_for_api[coin_id])})
                     print(f"total portfolio equity: {start_portfolio_equity}")
                     print(f"assets_in_portfolio_set: {assets_in_portfolio_set}")
                     print(f"assets_amount: {assets_value}")

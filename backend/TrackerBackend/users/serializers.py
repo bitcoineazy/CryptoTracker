@@ -96,10 +96,12 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class GetPortfolioSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=255)
     assets = AssetForUserSerializer(many=True, read_only=True)
+    portfolio_change_metrics = serializers.JSONField(read_only=True)
+    portfolio_historical_graph = serializers.JSONField(read_only=True)
 
     class Meta:
         model = UserPortfolio
-        fields = ["name", "assets"]
+        fields = ["name", "assets", "portfolio_change_metrics", "portfolio_historical_graph"]
 
 class GlobalMetricsSerializer(serializers.ModelSerializer):
     total_market_cap = serializers.DecimalField(decimal_places=5, max_digits=100, read_only=True)
