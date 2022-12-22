@@ -36,12 +36,13 @@ services:
     env_file:
       - ./.env
 
-#  frontend:
-#    image: noble6/cryptotracker_frontend:latest
-#    volumes:
-#      - frontend_value:/app/build/
-#    depends_on:
-#      - db
+  frontend:
+    image: noble6/cryptotracker_frontend:latest
+    volumes:
+      - frontend_value:/app/build/
+    depends_on:
+      - db
+      - backend
 
   nginx:
     image: nginx:1.19.3
@@ -55,7 +56,7 @@ services:
       - media_value:/code/media/
     depends_on:
       - backend
-      #- frontend
+      - frontend
 
   flower:
     build: ../backend/TrackerBackend
