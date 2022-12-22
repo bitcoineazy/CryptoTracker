@@ -17,11 +17,12 @@
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 ## Установка и запуск
-Проект разбит на 6 docker-контейнеров:
+Проект разбит на 7 docker-контейнеров:
 - backend — бэкенд проекта
 - frontend — фронтенд проекта
 - celery — асинхронные периодические задачи для бэкенда
-- celery-beat — планировщик задач для celery
+- celery-beat — планировщик задач для celer
+- flower — админка для Celery
 - postgres — образ базы данных PostgreSQL
 - nginx — web-сервер nginx
 
