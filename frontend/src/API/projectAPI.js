@@ -100,7 +100,36 @@ export default class projectAPI {
     }
     console.log(assets);
     console.log("getAssetsByCoinID - end");
-    return assets
+    return assets;
+  }
+
+  getGraph(token, name) {
+
+  }
+
+  async addUser(email, password) {
+    let formData = new FormData();
+    formData.append("username", email);
+    formData.append("password", password);
+    formData.append("email", email);
+
+    let requestOptions = {
+      method: 'POST',
+      body: formData,
+      redirect: 'follow'
+    };
+    console.log("addUser - start");
+    let res = await fetch( this.rootUrl + "users/create/", requestOptions);
+    if (res.status === 200) {
+      let token = await res.json()
+      token = token.token
+      console.log(token);
+      await this.addPortfolio(token, "Портфель");
+      return token;
+    }
+    if (res.status === 404) {
+      alert("User already exist");
+    }
   }
 
   async addPortfolio(token, name) {

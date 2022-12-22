@@ -19,11 +19,16 @@ export default class Portfolios extends React.Component {
       console.log('token');
       this.projectAPI.getPortfolios(this.props.token).then(portfolios => {
         let data = [];
+        let portfolio_cost = null;
         for (let portfolio of portfolios) {
-          data.push({name: portfolio.name, total_cost: 0});
+          data.push({name: portfolio.name, total_cost: portfolio.portfolio_change_metrics.final_equity});
+          if (portfolio.name === this.props.portfolioName) {
+            portfolio_cost = portfolio.portfolio_change_metrics.final_equity;
+          }
+
         }
         this.setState({data: data});
-        this.props.update_done()
+        this.props.update_done(portfolio_cost)
       })
     }
   }
@@ -37,14 +42,24 @@ export default class Portfolios extends React.Component {
         <div className={portfolios_container}>
           {this.state.data.map(
               (item) => (
-                  <button style={{border: 0, background: 'rgb(0,0,0,0)'}} onClick={() => this.props.onClick(item.name)} className="row_list user_portfolio_reference">
+                  <button
+                      style={{
+                        border: 0,
+                        background: this.props.portfolioName === item.name ? "rgba(0,0,0,0.04)" : 'rgb(0,0,0,0)'
+                      }}
+                      onClick={
+                        async () => {
+                          let graph = await this.projectAPI.getGraph(this.state.token, item.name)
+                          this.props.onClick(item.name, item.total_cost, graph)
+                        }}
+                      className="row_list user_portfolio_reference">
                     <img src={portfolio_img} alt="" style={{height: 25, width: 25}}/>
                     <div className="text_list">
                       <p className="bold_text portfolio_reference_text" style={{userSelect: "text"}}>
                         {item.name}
                       </p>
                       <p className="bold_text grey_text portfolio_reference_text_cost">
-                        {item.total_cost}
+                        {item.total_cost.toFixed(2)}
                       </p>
                     </div>
                   </button>

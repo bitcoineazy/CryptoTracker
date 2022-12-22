@@ -1,6 +1,9 @@
 
 .main_line {
-    background: linear-gradient(rgba(255,255,255,1), rgba(241,250,255,1));
+    /*
+    background: linear-gradient(rgba(255,255,255,1), rgba(241,250,255,1))
+     */
+    ;
 }
 
 .logo_value {

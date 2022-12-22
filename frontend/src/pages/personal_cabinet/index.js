@@ -19,13 +19,19 @@ import Add_active from "../../Components/Add_active";
 import AssetsInfo from "../../Components/AssetsInfo";
 import Portfolios from "../../Components/Portfilios";
 import AddPortfolio from "../../Components/AddPortfolio";
+import Footer from "../../Components/footer";
+import Header from "../../Components/Header";
 
 class MyResponsiveBump extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
   render() {
-    let {data /* see data tab */} = this.props;
     return (
         <ResponsiveBump
-            data={data}
+            data={this.props.data}
             xPadding={0.5}
             colors={{scheme: 'spectral'}}
             lineWidth={3}
@@ -103,11 +109,12 @@ class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active_cost: 12_345.6,
+      portfolio_cost: 12_345.6,
       active_change_percent: 3.14,
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
+      graphData: [],
       show_log_in: true,
       show_registration: false,
       show_add_active: false,
@@ -115,10 +122,8 @@ class UserPage extends React.Component {
       update_portfolio_list: false,
       update_active_list: false,
       rootUrl: 'http://143.244.205.59/api/',
-      login: null,
-      password: null,
       token: null,
-      portfolio_name: "1",
+      portfolio_name: "Портфель",
       content: [],
     }
   }
@@ -205,154 +210,159 @@ class UserPage extends React.Component {
 
     return (
         <div className={bodyClass}>
-          {
-            //<Header/>
-          }
-          <div className={mainClass}>
-            <div className={portfoliosClass}>
-              <Portfolios
-                  token={this.state.token}
-                  update={this.state.update_portfolio_list}
-                  update_done={() => this.setState({update_portfolio_list: false})}
-                  onClick={(name) => this.setState({portfolio_name: name})}
-              />
-              <AddPortfolioButton onClick={() => {
-                this.setState({show_add_portfolio: true})
-              }}/>
-            </div>
-            <div className={portfolioClass}>
-              <div className={active_info_container}>
-                <div className={active_info}>
-                  <div className={active_cost_container}>
-                    <div className={active_cost}>
-                      <p className={active_cost_text}>
-                        $ {this.state.active_cost}
-                      </p>
-                      <div className={active_change_percent_container}>
-                        <div className="active_change_percent_status">
-                          {
-                            this.state.active_change_percent !== 0 ?
-                                <img src={this.state.active_change_percent > 0 ? UP : DOWN} alt=""
-                                     style={{height: 15, width: 15}}/> : null
-                          }
-                        </div>
-                        <p className="white_text bold_text active_change_percent_text">
-                          {Math.abs(this.state.active_change_percent)} %
-                        </p>
-                      </div>
-                    </div>
-                    <div className="row_list active_change_cost_container">
-                      <p className={active_change_cost_text}>
-                        {this.state.active_change_cost === 0 ? null : this.state.active_change_cost > 0 ? "+" : "-"} $ {Math.abs(this.state.active_change_cost)}
-                      </p>
-                      <div className="active_change_cost_time_interval_container">
-                        <p className="bold_text row_list grey_background active_change_cost_time_interval_text">
-                          24h
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <button className="row_list button_active_add" onClick={() => {
-                    this.setState({'show_add_active': true})
-                  }}>
-                    <div className="white_text button_active_add_icon">
-                      <img src={add_active} style={{width: 25, height: 25}} alt=''/>
-                    </div>
-                    <p className="white_text button_active_add_text">
-                      add new
-                    </p>
-                  </button>
-                </div>
-                <div className="space_between_row graph_control">
-                  <div className="row_list grey_background graph_type">
-                    <p className={graph} onClick={() => this.setState({"graph_type": 0})}>
-                      График
-                    </p>
-                    <p className={normal_distribution} onClick={() => this.setState({"graph_type": 1})}>
-                      Распределение
-                    </p>
-                    <p className={statistic} onClick={() => this.setState({"graph_type": 2})}>
-                      Статистика
-                    </p>
-                  </div>
-                  <div className="row_list grey_background graph_view_interval">
-                    <p className={graph_view_interval_option_0}
-                       onClick={() => this.setState({"history_interval": 0})}>
-                      24 ч.
-                    </p>
-                    <p className={graph_view_interval_option_1}
-                       onClick={() => this.setState({"history_interval": 1})}>
-                      7D
-                    </p>
-                    <p className={graph_view_interval_option_2}
-                       onClick={() => this.setState({"history_interval": 2})}>
-                      30D
-                    </p>
-                    <p className={graph_view_interval_option_3}
-                       onClick={() => this.setState({"history_interval": 3})}>
-                      90D
-                    </p>
-                    <p className={graph_view_interval_option_4}
-                       onClick={() => this.setState({"history_interval": 4})}>
-                      ALL
-                    </p>
 
-                  </div>
-                </div>
-                <div className="graph">
-                  <div className="graph_img">
-                    <MyResponsiveBump data={[
-                      {
-                        "id": "Serie 1",
-                        "data": [
-                          {
-                            "x": 2000,
-                            "y": 1
-                          },
-                          {
-                            "x": 2001,
-                            "y": 9
-                          },
-                          {
-                            "x": 2002,
-                            "y": 2
-                          },
-                          {
-                            "x": 2003,
-                            "y": 6
-                          },
-                          {
-                            "x": 2004,
-                            "y": 3
-                          }
-                        ]
-                      }
-                    ]}/>
-                  </div>
-                </div>
+          <div>
+            <Header/>
+            <div className={mainClass}>
+              <div className={portfoliosClass}>
+                <Portfolios
+                    token={this.state.token}
+                    update={this.state.update_portfolio_list}
+                    update_done={(cost) => {
+                      this.setState({update_portfolio_list: false});
+                      this.setState({portfolio_cost: cost})
+                    }}
+                    onClick={
+                      (name, cost, dataGraph) => {
+                        this.setState({portfolio_name: name});
+                        this.setState({portfolio_cost: cost});
+                        this.setState({graphData: dataGraph});
+                      }}
+                    portfolioName={this.state.portfolio_name}
+                />
+                <AddPortfolioButton onClick={() => {
+                  this.setState({show_add_portfolio: true})
+                }}/>
               </div>
-              {
-                //this.state.token
-              }
-              <AssetsInfo
-                  token={this.state.token}
-                  portfolioName={this.state.portfolio_name}
-                  mod={0}
-                  update={this.state.update_active_list}
-                  update_done={() => this.setState({update_active_list: false})}
-              />
-              {
-                //this.state.AssetsInfo
-              }
+              <div className={portfolioClass}>
+                <div className={active_info_container}>
+                  <div className={active_info}>
+                    <div className={active_cost_container}>
+                      <div className={active_cost}>
+                        <p className={active_cost_text}>
+                          $ {this.state.portfolio_cost.toFixed(3)}
+                        </p>
+                        <div className={active_change_percent_container}>
+                          <div className="active_change_percent_status">
+                            {
+                              this.state.active_change_percent !== 0 ?
+                                  <img src={this.state.active_change_percent > 0 ? UP : DOWN} alt=""
+                                       style={{height: 15, width: 15}}/> : null
+                            }
+                          </div>
+                          <p className="white_text bold_text active_change_percent_text">
+                            {Math.abs(this.state.active_change_percent)} %
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row_list active_change_cost_container">
+                        <p className={active_change_cost_text}>
+                          {this.state.active_change_cost === 0 ? null : this.state.active_change_cost > 0 ? "+" : "-"} $ {Math.abs(this.state.active_change_cost)}
+                        </p>
+                        <div className="active_change_cost_time_interval_container">
+                          <p className="bold_text row_list grey_background active_change_cost_time_interval_text">
+                            24h
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <button className="row_list button_active_add" onClick={() => {
+                      this.setState({'show_add_active': true})
+                    }}>
+                      <div className="white_text button_active_add_icon">
+                        <img src={add_active} style={{width: 25, height: 25}} alt=''/>
+                      </div>
+                      <p className="white_text button_active_add_text">
+                        add new
+                      </p>
+                    </button>
+                  </div>
+                  <div className="space_between_row graph_control">
+                    <div className="row_list grey_background graph_type">
+                      <p className={graph} onClick={() => this.setState({"graph_type": 0})}>
+                        График
+                      </p>
+                      <p className={normal_distribution} onClick={() => this.setState({"graph_type": 1})}>
+                        Распределение
+                      </p>
+                      <p className={statistic} onClick={() => this.setState({"graph_type": 2})}>
+                        Статистика
+                      </p>
+                    </div>
+                    <div className="row_list grey_background graph_view_interval">
+                      <p className={graph_view_interval_option_0}
+                         onClick={() => this.setState({"history_interval": 0})}>
+                        24 ч.
+                      </p>
+                      <p className={graph_view_interval_option_1}
+                         onClick={() => this.setState({"history_interval": 1})}>
+                        7D
+                      </p>
+                      <p className={graph_view_interval_option_2}
+                         onClick={() => this.setState({"history_interval": 2})}>
+                        30D
+                      </p>
+                      <p className={graph_view_interval_option_3}
+                         onClick={() => this.setState({"history_interval": 3})}>
+                        90D
+                      </p>
+                      <p className={graph_view_interval_option_4}
+                         onClick={() => this.setState({"history_interval": 4})}>
+                        ALL
+                      </p>
 
+                    </div>
+                  </div>
+                  <div className="graph">
+                    <div className="graph_img">
+                      <MyResponsiveBump data={[
+                        {
+                          "id": "Serie 1",
+                          "data": [
+                            {
+                              "x": 2000,
+                              "y": 1
+                            },
+                            {
+                              "x": 2001,
+                              "y": 9
+                            },
+                            {
+                              "x": 2002,
+                              "y": 2
+                            },
+                            {
+                              "x": 2003,
+                              "y": 6
+                            },
+                            {
+                              "x": 2004,
+                              "y": 3
+                            }
+                          ]
+                        }
+                      ]}/>
+                    </div>
+                  </div>
+                </div>
+                {
+                  //this.state.token
+                }
+                <AssetsInfo
+                    token={this.state.token}
+                    portfolioName={this.state.portfolio_name}
+                    mod={0}
+                    update={this.state.update_active_list}
+                    update_done={() => this.setState({update_active_list: false})}
+                />
+                {
+                  //this.state.AssetsInfo
+                }
+
+              </div>
             </div>
-          </div>
-          {
-            /*
-
             <Footer/>
-             */
-          }
+          </div>
           <Modal show={this.state.show_log_in} onClose={() => null}>
             <Log_in
                 onClose={() => null}
@@ -362,11 +372,9 @@ class UserPage extends React.Component {
                       show_log_in: false,
                     })
                 }
-                onClick={(login, password) => {
+                onClick={() => {
                   this.setState({
                         show_log_in: false,
-                        login: login,
-                        password: password
                       }
                   );
                   //this.getToken(login, password)
@@ -377,13 +385,11 @@ class UserPage extends React.Component {
           <Modal show={this.state.show_registration} onClose={() => null}>
             <Registration
                 onClick={
-                  (login, password) => {
+                  () => {
                     this.setState({
-                      'show_registration': false,
-                      login: login,
-                      password: password,
+                      show_registration: false,
                     })
-                    this.addUser(login, password)
+                    //this.addUser(login, password)
                   }
                 }
                 tokenGet={(token) => this.setState({token: token})}

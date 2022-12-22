@@ -9,91 +9,6 @@ import Add_active from "../../Components/Add_active";
 import AssetsInfo from "../../Components/AssetsInfo";
 import Header from "../../Components/Header";
 
-class UserDataGrid extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      headers: ["Наименование", "Количество", "Цена", "Подъём 1", "Подъём 2", "Подъём 3", "Подъём 4"],
-      content: [
-        {name: "name1", count: 3, price: 80, up_1: 0.9, up_2: 0.14, up_3: 0.15, up_4: 0.20},
-        {name: "name2", count: 4, price: 70, up_1: 0.1, up_2: 0.13, up_3: 0.16, up_4: 0.19},
-        {name: "name3", count: 5, price: 60, up_1: 0.11, up_2: 0.12, up_3: 0.17, up_4: 0.18},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-        {name: "name X", count: 999, price: 999, up_1: 0.2, up_2: 0.2, up_3: 0.2, up_4: 0.2},
-      ]
-    }
-  }
-
-
-  render() {
-    const content = []
-    for (let i = 0; i < this.state.content.length; i++) {
-      let line = this.state.content[i]
-      content.push(
-          <div className="user_assets_data_grid_box-content user_assets_data_grid_box-content-start">
-            <img src="free-icon-star-1828970.png"/>
-            <p> {i + 1} </p>
-            <img src="./free-icon-star-1828970.png"/>
-            <p> {line.name} </p>
-
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            <div>{line.count}</div>
-
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end">
-            <div>{line.price}</div>
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end user_assets_up">
-            <div>{line.up_1}</div>
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end user_assets_up">
-            <div>{line.up_2}</div>
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end user_assets_up">
-            <div>{line.up_3}</div>
-          </div>
-      )
-      content.push(
-          <div className="user_assets_data_grid_box-content-end user_assets_up">
-            <div>{line.up_4} </div>
-          </div>
-      )
-    }
-    return (
-        <div className="user_assets_data_grid">
-          {
-            this.state.headers.map(
-                (header) => (
-                    <div className="user_assets_data_grid_box-header">
-                      <div style={{border: 1}}>{header}</div>
-                    </div>
-                )
-            )
-          }
-          {content}
-        </div>
-    );
-  }
-}
-
 class Top extends React.Component {
   constructor(props) {
     super(props);
@@ -138,8 +53,6 @@ class HomePage extends React.Component {
     this.state = {
       show_log_in: true,
       show_registration: false,
-      login: null,
-      password: null,
       token: null,
       rootUrl: 'http://143.244.205.59/api/',
       portfolio_name: "1",
@@ -147,114 +60,11 @@ class HomePage extends React.Component {
     }
   }
 
-  getToken(username, password) {
-    fetch(this.state.rootUrl + "api-token-auth/",
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': '*/*',
-          },
-          body: JSON.stringify({
-            username,
-            password
-          })
-        })
-        .then(res => res.json())
-        .then(
-            (result) => {
-              this.setState({
-                token: result.token,
-              });
-              this.getActives(result.token).then(r => null)
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error: error,
-              });
-            }
-        )
-
-  }
-
-  result2content(result, assets_by_coin_id) {
-    console.log(assets_by_coin_id);
-    let content = [];
-    let data = result.assets;
-    console.log(data)
-    let coin_id;
-    let price;
-    let symbol;
-    let img;
-    let price_change_24h;
-    let price_change_percentage_24h;
-    for (const row in data) {
-      coin_id = data[row].asset;
-      price = assets_by_coin_id[coin_id]['current_price'];
-      symbol = assets_by_coin_id[coin_id].symbol;
-      img = assets_by_coin_id[coin_id].image;
-      price_change_24h = assets_by_coin_id[coin_id].price_change_24h;
-      price_change_percentage_24h = assets_by_coin_id[coin_id].price_change_percentage_24h;
-      content.push(
-          {
-            name: assets_by_coin_id[coin_id].name,
-            count: parseFloat(data[row].amount).toFixed(2),
-            buy_price: parseFloat(price).toFixed(2),
-            assets: [parseFloat(price * data[row].amount).toFixed(2), symbol.toUpperCase()],
-            price: parseFloat(data[row].price).toFixed(2),
-            up_down: [parseFloat(price_change_24h).toFixed(4), parseFloat(price_change_percentage_24h).toFixed(4)],
-            img: img
-          }
-      );
-    }
-    this.setState({content: content})
-  }
-
-  async getActives(token) {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Token " + token);
-
-    var formData = new FormData();
-    formData.append("name", "1");
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: formData,
-      redirect: 'follow'
-    };
-
-    let result = await fetch("http://143.244.205.59/api/portfolio/get_portfolio/", requestOptions)
-    result = await result.json();
-    let assets = result.assets
-    let assets_by_coin_id = {}
-    for (const assetsKey in assets) {
-      let coin_id = assets[assetsKey].asset
-      if (!(coin_id in assets_by_coin_id)) {
-        var formData1 = new FormData();
-        formData1.append("coin_id", coin_id);
-
-        var requestOptions = {
-          method: 'POST',
-          body: formData1,
-          redirect: 'follow'
-        };
-        let assets_data = await fetch("http://143.244.205.59/api/assets/by_coin_id/", requestOptions)
-        assets_by_coin_id[coin_id] = await assets_data.json()
-      }
-
-    }
-
-    this.result2content(result, assets_by_coin_id)
-  }
-
   render() {
     return (
         <div className="main_body">
           <div className="column_list main_center">
             <Header/>
-
             <div className="main_home">
               <div className="days_price">
                 <span className="days_price_logo">Сегодняшние цены на криптовалюту по рыночной капитализации</span>
@@ -294,29 +104,27 @@ class HomePage extends React.Component {
                       show_log_in: false,
                     })
                 }
-                onClick={(login, password) => {
+                onClick={() => {
                   this.setState({
                         show_log_in: false,
-                        login: login,
-                        password: password
                       }
                   );
-                  this.getToken(login, password)
+                  //this.getToken(login, password)
                 }}
                 tokenGet={(token) => this.setState({token: token})}
             />
           </Modal>
           <Modal show={this.state.show_registration} onClose={() => null}>
-            <Registration onClick={
-              (login, password) => {
-                this.setState({
-                  'show_registration': false,
-                  login: login,
-                  password: password,
-                })
-                this.addUser(login, password)
-              }
-            } tokenGet={(token) => this.setState({token: token})}
+            <Registration
+                onClick={
+                  () => {
+                    this.setState({
+                      show_registration: false,
+                    })
+                    //this.addUser(login, password)
+                  }
+                }
+                tokenGet={(token) => this.setState({token: token})}
             />
           </Modal>
         </div>

@@ -5,6 +5,7 @@ import gcss from '../../generalCSS.css'
 import className from "classname";
 import PropTypes from "prop-types";
 import Log_in from "../Log_in";
+import projectAPI from "../../API/projectAPI";
 
 
 class Registration extends React.Component {
@@ -15,6 +16,7 @@ class Registration extends React.Component {
       password: null,
       password_2: null,
     }
+    this.projectAPI = new projectAPI();
   }
 
   render() {
@@ -66,7 +68,7 @@ class Registration extends React.Component {
                    type="password"/>
           </div>
           <button className={registration_button_container} onClick={
-            () => {
+            async () => {
               if (this.state.login === null) {
                 alert("Введите логин!")
                 return;
@@ -84,8 +86,8 @@ class Registration extends React.Component {
                 return;
               }
               console.log(this.state.login, this.state.password)
-              this.props.tokenGet(this.getToken(this.state.login, this.state.password))
-              this.props.onClick(this.state.login, this.state.password)
+              this.props.tokenGet(await this.projectAPI.addUser(this.state.login, this.state.password))
+              this.props.onClick()
             }
 
 
