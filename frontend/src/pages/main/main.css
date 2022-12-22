@@ -1,0 +1,360 @@
+
+.main_body {
+    background: #FAFEFE;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center !important;
+
+
+}
+
+.main_center {
+    font-size: 14px;
+    background: #FAFEFE;
+    max-width: 1400px;
+
+    flex: 1;
+}
+
+.null_element {
+    flex: 1;
+}
+
+.main_home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 20px;
+
+}
+
+.days_price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 25px;
+    gap: 10px;
+    height: 105px;
+    flex: 1;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.days_price_logo {
+    height: 32px;
+
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+
+    flex: 1;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.days_price_data {
+    height: 23px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: #184A6E;
+
+    flex: 1;
+    order: 1;
+    flex-grow: 0;
+}
+
+.blue_text {
+    color: #1A89AC;
+}
+
+.header_tops {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px 25px;
+    gap: 30px;
+    width: 100%;
+
+    flex: 1;
+    order: 0;
+    flex-grow: 0;
+}
+
+.top {
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px 10px;
+    gap: 10px;
+
+    background: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+
+    flex: 1;
+}
+
+.top_head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+
+    flex: 1;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.top_head_text {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 24px;
+    color: #000000;
+
+    flex: none;
+}
+
+.top_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 12px;
+
+    flex: 1;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.top_line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    flex: 1;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.header_top_text {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+
+    color: #000000;
+
+    flex: none;
+}
+
+.user_assets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.user_assets_menu {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: #000000;
+
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.user_assets_menu_item_hide {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+
+    background: #EAEAEA;
+    border-width: 0px 1px;
+    border-style: solid;
+    border-color: #000000;
+
+    flex: none;
+    flex-grow: 0;
+}
+
+.user_assets_menu_item_show {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+
+    border-right: 1px solid #000000;
+    border-left: 1px solid #000000;
+
+    flex: none;
+    flex-grow: 0;
+}
+
+.user_assets_menu_fill {
+    box-sizing: border-box;
+
+    background: #EAEAEA;
+    border-right: 1px solid #000000;
+
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+
+.user_assets_data {
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.user_assets_data_grid {
+
+    display: grid;
+
+    row-gap:  10px;
+
+    /*  border: solid black 1px; */
+    grid-template-columns: repeat(7, 1fr);
+    flex: 1;
+}
+
+[class^="user_assets_data_grid_box-"] {
+    /* background-color: skyblue; */
+    /* Размещаем контейнеры по центру */
+
+    min-height: 70px;
+    max-height: 100px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    /* border: black solid 1px; */
+    box-sizing: border-box;
+}
+
+.user_assets_data_grid_box-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: flex-start;
+
+    padding: 10px;
+    gap: 7px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 20px;
+}
+
+.user_assets_data_grid_box-header:first-of-type {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: flex-start;
+}
+
+[class^="user_assets_data_grid_box-content"] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 7px;
+
+}
+
+.user_assets_data_grid_box-content-start {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 20px;
+}
+.user_assets_data_grid_box-content-end {
+    justify-content: flex-end;
+
+}
+
+.user_assets_up {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #00AE50;
+}
+
+.user_assets_down {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FF1F00;
+}

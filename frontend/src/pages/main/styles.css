@@ -1,0 +1,286 @@
+
+
+.main {
+  width: 100%;
+  height: auto;
+  background: rgba(250, 254, 254, 1);
+  margin: 20px;
+  opacity: 1;
+  display: flex;
+  top: 105px;
+  left: 0;
+  overflow: hidden;
+}
+
+.days_price {
+  width: 100%;
+  height: auto;
+  background: url("../../icons/logo.png") no-repeat center center;
+  background-size: cover;
+  padding: 20px 25px;
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.days_price_logo {
+  width: 100%;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  font-family: Inter;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+
+.days_price_data {
+  width: 100%;
+  color: rgba(0,255,0, 0);
+  position: absolute;
+  top: 59px;
+  left: 25px;
+  font-family: Ubuntu;
+  font-weight: Bold;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+
+.header_tops {
+  width: 100%;
+  height: 171px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 30px;
+  opacity: 1;
+  position: absolute;
+  top: 122px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.top_rating {
+  width: 613px;
+  height: 171px;
+  background: rgba(255, 255, 255, 1);
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 25px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.top_head {
+  width: 593px;
+  height: 24px;
+  background: rgba(0,255,0, 0) no-repeat center center;
+  background-size: cover;
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.top_head_text {
+  width: 170px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Ubuntu;
+  font-weight: Bold;
+  font-size: 21px;
+  opacity: 1;
+  text-align: left;
+}
+
+.top_body {
+  width: 593px;
+  height: 137px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 10px 10px;
+  margin: 12px;
+  opacity: 1;
+  position: absolute;
+  top: 34px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.header_top_line {
+  width: 573px;
+  height: 18px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.header_top_text {
+  width: 106px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Ubuntu;
+  font-weight: Bold;
+  font-size: 16px;
+  opacity: 1;
+  text-align: left;
+}
+
+.top_new {
+  width: 613px;
+  height: 171px;
+  background: rgba(255, 255, 255, 1);
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 653px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.top_adds {
+  width: 613px;
+  height: 171px;
+  background: rgba(255, 255, 255, 1);
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 1281px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.user_assets {
+  width: 100%;
+  height: 566px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 20px 0px;
+  opacity: 1;
+  position: absolute;
+  top: 313px;
+  left: 0px;
+  overflow: hidden;
+}
+
+
+.user_assets_menu {
+  width: 100%;
+  height: 63px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 10px 10px;
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.user_assets_menu_item_hide {
+  width: 128px;
+  height: 43px;
+  background: rgba(234, 234, 234, 1);
+  padding: 10px 10px;
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.user_assets_menu_item_show {
+  width: 121px;
+  height: 43px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 10px 10px;
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: 138px;
+  overflow: hidden;
+}
+
+.user_assets_menu_fill {
+  width: 100%;
+  height: 43px;
+  background: rgba(234, 234, 234, 1);
+  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: 259px;
+  overflow: hidden;
+}
+
+.user_assets_data {
+  width: 100%;
+  height: 433px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 10px;
+  opacity: 1;
+  position: absolute;
+  top: 83px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.user_assets_data_grid {
+  width: 100%;
+  height: 406px;
+  background: rgba(0,255,0, 0);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}

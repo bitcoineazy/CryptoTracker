@@ -1,0 +1,51 @@
+
+.main_line {
+    /*
+    background: linear-gradient(rgba(255,255,255,1), rgba(241,250,255,1))
+     */
+    ;
+}
+
+.logo_value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 27px;
+    gap: 20px;
+    height: 59px;
+}
+
+.logo_img {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.text_logo {
+    color: rgba(0,0,0,1);
+    font-family: "Viga", sans-serif;
+    font-weight: normal;
+    font-size: 26px;
+
+    align-self: center;
+}
+
+.in_focus {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 10px 0;
+    margin: 20px;
+    opacity: 1;
+
+}
+
+.text_info {
+    align-self: flex-end;
+    color: rgba(0,0,0,1);
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    opacity: 1;
+    text-align: right;
+}
