@@ -114,7 +114,7 @@ class UserPage extends React.Component {
       active_change_cost: 2718.28,
       graph_type: 0,
       history_interval: 0,
-      graphData: [],
+      graphData: {id: "main", "data": [{x: 1, y: 1}]},
       show_log_in: true,
       show_registration: false,
       show_add_active: false,
@@ -218,9 +218,10 @@ class UserPage extends React.Component {
                 <Portfolios
                     token={this.state.token}
                     update={this.state.update_portfolio_list}
-                    update_done={(cost) => {
+                    update_done={(cost, dataGraph) => {
                       this.setState({update_portfolio_list: false});
-                      this.setState({portfolio_cost: cost})
+                      this.setState({portfolio_cost: cost});
+                      this.setState({graphData: dataGraph});
                     }}
                     onClick={
                       (name, cost, dataGraph) => {
@@ -316,31 +317,7 @@ class UserPage extends React.Component {
                   <div className="graph">
                     <div className="graph_img">
                       <MyResponsiveBump data={[
-                        {
-                          "id": "Serie 1",
-                          "data": [
-                            {
-                              "x": 2000,
-                              "y": 1
-                            },
-                            {
-                              "x": 2001,
-                              "y": 9
-                            },
-                            {
-                              "x": 2002,
-                              "y": 2
-                            },
-                            {
-                              "x": 2003,
-                              "y": 6
-                            },
-                            {
-                              "x": 2004,
-                              "y": 3
-                            }
-                          ]
-                        }
+                        this.state.graphData
                       ]}/>
                     </div>
                   </div>

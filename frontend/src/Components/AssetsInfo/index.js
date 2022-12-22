@@ -30,15 +30,16 @@ class AssetsInfo extends React.Component {
         ) && this.props.mod === 0
     ) {
       this.projectAPI.getPortfolio(this.props.token, this.props.portfolioName).then(portfolio => {
+        let portfolio_assets = portfolio.assets
         let coin_id = [];
-        for (let portfolioElement of portfolio) {
+        for (let portfolioElement of portfolio_assets) {
           coin_id.push(portfolioElement.asset);
         }
         console.log("get coin_id - start");
         console.log(coin_id)
         console.log("get coin_id - end");
         this.projectAPI.getAssetsByCoinID(coin_id).then(assets => {
-          let content = this.projectAPI.result2content(portfolio, assets)
+          let content = this.projectAPI.result2content(portfolio_assets, assets)
           console.log(content)
           this.setState({content: content})
           this.props.update_done()

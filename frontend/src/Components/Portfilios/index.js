@@ -20,15 +20,20 @@ export default class Portfolios extends React.Component {
       this.projectAPI.getPortfolios(this.props.token).then(portfolios => {
         let data = [];
         let portfolio_cost = null;
+        let graph = null;
         for (let portfolio of portfolios) {
           data.push({name: portfolio.name, total_cost: portfolio.portfolio_change_metrics.final_equity});
           if (portfolio.name === this.props.portfolioName) {
             portfolio_cost = portfolio.portfolio_change_metrics.final_equity;
+            graph = portfolio.portfolio_historical_graph;
+            if (Object.keys(graph).length === 0) {
+              graph = {id: "Нет данных графика", "data": [{x: 1, y: 1}]}
+            }
           }
 
         }
         this.setState({data: data});
-        this.props.update_done(portfolio_cost)
+        this.props.update_done(portfolio_cost, graph)
       })
     }
   }
@@ -49,7 +54,12 @@ export default class Portfolios extends React.Component {
                       }}
                       onClick={
                         async () => {
-                          let graph = await this.projectAPI.getGraph(this.state.token, item.name)
+                          let res = await this.projectAPI.getPortfolio(this.props.token, item.name)
+                          console.log("Портфель");
+                          let graph = res.portfolio_historical_graph;
+                          if (Object.keys(graph).length === 0) {
+                            graph = {id: "Нет данных графика", "data": [{x: 1, y: 1}]}
+                          }
                           this.props.onClick(item.name, item.total_cost, graph)
                         }}
                       className="row_list user_portfolio_reference">

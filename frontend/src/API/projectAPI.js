@@ -71,9 +71,9 @@ export default class projectAPI {
     let res = await fetch(this.rootUrl + "portfolio/get_portfolio/", requestOptions)
     if (res.ok) {
       res = await res.json();
-      console.log(res.assets);
+      console.log(res);
       console.log("getPortfolio - end");
-      return res.assets;
+      return res;
     } else {
       alert("Не удалось получить доступ к: portfolio/get_portfolio/")
       console.log(res.status + " " + await res.json())
