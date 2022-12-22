@@ -5,7 +5,7 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 import numpy as np
 import time
-import datetime
+from datetime import datetime
 
 cg = CoinGeckoAPI()
 
