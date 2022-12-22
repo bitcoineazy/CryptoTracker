@@ -1,11 +1,9 @@
 from utils import TestStates
 
 
-help_message = 'Для того, чтобы изменить текущее состояние пользователя, ' \
-               f'отправь команду "/setstate x", где x - число от 0 до {len(TestStates.all()) - 1}.\n' \
-               'Чтобы сбросить текущее состояние, отправь "/setstate" без аргументов.'
+help_message = '/cap - показать топ криптовалют по капитализации\n /lookfor 1 - посмотреть цену конкретной криптовалюты'
 
-start_message = 'Привет! Это демонстрация работы FSM.\n' + help_message
+start_message = 'Добро пожаловать в crypto бот ! Для помощи введите команду /help'
 invalid_key_message = 'Ключ "{key}" не подходит.\n' + help_message
 state_set_own = 'Введите название криптовалюты: '
 state_reset_message = 'Состояние успешно сброшено'
