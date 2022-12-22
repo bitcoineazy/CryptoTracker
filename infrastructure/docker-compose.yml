@@ -45,8 +45,8 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
-#    volumes:
-#      - frontend_value:/app/build/
+    volumes:
+      - frontend_value:/app/frontend
     depends_on:
       - db
       - backend
@@ -80,4 +80,4 @@ volumes:
   postgres_data:
   static_value:
   media_value:
-#  frontend_value:
+  frontend_value:
