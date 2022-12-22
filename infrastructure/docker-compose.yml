@@ -38,8 +38,15 @@ services:
 
   frontend:
     image: noble6/cryptotracker_frontend:latest
-    volumes:
-      - frontend_value:/app/build/
+    restart: always
+    command: npm start
+    ports:
+      - "3000:3000"
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+#    volumes:
+#      - frontend_value:/app/build/
     depends_on:
       - db
       - backend
@@ -73,4 +80,4 @@ volumes:
   postgres_data:
   static_value:
   media_value:
-  frontend_value:
+#  frontend_value:
