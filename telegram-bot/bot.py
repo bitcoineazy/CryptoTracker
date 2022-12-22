@@ -9,6 +9,7 @@ from messages import MESSAGES
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import time
+from login import users
 
 logging.basicConfig(format=u'%(filename)+13s [ LINE:%(lineno)-4s] %(levelname)-8s [%(asctime)s] %(message)s',
                     level=logging.DEBUG)
@@ -44,18 +45,51 @@ async def process_help_command(message: types.Message):
 
 @dp.message_handler(commands=['cap'])
 async def process_help_command(message: types.Message):
-    list = []
+    global result
     data = cg.get_coins_markets(vs_currency='usd')
+    k = []
+    r = []
+    y = []
+    s = []
+    stroka = ''
+    list_2 = []
+
+    x = 0
+
+    low = '📉'
+    high = '📈'
+
     for i in data:
-        list.append(i['id'])
-    i = 0
-    while i < len(list):
-        if i > 9:
-            del list[i]
-        else:
-            i += 1
-    for x in list:
-        await message.answer(x)
+        x += 1
+        i['id'] = i['id'].upper()
+
+        if i['price_change_24h'] > 0:
+            i['id'] = i['id'] + high
+        elif i['price_change_24h'] < 0:
+            i['id'] = i['id'] + low
+
+        string = i['id'], 'Цена:', i['current_price'], 'Объём:', i['market_cap'], 'Изменение[сутки]:', i[
+            'price_change_24h']
+
+        list_2.append(string)
+        if x == 10:
+            break
+
+    for i in list_2:
+        k.append(str(i).replace('(', ''))
+    for j in k:
+        r.append(str(j).replace(')', ''))
+    for x in r:
+        y.append(str(x).replace(',', ''))
+    for z in y:
+        s.append(str(z).replace(' ', ''))
+    for e in s:
+        stroka = stroka + '\n' + str(e).replace("'", '\n')
+
+    await message.answer(stroka)
+
+
+#message.answer(x)
 
 @dp.message_handler(state='*', commands=['lookfor'])
 async def process_setstate_command(message: types.Message):
