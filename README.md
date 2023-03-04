@@ -59,3 +59,10 @@ DB_PORT=5432
 - Flower админка для Celery [127.0.0.1:5566/](http://127.0.0.1:5566/)
 
 ## Документация и документы
+1. [Основная информация о проекте](https://docs.google.com/document/d/1uAo9AEyFQp9OS7pW8nWsjONwGxFhm0iNyN3ExQD0aMM)
+2. [ТЗ (техническое задание к проекту)](https://docs.google.com/document/d/1brzGZPXWFxUncZA1nxC8m6WuJMndXy1ayGbnxd3g04U)
+3. [Описание автоматизируемых функций](https://docs.google.com/document/d/1INT0S4TTg03zlc-QvNWq9smn-57PG0JOOYwngxOvhDE)
+4. [Схема функциональной структуры автоматизируемой деятельности](https://docs.google.com/document/d/1q91wO5nlNoPGV8APYzggHGtBieRXXFbkYSavtPk5bd8)
+5. [Описание программного обеспечения АС](https://docs.google.com/document/d/1N8bd2g0r8BV_nUNI_Cj2Y5bufMBc_LXSQsph7715P6s)
+6. [Схема логической структуры БД](https://docs.google.com/document/d/1CuoIZcxkWvNPrK6kCHm5Z5p2tN7JPYcuRwC8NVAnoa8)
+7. [Концепция ИС](https://docs.google.com/document/d/1e2T2Jslet7b_nb3WPSleWURQqHSkHrr4sR41SYgX9lk)
