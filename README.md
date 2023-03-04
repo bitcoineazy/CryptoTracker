@@ -7,14 +7,14 @@
 
 - Проект <b>CryptoTracker</b> это удобный инструмент учета для хранения всех своих крипто-инвестиций в одном месте, пользователи могут проанализировать стоимость инвестиций, доходы и статистику по ним в виде графиков и диаграмм.
 
-[![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)](https://www.django-rest-framework.org/)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-<img src="https://img.shields.io/badge/celery-%2337814A.svg?&style=for-the-badge&logo=celery&logoColor=white" />
-[![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)](https://nginx.org/ru/)
-[![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
-[![GitHub_Actions](https://img.shields.io/badge/githubactions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
-[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=flat&logo=Django&logoColor=white&color=ff1709&labelColor=gray)](https://www.django-rest-framework.org/)
+![React](https://img.shields.io/badge/React-%2320232a.svg?style=flat&logo=React&logoColor=%2361DAFB)
+<img src="https://img.shields.io/badge/Celery-%2337814A.svg?&style=flat&logo=Celery&logoColor=white" />
+[![Nginx](https://img.shields.io/badge/Nginx-%23009639.svg?style=flat&logo=Nginx&logoColor=white)](https://nginx.org/ru/)
+[![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?style=flat&logo=Postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-%23DD0031.svg?style=flat&logo=Redis&logoColor=white)](https://redis.io/)
+[![GitHub_Actions](https://img.shields.io/badge/GithubActions-%232671E5.svg?style=flat&logo=GithubActions&logoColor=white)](https://github.com/features/actions)
+[![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=flat&logo=Docker&logoColor=white)](https://www.docker.com/)
 
 ## Установка и запуск
 Проект разбит на 7 docker-контейнеров:
