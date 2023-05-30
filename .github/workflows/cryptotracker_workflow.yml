@@ -89,7 +89,7 @@ jobs:
   telegram_notification:
     runs-on: ubuntu-latest
     name: Telegram notification
-    needs: deploy
+    needs: tests
     steps:
       - uses: actions/checkout@master
       - name: Display flake8 output
