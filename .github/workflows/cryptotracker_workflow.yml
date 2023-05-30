@@ -66,23 +66,37 @@ jobs:
   #           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
   #           sudo docker-compose up -d
             
+  # telegram_notification:
+  #     runs-on: ubuntu-latest
+  #     name: Telegram notification
+  #     needs: deploy
+  #     steps:
+  #       - uses: actions/checkout@master
+  #       # - name: send message
+  #       #   uses: appleboy/telegram-action@master
+  #       #   with:
+  #       #     to: ${{ secrets.TELEGRAM_TO }}
+  #       #     token: ${{ secrets.TELEGRAM_TOKEN }}
+  #       #     args: ${{ github.workflow }} done successfully!
+  #       - name: Display flake8 output
+  #       run: cat flake8_output.txt
+  #         - name: send message
+  #           uses: appleboy/telegram-action@master
+  #           with:
+  #             to: ${{ secrets.TELEGRAM_TO }}
+  #             token: ${{ secrets.TELEGRAM_TOKEN }}
+  #             args: ${{ github.workflow }} done successfully!
   telegram_notification:
-      runs-on: ubuntu-latest
-      name: Telegram notification
-      needs: deploy
-      steps:
-        - uses: actions/checkout@master
-        # - name: send message
-        #   uses: appleboy/telegram-action@master
-        #   with:
-        #     to: ${{ secrets.TELEGRAM_TO }}
-        #     token: ${{ secrets.TELEGRAM_TOKEN }}
-        #     args: ${{ github.workflow }} done successfully!
-        - name: Display flake8 output
+    runs-on: ubuntu-latest
+    name: Telegram notification
+    needs: deploy
+    steps:
+      - uses: actions/checkout@master
+      - name: Display flake8 output
         run: cat flake8_output.txt
-          - name: send message
-            uses: appleboy/telegram-action@master
-            with:
-              to: ${{ secrets.TELEGRAM_TO }}
-              token: ${{ secrets.TELEGRAM_TOKEN }}
-              args: ${{ github.workflow }} done successfully!
+      - name: send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{ github.workflow }} done successfully!
