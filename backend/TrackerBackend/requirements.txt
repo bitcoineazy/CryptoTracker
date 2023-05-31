@@ -19,3 +19,5 @@ PyJWT==2.6.0
 wheel==0.36.2
 whitenoise==6.2.0
 sqlalchemy==1.4.44
+pipenv
+pytest
