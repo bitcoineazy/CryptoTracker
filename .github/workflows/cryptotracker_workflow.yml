@@ -42,8 +42,8 @@ jobs:
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
-      - name: Check out repository code
-        uses: actions/checkout@v3
+      # - name: Check out repository code
+      - uses: actions/checkout@v3
 
       
       - name: Set up Python
