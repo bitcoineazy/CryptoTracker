@@ -1,80 +1,83 @@
 name: CryptoTracker workflow
 on: [push]
 jobs:
-  # tests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v3
-  #       with:
-  #         python-version: 3.8
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install -r backend/TrackerBackend/requirements.txt
-  #         pip install flake8 pep8-naming flake8-broken-line flake8-return
-  #     - name: Test with flake8 and django tests
-  #       run: |
-  #         python -m flake8 backend/TrackerBackend/TrackerBackend/settings.py > flake8_output.txt
-  test_models:
+  tests:
     runs-on: ubuntu-latest
-    container: postgres:13.0-alpine
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env:
-          DB_ENGINE: django.db.backends.postgresql
-          DB_NAME: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          DB_PORT: 5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      # python:
-      #   image: python
-
     steps:
-      # Downloads a copy of the code in your repository before running CI tests
-      # - name: Check out repository code
       - uses: actions/checkout@v3
-
-      
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
-      # Performs a clean installation of all dependencies in the `package.json` file
-      # For more information, see https://docs.npmjs.com/cli/ci.html
       - name: Install dependencies
         run: |
-          apt-get install python3 python3-pip
           python -m pip install --upgrade pip
           pip install -r backend/TrackerBackend/requirements.txt
-
-      - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
+          
+          pip install flake8 pep8-naming flake8-broken-line flake8-return
+      - name: Test with django tests
         run: |
-          python3 manage.py makemigrations
-          python3 manage.py migrate
+          cd backend/TrackerBackend/
           pipenv run pytest -v
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          DB_PORT: 5432
+    # python -m flake8 backend/TrackerBackend/TrackerBackend/settings.py > flake8_output.txt
+  # test_models:
+  #   runs-on: ubuntu-latest
+  #   container: postgres:13.0-alpine
+  #   # Service containers to run with `container-job`
+  #   services:
+  #     # Label used to access the service container
+  #     postgres:
+  #       # Docker Hub image
+  #       image: postgres
+  #       # Provide the password for postgres
+  #       env:
+  #         DB_ENGINE: django.db.backends.postgresql
+  #         DB_NAME: postgres
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         DB_PORT: 5432
+  #       # Set health checks to wait until postgres has started
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #     # python:
+  #     #   image: python
+
+  #   steps:
+  #     # Downloads a copy of the code in your repository before running CI tests
+  #     # - name: Check out repository code
+  #     - uses: actions/checkout@v3
+
+      
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: 3.8
+  #     # Performs a clean installation of all dependencies in the `package.json` file
+  #     # For more information, see https://docs.npmjs.com/cli/ci.html
+  #     - name: Install dependencies
+  #       run: |
+  #         apt-get install python3 python3-pip
+  #         python -m pip install --upgrade pip
+  #         pip install -r backend/TrackerBackend/requirements.txt
+
+  #     - name: Connect to PostgreSQL
+  #       # Runs a script that creates a PostgreSQL table, populates
+  #       # the table with data, and then retrieves the data.
+  #       run: |
+  #         python3 manage.py makemigrations
+  #         python3 manage.py migrate
+  #         pipenv run pytest -v
+  #       # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+  #       env:
+  #         # The hostname used to communicate with the PostgreSQL service container
+  #         POSTGRES_HOST: postgres
+  #         # The default PostgreSQL port
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         DB_PORT: 5432
   # testsz:
   #     name: Deploy project on production server
   #     runs-on: ubuntu-latest
