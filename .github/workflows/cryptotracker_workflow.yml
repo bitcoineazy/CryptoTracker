@@ -56,7 +56,7 @@ jobs:
       # For more information, see https://docs.npmjs.com/cli/ci.html
       - name: Install dependencies
         run: |
-          sudo apt-get install python3 python3-pip
+          apt-get install python3 python3-pip
           python -m pip install --upgrade pip
           pip install -r backend/TrackerBackend/requirements.txt
 
