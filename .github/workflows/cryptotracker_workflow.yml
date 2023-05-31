@@ -39,6 +39,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      python:
+        image: python
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
